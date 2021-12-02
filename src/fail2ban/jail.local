@@ -1,0 +1,12 @@
+# this is an example snippet for jail.local
+# your setting need to betailored depending on your operating system
+# use this only as an example
+#
+[wordpress-userenum]
+enabled = true
+filter = wordpress-userenum
+action   = iptables-allports[name=WORDPRESS-USERENUM]
+logpath = /var/log/auth.log
+maxretry = 1
+findtime = 600
+bantime = 604800

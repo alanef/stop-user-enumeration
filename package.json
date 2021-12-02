@@ -1,0 +1,24 @@
+{
+  "devDependencies": {
+    "del": "latest",
+    "gulp": "latest",
+    "gulp-directory-sync": "latest",
+    "gulp-notify": "latest",
+    "gulp-remove-lines": "latest",
+    "gulp-rename": "latest",
+    "gulp-sort": "latest",
+    "gulp-util": "latest",
+    "gulp-wp-pot": "latest",
+    "gulp-zip": "latest"
+  },
+  "name": "stop-user-enumeration-project",
+  "version": "1.0.0",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Alan Fuller <alan@fullworks.net>",
+  "license": "GPL",
+  "description": ""
+}

@@ -1,0 +1,20 @@
+{
+  "name": "src",
+  "version": "1.0.0",
+  "description": "=== Stop User Enumeration === Contributors: fullworks Tags: User Enumeration, Security, WPSCAN, fail2ban, Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4EMTVFMKXRRYY Requires at least: 3.4 Requires PHP: 5.3 Tested up to: 4.8.3 Stable tag: 1.3.15 License: GPLv2 or later License URI: http://www.gnu.org/licenses/gpl-2.0.html",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/FullworksWordPressPlugins/stop-user-enumeration.git"
+  },
+  "keywords": [],
+  "author": "Alan Fuller <alan@fullworks.net>",
+  "license": "GPL",
+  "bugs": {
+    "url": "https://gitlab.com/FullworksWordPressPlugins/stop-user-enumeration/issues"
+  },
+  "homepage": "https://gitlab.com/FullworksWordPressPlugins/stop-user-enumeration#README"
+}

@@ -1,0 +1,88 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-09-13 09:58+0100\n"
+"PO-Revision-Date: 2017-09-13 09:59+0100\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.9\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: esc_html__\n"
+"Last-Translator: \n"
+"Language: en_GB\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: freemius\n"
+"X-Poedit-SearchPathExcluded-1: wp-settings-framework.php\n"
+
+#: settings/settings-general.php:9
+msgid "Welcome to Stop Enumeration, part of Fullworks WP VPS Security"
+msgstr "Hi and Welcome to Stop Enumeration, part of Fullworks WP VPS Security"
+
+#: settings/settings-general.php:10
+msgid ""
+"Fullworks WP VPS Security is built to help protect WP installations on VPS "
+"and Dedicated Servers, although you may use it happily on your shared "
+"hosting plans too."
+msgstr ""
+
+#: settings/settings-general.php:17
+msgid "Stop REST API User calls"
+msgstr ""
+
+#: settings/settings-general.php:18
+msgid ""
+"WordPress allows anyone to find users by API call, by checking this box the "
+"calls will be restricted to logged in users only. Only untick this box if "
+"you need to allow unfettered API access to users"
+msgstr ""
+
+#: settings/settings-general.php:24
+msgid "log attempts to AUTH LOG"
+msgstr ""
+
+#: settings/settings-general.php:25
+#, php-format
+msgid ""
+"Leave this ticked if you are using %1$sFail2Ban%2$s on your VPS to block "
+"attempts at enumeration.%3$s If you are not running Fail2Ban or on a shared "
+"host this does not need to be ticked, however it normally will not cause a "
+"problem being ticked."
+msgstr ""
+
+#: settings/settings-general.php:33
+msgid "Remove numbers from comment authors"
+msgstr ""
+
+#: settings/settings-general.php:34
+msgid ""
+"This plugin uses jQuery to remove any numbers from a comment author name, "
+"this is because numbers trigger enumeration checking. You can untick this if "
+"you do not use comments on your site or you use a different comment method "
+"than standard"
+msgstr ""
+
+#: stop-user-enumeration.php:167
+msgid "forbidden - number in author name not allowed = "
+msgstr ""
+
+#: stop-user-enumeration.php:197
+msgid "Only authenticated users can access the User endpoint REST API."
+msgstr ""
+
+#: stop-user-enumeration.php:218
+#, php-format
+msgid ""
+"Plugin: Stop User Enumeration now has settings, go to the %1$s page and save "
+"the new settings"
+msgstr ""
+
+#: stop-user-enumeration.php:230
+msgid "Stop User Enumeration Settings"
+msgstr ""
+
+#: stop-user-enumeration.php:231
+msgid "Stop User Enumeration"
+msgstr ""

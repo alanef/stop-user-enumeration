@@ -1,0 +1,127 @@
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url(fonts/400.ttf) format('ttf');
+}
+
+$brand_darkblue: #0C3A5B;
+$brand_lightgrey: #B9B9BA;
+$brand_white: #fff;
+$brand_lightblue: #409EBB;
+$brand_midgrey: #545764;
+$brand_darkgrey: #2E3744;
+$min-width: 850px;
+$max-width: 420px;
+#poststuff {
+  #offers {
+    .inside {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  .offer-container {
+    padding: 20px 20px 5px 20px;
+    color: $brand_white;
+    background-color: $brand_darkgrey;
+    background-image: url(images/vertbg.png);
+    background-repeat: no-repeat;
+    background-position: top right;
+
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    p {
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+    }
+
+    .logo {
+      margin-bottom: 20px;
+      @media (max-width: $min_width) and (min-width: $max-width) {
+        width: 50%;
+        float: right
+      }
+    }
+
+    .heading {
+      h2 {
+        font-family: 'Fira Sans', sans-serif;
+        font-size: 24px;
+        letter-spacing: 0.87px;
+        margin-bottom: 14px;
+        color: $brand_white;
+        font-weight: 700;
+        line-height: 28px;
+        margin: 0;
+        padding: 0;
+      }
+
+      @media (max-width: $min_width) and (min-width: $max-width) {
+        width: 50%;
+        float: left;
+      }
+    }
+
+    .text {
+      padding-bottom: 20px;
+
+      p {
+        line-height: 1.5;
+
+        &.price {
+          font-weight: 900;
+        }
+      }
+
+      @media (max-width: $min_width) and (min-width: $max-width) {
+        width: 50%;
+        float: left;
+      }
+    }
+
+    .cta {
+      text-align: center;
+
+      .action {
+        a {
+          background-color: $brand_lightblue;
+          color: $brand_white;
+          border-width: 0;
+          border-radius: 5px;
+          box-shadow: none;
+          cursor: pointer;
+          font-size: 18px;
+          font-weight: 700;
+          letter-spacing: 1px;
+          padding: 10px 30px;
+          text-align: center;
+          text-decoration: none;
+          text-transform: uppercase;
+          white-space: normal;
+          width: auto;
+
+          &:hover {
+            box-shadow: inset 0 0 200px rgba(230, 230, 230, 0.25);
+          }
+        }
+      }
+
+      .cta-text {
+        p {
+          line-height: 1;
+        }
+      }
+
+      @media (max-width: $min_width) and (min-width: $max-width) {
+        width: 50%;
+        float: right;
+      }
+    }
+  }
+}

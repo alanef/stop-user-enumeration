@@ -1,0 +1,130 @@
+# Copyright (C) 2021 stop-user-enumeration
+# This file is distributed under the same license as the stop-user-enumeration package.
+msgid ""
+msgstr ""
+"Project-Id-Version: stop-user-enumeration\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/admin/class-admin-pages.php:204
+msgid "Save Options"
+msgstr ""
+
+#: src/admin/class-admin-pages.php:233
+msgid "Save"
+msgstr ""
+
+#: src/admin/class-admin-pages.php:249
+msgid "Settings reset to defaults."
+msgstr ""
+
+#: src/admin/class-admin-settings.php:40
+msgid "Stop User Enumeration"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:116
+msgid "Information"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:124
+msgid "Options"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:138
+msgid "About this Plugin"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:140
+msgid "Stop User Enumeration detects attempts by malicious scanners to identify your users"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:141
+msgid ""
+"If a bot or user is caught scanning for user names they are denied access and their IP is\n"
+"                        logged"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:144
+msgid ""
+"When you are viewing an admin page, the plugin does nothing, this is designed this way as it is\n"
+"                        assumed admin user have authority, bear this in mind when testing."
+msgstr ""
+
+#: src/admin/class-admin-settings.php:146
+msgid ""
+"This plugin is best used in conjunction with a blocking tool to exclude the IP for longer. If you\n"
+"                        are on a VPS or dedicated server where you have root access you can install and configure"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:149
+msgid "Also note: It is very common for users to leave their Display Name and Nickname the same as their Username, in which case the Username is leaked by so many things. Best to check at least your admins don't do this"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:154
+msgid "Support"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:156
+msgid ""
+"<a class=\"button-secondary\"\n"
+"                                href=\"https://wordpress.org/support/plugin/stop-user-enumeration/\" target=\"_blank\">WordPress.org support forum</a>"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:209
+msgid "Stop REST API User calls"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:216
+msgid "WordPress allows anyone to find users by API call, by checking this box the calls will be restricted to logged in users only. Only untick this box if you need to allow unfettered API access to users"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:221
+msgid "Stop oEmbed calls revealing user ids"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:228
+msgid "WordPress reveals the user login ID through oEmbed calls by including the Author Archive link which contains the user id. When in many cases just the Author Name is enough. Note: remember it is not good idea to have login user id equal to your display name"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:233
+msgid "Disable WP Core Author sitemaps"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:240
+msgid "WordPress provides sitemaps for built-in content types like pages and author archives out of the box. The Author sitemap exposes the user id."
+msgstr ""
+
+#: src/admin/class-admin-settings.php:245
+msgid "log attempts to AUTH LOG"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:252
+msgid "Leave this ticked if you are using %1$sFail2Ban%2$s on your VPS to block attempts at enumeration.%3$s If you are not running Fail2Ban or on a shared host this does not need to be ticked, however it normally will not cause a problem being ticked."
+msgstr ""
+
+#: src/admin/class-admin-settings.php:259
+msgid "Remove numbers from comment authors"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:266
+msgid "This plugin uses JavaScript to remove any numbers from a comment author name, this is because numbers trigger enumeration checking. You can untick this if you do not use comments on your site or you use a different comment method than standard"
+msgstr ""
+
+#: src/frontend/class-frontend.php:62
+msgid "forbidden - number in author name not allowed = "
+msgstr ""
+
+#: src/frontend/class-frontend.php:108
+msgid "Only authenticated users can access the User endpoint REST API."
+msgstr ""
+
+#: src/includes/autoloader.php:61
+msgid "The system file attempting to be loaded at %1$s does not exist."
+msgstr ""
