@@ -2,8 +2,8 @@
 Contributors: alanfuller, fullworks
 Donate Link: https://www.paypal.com/donate/?hosted_button_id=UGRBY5CHSD53Q
 Tags: User Enumeration, Security, WPSCAN, fail2ban,
-Tested up to: 5.8
-Stable tag: 1.4.0
+Tested up to: 5.9
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,9 @@ An example jail.local is found in plugin directory stop-user-enumeration/fail2ba
 == Upgrade Notice ==
 
 == Changelog ==
+= 1.4.1 =
+* Tidy donation library for build to remove dev dependencies
+
 = 1.4.0 =
 * Remove freemius library and optional registration
 * Add donation and contribution notices

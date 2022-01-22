@@ -22,19 +22,6 @@ gulp.task('zip', (done) => {
     done()
 });
 
-gulp.task('secret', (done) => {
-    gulp.src('src/includes/class-freemius-config.php')
-        .pipe(removeLines({
-            'filters': [
-                /Set the SDK/,
-                /IMPORTANT/,
-                /\'secret_key+/
-            ]
-        }))
-        .pipe(gulp.dest('dist/control'));
-    done()
-});
-
 gulp.task('clean', () => {
     return del([
         'dist/**/sass/',
@@ -48,10 +35,12 @@ gulp.task('clean', () => {
         'dist/includes/vendor/**/.codeclimate.yml',
         'dist/includes/vendor/**/composer.json',
         'dist/includes/vendor/**/package.json',
+        'dist/includes/vendor/**/composer.lock',
+        'dist/includes/vendor/**/package-lock.json',
         'dist/includes/vendor/**/gulpfile.js',
         'dist/includes/vendor/**/*.md',
         'dist/includes/vendor/squizlabs',
-        'dist/includes/vendor/wp-coding-standards'
+        'dist/includes/vendor/wp-coding-standards',
     ]);
 });
 
@@ -77,5 +66,5 @@ gulp.task('translate', () => {
 });
 
 
-gulp.task('build', gulp.series('sync', 'secret', 'clean', 'translate', 'zip'));
+gulp.task('build', gulp.series('sync', 'clean', 'translate', 'zip'));
 
