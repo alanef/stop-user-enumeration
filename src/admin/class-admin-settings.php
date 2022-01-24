@@ -9,7 +9,7 @@
 namespace Stop_User_Enumeration\Admin;
 
 use AlanEFPluginDonation\PluginDonation;
-use Freemius;
+
 
 /**
  * Class Admin_Settings
@@ -40,6 +40,7 @@ class Admin_Settings extends Admin_Pages {
 			admin_url( 'options-general.php?page=stop-user-enumeration' ),
 			$this->settings_title
 		);
+		add_filter( 'plugindonation_lib_strings_stop-user-enumeration', array( $this, 'set_strings' ) );
 		parent::__construct();
 	}
 
@@ -300,6 +301,87 @@ class Admin_Settings extends Admin_Pages {
             </tbody>
         </table>
 		<?php
+	}
+
+	public function set_strings( $strings ) {
+		$strings = array(
+			esc_html__( 'Gift a Donation', 'stop-wp-emails-going-to-spam' ),
+			// 0
+			esc_html__( 'Hi, I\'m Alan and I built this free plugin to solve problems I had, and I hope it solves your problem too.', 'stop-wp-emails-going-to-spam' ),
+			// 1
+			esc_html__( 'It would really help me know that others find it useful and a great way of doing this is to gift me a small donation', 'stop-wp-emails-going-to-spam' ),
+			// 2
+			esc_html__( 'Gift a donation: select your desired option', 'stop-wp-emails-going-to-spam' ),
+			// 3
+			esc_html__( 'My Bitcoin donation wallet', 'stop-wp-emails-going-to-spam' ),
+			// 4
+			esc_html__( 'Gift a donation via PayPal', 'stop-wp-emails-going-to-spam' ),
+			// 5
+			esc_html__( 'My Bitcoin Cash address', 'stop-wp-emails-going-to-spam' ),
+			// 6
+			esc_html__( 'My Ethereum address', 'stop-wp-emails-going-to-spam' ),
+			// 7
+			esc_html__( 'My Dogecoin address', 'stop-wp-emails-going-to-spam' ),
+			// 8
+			esc_html__( 'Contribute', 'stop-wp-emails-going-to-spam' ),
+			// 9
+			esc_html__( 'Contribute to the Open Source Project in other ways', 'stop-wp-emails-going-to-spam' ),
+			// 10
+			esc_html__( 'Submit a review', 'stop-wp-emails-going-to-spam' ),
+			// 11
+			esc_html__( 'Translate to your language', 'stop-wp-emails-going-to-spam' ),
+			// 12
+			esc_html__( 'SUBMIT A REVIEW', 'stop-wp-emails-going-to-spam' ),
+			// 13
+			esc_html__( 'If you are happy with the plugin then we would love a review. Even if you are not so happy feedback is always useful, but if you have issues we would love you to make a support request first so we can try and help.', 'stop-wp-emails-going-to-spam' ),
+			// 14
+			esc_html__( 'SUPPORT FORUM', 'stop-wp-emails-going-to-spam' ),
+			// 15
+			esc_html__( 'Providing some translations for a plugin is very easy and can be done via the WordPress system. You can easily contribute to the community and you don\'t need to translate it all.', 'stop-wp-emails-going-to-spam' ),
+			// 16
+			esc_html__( 'TRANSLATE INTO YOUR LANGUAGE', 'stop-wp-emails-going-to-spam' ),
+			// 17
+			esc_html__( 'As an open source project you are welcome to contribute to the development of the software if you can. The development plugin is hosted on GitHub.', 'stop-wp-emails-going-to-spam' ),
+			// 18
+			esc_html__( 'CONTRIBUTE ON GITHUB', 'stop-wp-emails-going-to-spam' ),
+			// 19
+			esc_html__( 'Get Support', 'stop-wp-emails-going-to-spam' ),
+			// 20
+			esc_html__( 'WordPress SUPPORT FORUM', 'stop-wp-emails-going-to-spam' ),
+			// 21
+			esc_html__( 'Hi I\'m Alan and I support the free plugin', 'stop-wp-emails-going-to-spam' ),
+			// 22
+			esc_html__( 'for you.  You have been using the plugin for a while now and WordPress has probably been through several updates by now. So I\'m asking if you can help keep this plugin free, by donating a very small amount of cash. If you can that would be a fantastic help to keeping this plugin updated.', 'stop-wp-emails-going-to-spam' ),
+			// 23
+			esc_html__( 'Donate via this page', 'stop-wp-emails-going-to-spam' ),
+			// 24
+			esc_html__( 'Remind me later', 'stop-wp-emails-going-to-spam' ),
+			// 25
+			esc_html__( 'I have already donated', 'stop-wp-emails-going-to-spam' ),
+			// 26
+			esc_html__( 'I don\'t want to donate, dismiss this notice permanently', 'stop-wp-emails-going-to-spam' ),
+			// 27
+			esc_html__( 'Hi I\'m Alan and you have been using this plugin', 'stop-wp-emails-going-to-spam' ),
+			// 28
+			esc_html__( 'for a while - that is awesome! Could you please do me a BIG favor and give it a 5-star rating on WordPress? Just to help spread the word and boost my motivation..', 'stop-wp-emails-going-to-spam' ),
+			// 29
+			esc_html__( 'OK, you deserve it', 'stop-wp-emails-going-to-spam' ),
+			// 30
+			esc_html__( 'Maybe later', 'stop-wp-emails-going-to-spam' ),
+			// 31
+			esc_html__( 'Already done', 'stop-wp-emails-going-to-spam' ),
+			// 32
+			esc_html__( 'No thanks, dismiss this request', 'stop-wp-emails-going-to-spam' ),
+			// 33
+			esc_html__( 'Donate to Support', 'stop-wp-emails-going-to-spam' ),
+			// 34
+			esc_html__( 'Settings', 'stop-wp-emails-going-to-spam' ),
+			// 35
+			esc_html__( 'Help Develop', 'stop-wp-emails-going-to-spam' ),
+			// 36
+		);
+
+		return $strings;
 	}
 }
 
