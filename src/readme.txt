@@ -77,10 +77,11 @@ An example jail.local is found in plugin directory stop-user-enumeration/fail2ba
 
 == Changelog ==
 = 1.4.3 =
-* Move query arg to init hook to avoid uneccessary warnings
+* Move query arg to init hook to avoid unneccessary warnings
+* Update donation lib
 
 = 1.4.2 =
-* Fix edge case where reiew / donate become undismissible
+* Fix edge case where review / donate become undismissible
 
 = 1.4.1 =
 * Tidy donation library for build to remove dev dependencies
