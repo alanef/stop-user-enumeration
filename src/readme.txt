@@ -3,7 +3,7 @@ Contributors: alanfuller, fullworks
 Donate Link: https://www.paypal.com/donate/?hosted_button_id=UGRBY5CHSD53Q
 Tags: User Enumeration, Security, WPSCAN, fail2ban,
 Tested up to: 5.9
-Stable tag: 1.4.3
+Stable tag: 1.4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,7 +77,10 @@ An example jail.local is found in plugin directory stop-user-enumeration/fail2ba
 
 == Changelog ==
 = 1.4.3 =
-* Move query arg to init hook to avoid unneccessary warnings
+* add buy me a coffee donation
+
+= 1.4.3 =
+* Move query arg to init hook to avoid unnecessary warnings
 * Update donation lib
 
 = 1.4.2 =
