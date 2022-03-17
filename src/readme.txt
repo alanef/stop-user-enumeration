@@ -1,6 +1,6 @@
 === Stop User Enumeration ===
 Contributors: alanfuller, fullworks
-Donate Link: https://www.paypal.com/donate/?hosted_button_id=UGRBY5CHSD53Q
+Donate Link: https://www.buymeacoffee.com/wpdevalan
 Tags: User Enumeration, Security, WPSCAN, fail2ban,
 Tested up to: 5.9
 Stable tag: 1.4.4
