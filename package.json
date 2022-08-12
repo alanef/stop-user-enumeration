@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "del": "latest",
+    "del": "6.1.1",
     "gulp": "latest",
     "gulp-directory-sync": "latest",
     "gulp-notify": "latest",

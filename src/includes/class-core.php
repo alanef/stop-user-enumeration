@@ -130,7 +130,6 @@ class Core {
 	private function settings_pages() {
 
 		$settings = new Admin_Settings( $this->get_plugin_name(), $this->get_version() );
-		$this->loader->add_action( 'admin_enqueue_scripts', $settings, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_menu', $settings, 'settings_setup' );
 
 	}

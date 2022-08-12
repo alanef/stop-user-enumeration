@@ -45,26 +45,6 @@ class Admin_Settings extends Admin_Pages {
 	}
 
 
-	public function enqueue_styles( $hook ) {
-		if ( $hook != $this->settings_page_id ) {
-			return;
-		}
-		wp_enqueue_style(
-			$this->plugin_name . '-fonts',
-			'https://fonts.googleapis.com/css?family=Fira+Sans:700|Roboto:300,400,500,700&display=swap',
-			array(),
-			null
-		);
-
-		wp_enqueue_style(
-			$this->plugin_name,
-			plugin_dir_url( __FILE__ ) . 'css/admin.css',
-			array(),
-			$this->version,
-			'all'
-		);
-	}
-
 	public function register_settings() {
 		/* Register our setting. */
 		register_setting(
