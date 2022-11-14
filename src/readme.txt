@@ -2,7 +2,7 @@
 Contributors: alanfuller, fullworks
 Donate Link: https://www.buymeacoffee.com/wpdevalan
 Tags: User Enumeration, Security, WPSCAN, fail2ban,
-Tested up to: 6.0
+Tested up to: 6.1
 Stable tag: 1.4.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -65,7 +65,8 @@ Yes
 = Why don't I just block with .htaccess =
 A .htaccess solution is insufficient for several reasons, but most published posts on the subject do not cover POST blocking, REST API blocking and inadvertently block admin users access. And don't log the IP to a firewall, the major benefit!
 = Does it break anything? =
-If a comment is left by someone just giving a number that comment would be forbidden, as it is assumed a hack attempt, but the plugin has a bit of code that strips out numbers from comment author names
+If a comment is left by someone just giving a number that comment would be forbidden, as it is assumed a hack attempt, but the plugin has a bit of code that strips out numbers from comment author namesa1
+Also usernames containing numbers may not work in the front end.
 = Do I need fail2ban for this to work? =
 No, but fail2ban will allow you to block IP addresses at your VPS / Dedicated server firewall that attempt user enumeration.
 = What is the fail2ban config?=
@@ -79,130 +80,4 @@ An example jail.local is found in plugin directory stop-user-enumeration/fail2ba
 = 1.4.5 =
 * remove redundant CSS and fonts
 
-= 1.4.3 =
-* add buy me a coffee donation
-
-= 1.4.3 =
-* Move query arg to init hook to avoid unnecessary warnings
-* Update donation lib
-
-= 1.4.2 =
-* Fix edge case where review / donate become undismissible
-
-= 1.4.1 =
-* Tidy donation library for build to remove dev dependencies
-
-= 1.4.0 =
-* Remove freemius library and optional registration
-* Add donation and contribution notices
-
-= 1.3.32 =
-* be case insensitive when checking REST API
-
-= 1.3.31 =
-* Upgrade to version 1.3.30 to disable author site maps - you will need to enable in settings (closes issue #6)
-
-
-= 1.3.30 =
-* option to remove author site maps
-
-= 1.3.29 =
-* Minor javascript fix
-* better IP detection for proxies
-
-= 1.3.28 =
-* Library update
-
-= 1.3.27 =
-* Removed console issue when no comments turned on
-
-= 1.3.26 =
-* Updated library
-
-= 1.3.25 =
-* Removed link
-
-= 1.3.24 =
-* Changed settings page
-
-= 1.3.23 =
-* Removed donate link
-
-= 1.3.22 =
-* Moved support link to settings page to reduce menu clutter
-* Updated Freemius library to 2.3.0
-
-= 1.3.21 =
-* Changed menu name and support link
-
-= 1.3.20 =
-* minor improvement
-
-= 1.3.19 =
-* minor improvement
-
-= 1.3.18 =
-* minor tweak to work better with 5.0
-
-= 1.3.17 =
-* changed settings page to stop random metaboxes
-
-= 1.3.16 =
-* Reworked settings page
-
-= 1.3.15 =
-* fix to ensure scripts not enqueued unless required
-
-= 1.3.14 =
-* fix double plugin header
-
-= 1.3.13 =
-* ability to link to shared host firewall ( fullworks-firewall )
-
-= 1.3.12 =
-
-* Resolve some missing files
-
-= 1.3.11 =
-
-* Added language localisation for translations
-* Added Spanish translation
-
-= 1.3.10 =
-
-Fixed unused javascript & css in settings page
-
-= 1.3.9 =
-
-Added language settings to allow translation.
-
-Sanitized text being written to syslog
-
-Closed potential REST API bypass
-
-= 1.3.8 =
-
-Security fix to stop XSS exploit
-
-Also coded so should work with PHP 5.3 - although PHP 5.3. has been end of life for over two years it seems some hosts still use this. This is a security risk in its own right and
-sites using PHP 5.3 should try to upgrade to a supported version of PHP, but this change is for backward compatibility.
-
-= 1.3.7 =
-
-Fix to allow deprecated PHP Version 5.4 to work, as 5.4 seems to still be in common use despite end of life
-
-Note this code wont work on PHP 5.3
-
-= 1.3.6 =
-
-Fix PHP error
-
-= 1.3.5 =
-
-* full rewrite
-* Changed detection rules to stop a reported bypass
-* Added detection and suppression of REST API calls to user data
-* Added settings page to allow REST API calls or stop system logging as required
-* Added code to remove numbers from comment authors, and setting to turn that off
-
-
+[Full Change History](https://plugins.trac.wordpress.org/browser/stop-user-enumeration/trunk/changelog.txt)
