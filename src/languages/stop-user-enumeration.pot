@@ -1,4 +1,4 @@
-# Copyright (C) 2022 stop-user-enumeration
+# Copyright (C) 2023 stop-user-enumeration
 # This file is distributed under the same license as the stop-user-enumeration package.
 msgid ""
 msgstr ""

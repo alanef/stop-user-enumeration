@@ -1,4 +1,7 @@
 == Changelog ==
+= 1.4.6 =
+* set default option early enough for multi site network wide activation
+
 = 1.4.5 =
 * remove redundant CSS and fonts
 

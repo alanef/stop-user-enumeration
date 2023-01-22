@@ -3,7 +3,7 @@ Contributors: alanfuller, fullworks
 Donate Link: https://www.buymeacoffee.com/wpdevalan
 Tags: User Enumeration, Security, WPSCAN, fail2ban,
 Tested up to: 6.1
-Stable tag: 1.4.5
+Stable tag: 1.4.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,9 @@ An example jail.local is found in plugin directory stop-user-enumeration/fail2ba
 == Upgrade Notice ==
 
 == Changelog ==
+= 1.4.6 =
+* set default option early enough for multi site network wide activation
+
 = 1.4.5 =
 * remove redundant CSS and fonts
 

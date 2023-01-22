@@ -62,6 +62,9 @@ class Core {
 			update_option( 'stop-user-enumeration', $newopts );
 			delete_option( 'sue_settings_settings' );
 		}
+        if ( false === get_option( 'stop-user-enumeration' ) ) {
+	        update_option( 'stop-user-enumeration', Admin_Settings::option_defaults( 'stop-user-enumeration' ) );
+	     }
 
 
 		$this->load_dependencies();
