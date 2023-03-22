@@ -1,4 +1,7 @@
 == Changelog ==
+= 1.4.7 =
+* update library to remove deprecation notices
+
 = 1.4.6 =
 * set default option early enough for multi site network wide activation
 

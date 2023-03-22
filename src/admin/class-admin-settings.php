@@ -22,6 +22,8 @@ class Admin_Settings extends Admin_Pages {
 	protected $option_group = 'stop-user-enumeration';
 	protected $settings_title;
 
+    public $donation;
+
 	/**
 	 * Settings constructor.
 	 *
