@@ -2,7 +2,7 @@
 /*
 Plugin Name: Stop User Enumeration
 Plugin URI: https://fullworks.net/products/stop-user-enumeration/
-Description: User enumeration is a technique used by hackers to get your login name if you are using permalinks. This plugin stops that.
+Description: Helps secure your site against hacking attacks through detecting  User Enumeration
 Version: 1.4.7
 Author: Fullworks
 Requires at least: 4.6
