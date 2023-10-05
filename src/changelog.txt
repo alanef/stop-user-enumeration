@@ -1,4 +1,7 @@
 == Changelog ==
+= 1.4.8 =
+* update library
+
 = 1.4.7 =
 * update library to remove deprecation notices
 

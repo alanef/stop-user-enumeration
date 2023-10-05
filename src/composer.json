@@ -13,7 +13,8 @@
   "config": {
     "vendor-dir": "includes/vendor",
     "allow-plugins": {
-      "composer/installers": true
+      "composer/installers": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
   "repositories": {
