@@ -58,6 +58,6 @@ function fullworks_Stop_User_Enumeration_autoload( $class_name ) {
 		include_once( $filepath );
 	} else {
 		// changed to be translatable
-		wp_die( sprintf( __( 'The system file attempting to be loaded at %1$s does not exist.', 'stop-user-enumeration' ), esc_html( $filepath ) ) );
+		wp_die( sprintf( esc_html__( 'The system file attempting to be loaded at %1$s does not exist.', 'stop-user-enumeration' ), esc_html( $filepath ) ) );
 	}
 }

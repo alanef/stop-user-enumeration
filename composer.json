@@ -1,0 +1,31 @@
+{
+  "config": {
+    "platform": {
+      "php": "7.4.33"
+    },
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  },
+  "require-dev": {
+    "wp-coding-standards/wpcs": ">=2.3.0",
+    "phpcompatibility/phpcompatibility-wp": "*"
+  },
+  "scripts": {
+    "post-update-cmd": "composer update -d src",
+    "phpcs": "phpcs src -s --standard=phpcs_sec.xml --ignore=*/vendor/*  --extensions=php",
+    "compat:8.3": "./vendor/bin/phpcs src -s --standard=PHPCompatibilityWP --ignore=*/vendor/*  --extensions=php --runtime-set testVersion 8.3",
+    "compat:8.2": "./vendor/bin/phpcs src -s --standard=PHPCompatibilityWP --ignore=*/vendor/*  --extensions=php --runtime-set testVersion 8.2",
+    "compat:8.1": "./vendor/bin/phpcs src -s --standard=PHPCompatibilityWP --ignore=*/vendor/*  --extensions=php --runtime-set testVersion 8.1",
+    "compat:8.0": "./vendor/bin/phpcs src -s --standard=PHPCompatibilityWP --ignore=*/vendor/*  --extensions=php --runtime-set testVersion 8.0",
+    "compat:7.4": "./vendor/bin/phpcs src -s --standard=PHPCompatibilityWP --ignore=*/vendor/*  --extensions=php --runtime-set testVersion 7.4",
+    "check": [
+      "@compat:8.3",
+      "@compat:8.2",
+      "@compat:8.1",
+      "@compat:8.0",
+      "@compat:7.4",
+      "@phpcs"
+    ]
+  }
+}

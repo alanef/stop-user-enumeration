@@ -121,7 +121,7 @@ class Admin_Settings extends Admin_Pages {
             <tbody>
 			<?php $this->donation->display(); ?>
             <tr class="alternate">
-                <th scope="row"><?php _e( 'About this Plugin', 'stop-user-enumeration' ); ?></th>
+                <th scope="row"><?php esc_html_e( 'About this Plugin', 'stop-user-enumeration' ); ?></th>
                 <td><p>
 						<?php esc_html_e( 'Stop User Enumeration detects attempts by malicious scanners to identify your users', 'stop-user-enumeration' ); ?>
                     </p>
@@ -213,7 +213,7 @@ class Admin_Settings extends Admin_Pages {
                                                                               id="stop-user-enumeration[stop_rest_user]"
                                                                               value="on"
 							<?php checked( 'on', $options['stop_rest_user'] ); ?>>
-						<?php _e( 'WordPress allows anyone to find users by API call, by checking this box the calls will be restricted to logged in users only. Only untick this box if you need to allow unfettered API access to users', 'stop-user-enumeration' ); ?>
+						<?php esc_html_e( 'WordPress allows anyone to find users by API call, by checking this box the calls will be restricted to logged in users only. Only untick this box if you need to allow unfettered API access to users', 'stop-user-enumeration' ); ?>
                     </label>
                 </td>
             </tr>
