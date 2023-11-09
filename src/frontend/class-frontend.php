@@ -54,9 +54,12 @@ class FrontEnd {
 		* Validate incoming request
 		 *
 		 */
+		/* phpcs:ignore WordPress.Security.NonceVerification  -- not saved just checking the request */
 		if ( ! is_user_logged_in() && isset( $_REQUEST['author'] ) ) {
+			/* phpcs:ignore WordPress.Security.NonceVerification  -- not saved just checking the request */
 			if ( $this->ContainsNumbers( $_REQUEST['author'] ) ) {
 				$this->sue_log();
+				/* phpcs:ignore WordPress.Security.NonceVerification  -- not saved just checking the request */
 				wp_die( esc_html__( 'forbidden - number in author name not allowed = ', 'stop-user-enumeration' ) . esc_html( $_REQUEST['author'] ) );
 			}
 		}
@@ -99,6 +102,7 @@ class FrontEnd {
 
 	public function only_allow_logged_in_rest_access_to_users( $access ) {
 		if ( 'on' === Core::sue_get_option( 'stop_rest_user', 'off' ) ) {
+			/* phpcs:ignore WordPress.Security.NonceVerification  -- not saved just checking the request */
 			if ( ( preg_match( '/users/i', $_SERVER['REQUEST_URI'] ) !== 0 ) || ( isset( $_REQUEST['rest_route'] ) && ( preg_match( '/users/i', $_REQUEST['rest_route'] ) !== 0 ) ) ) {
 				if ( ! is_user_logged_in() ) {
 					$this->sue_log();

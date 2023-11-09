@@ -2,8 +2,8 @@
 Contributors: alanfuller, fullworks
 Donate Link: https://www.buymeacoffee.com/wpdevalan
 Tags: User Enumeration, Security, WPSCAN, fail2ban,
-Tested up to: 6.4
-Stable tag: 1.4.7
+Tested up to: 6.3
+Stable tag: 1.4.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -73,10 +73,15 @@ No, but fail2ban will allow you to block IP addresses at your VPS / Dedicated se
 An fail2ban config file, wordpress-userenum.conf is found in the plugin directory stop-user-enumeration/fail2ban/filter.d
 = What needs to go in the fail2ban jail.local?=
 An example jail.local is found in plugin directory stop-user-enumeration/fail2ban
+= How can I report security bugs? =
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/stop-user-enumeration)
 
 == Upgrade Notice ==
 
 == Changelog ==
+= 1.4.8 =
+* update library
+
 = 1.4.7 =
 * update library to remove deprecation notices
 
