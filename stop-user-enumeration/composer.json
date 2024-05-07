@@ -6,7 +6,7 @@
   "authors": [
     {
       "name": "alan",
-      "email": "alan@fullworks.net"
+      "email": "alan@fullworksplugins.com"
     }
   ],
   "minimum-stability": "stable",
@@ -16,15 +16,8 @@
       "composer/installers": true
     }
   },
-  "repositories": {
-    "plugindonations_lib": {
-      "type": "vcs",
-      "url": "https://github.com/alanef/plugindonation_lib"
-    }
-  },
   "require": {
     "php": ">=5.6.0",
-    "composer/installers": "v1.0.12",
-    "alanef/plugindonation_lib": "dev-master"
+    "composer/installers": "v1.0.12"
   }
 }

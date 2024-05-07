@@ -16,8 +16,6 @@
     </rule>
     <rule ref="WordPress.PHP.RestrictedPHPFunctions">
     </rule>
-    <!-- this rule create too many false positives
     <rule ref="WordPress.Security.ValidatedSanitizedInput">
     </rule>
-    -->
 </ruleset>

@@ -1,4 +1,10 @@
 == Changelog ==
+= 1.5.0 =
+* remove admin notifications for reviews and donations
+
+= 1.4.9 =
+* update library
+
 = 1.4.8 =
 * update library
 

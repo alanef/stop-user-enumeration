@@ -3,6 +3,6 @@
 dist/
 zipped/
 node_modules/
-src/includes/vendor/
-/src/composer.lock
+stop-user-enumeration/includes/vendor/
+/stop-user-enumeration/composer.lock
 /composer.lock
