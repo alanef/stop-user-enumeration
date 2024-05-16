@@ -3,7 +3,7 @@ Contributors: alanfuller, fullworks
 Donate Link: https://www.buymeacoffee.com/wpdevalan
 Tags: User Enumeration, Security, WPSCAN, fail2ban,
 Tested up to: 6.5
-Stable tag: 1.5.0
+Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,20 +79,12 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 == Upgrade Notice ==
 
 == Changelog ==
+= 1.5.1 =
+*  change getenv to $_SERVER for better compatability
+
 = 1.5.0 =
 * remove admin notifications for reviews and donations
 
-= 1.4.9 =
-* update library
-
-= 1.4.8 =
-* update library
-
-= 1.4.7 =
-* update library to remove deprecation notices
-
-= 1.4.6 =
-* set default option early enough for multi site network wide activation
 
 
 [Full Change History](https://plugins.trac.wordpress.org/browser/stop-user-enumeration/trunk/changelog.txt)

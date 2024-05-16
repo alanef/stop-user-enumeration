@@ -1,4 +1,7 @@
 == Changelog ==
+= 1.5.1 =
+*  change getenv to $_SERVER for better compatability
+
 = 1.5.0 =
 * remove admin notifications for reviews and donations
 

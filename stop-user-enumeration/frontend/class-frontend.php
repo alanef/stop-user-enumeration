@@ -80,20 +80,20 @@ class FrontEnd {
 
 	private function get_ip() {
 		$ipaddress = false;
-		if ( getenv( 'HTTP_CF_CONNECTING_IP' ) ) {
-			$ipaddress = getenv( 'HTTP_CLIENT_IP' );
-		} elseif ( getenv( 'HTTP_CLIENT_IP' ) ) {
-			$ipaddress = getenv( 'HTTP_CLIENT_IP' );
-		} elseif ( getenv( 'HTTP_X_FORWARDED_FOR' ) ) {
-			$ipaddress = getenv( 'HTTP_X_FORWARDED_FOR' );
-		} elseif ( getenv( 'HTTP_X_FORWARDED' ) ) {
-			$ipaddress = getenv( 'HTTP_X_FORWARDED' );
-		} elseif ( getenv( 'HTTP_FORWARDED_FOR' ) ) {
-			$ipaddress = getenv( 'HTTP_FORWARDED_FOR' );
-		} elseif ( getenv( 'HTTP_FORWARDED' ) ) {
-			$ipaddress = getenv( 'HTTP_FORWARDED' );
-		} elseif ( getenv( 'REMOTE_ADDR' ) ) {
-			$ipaddress = getenv( 'REMOTE_ADDR' );
+		if ( isset( $_SERVER[ ‘HTTP_CF_CONNECTING_IP’ ] ) ) {
+			$ipaddress = $_SERVER[ ‘HTTP_CF_CONNECTING_IP’ ];
+		} elseif ( isset( $_SERVER[ ‘HTTP_CLIENT_IP’ ] ) ) {
+			$ipaddress = $_SERVER[ ‘HTTP_CLIENT_IP’ ];
+		} elseif ( isset( $_SERVER[ ‘HTTP_X_FORWARDED_FOR’ ] ) ) {
+			$ipaddress = $_SERVER[ ‘HTTP_X_FORWARDED_FOR’ ];
+		} elseif ( isset( $_SERVER[ ‘HTTP_X_FORWARDED’ ] ) ) {
+			$ipaddress = $_SERVER[ ‘HTTP_X_FORWARDED’ ];
+		} elseif ( isset( $_SERVER[ ‘HTTP_FORWARDED_FOR’ ] ) ) {
+			$ipaddress = $_SERVER[ ‘HTTP_FORWARDED_FOR’ ];
+		} elseif ( isset( $_SERVER[ ‘HTTP_FORWARDED’ ] ) ) {
+			$ipaddress = $_SERVER[ ‘HTTP_FORWARDED’ ];
+		} elseif ( isset( $_SERVER[ ‘REMOTE_ADDR’ ] ) ) {
+			$ipaddress = $_SERVER[ ‘REMOTE_ADDR’ ];
 		}
 
 		// sanitize IP address
