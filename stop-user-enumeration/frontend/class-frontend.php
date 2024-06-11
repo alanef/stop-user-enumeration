@@ -57,10 +57,12 @@ class FrontEnd {
 		/* phpcs:ignore WordPress.Security.NonceVerification  -- not saved just checking the request */
 		if ( ! is_user_logged_in() && isset( $_REQUEST['author'] ) ) {
 			/* phpcs:ignore WordPress.Security.NonceVerification  -- not saved just checking the request */
-			if ( $this->ContainsNumbers( $_REQUEST['author'] ) ) {
+			$author = sanitize_text_field( wp_unslash( $_REQUEST['author'] ) );
+			/* phpcs:ignore WordPress.Security.NonceVerification -- not saved just checking the request */
+			if ( $this->ContainsNumbers( $author ) ) {
 				$this->sue_log();
-				/* phpcs:ignore WordPress.Security.NonceVerification  -- not saved just checking the request */
-				wp_die( esc_html__( 'forbidden - number in author name not allowed = ', 'stop-user-enumeration' ) . esc_html( $_REQUEST['author'] ) );
+				/* phpcs:ignore WordPress.Security.NonceVerification  -- not saved just logging the request, not form input so no unslash*/
+				wp_die( esc_html__( 'forbidden - number in author name not allowed = ', 'stop-user-enumeration' ) . esc_html( $author ) );
 			}
 		}
 	}
@@ -72,7 +74,7 @@ class FrontEnd {
 	private function sue_log() {
 		$ip = $this->get_ip();
 		if ( false !== $ip && 'on' === Core::sue_get_option( 'log_auth', 'off' ) ) {
-			openlog( 'wordpress(' . sanitize_text_field( $_SERVER['HTTP_HOST'] ) . ')', LOG_NDELAY | LOG_PID, LOG_AUTH );
+			openlog( 'wordpress(' . ( isset( $_SERVER['HTTP_HOST'] ) ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '' . ')', LOG_NDELAY | LOG_PID, LOG_AUTH );
 			syslog( LOG_INFO, esc_html( "Attempted user enumeration from " . $ip ) );
 			closelog();
 		}
@@ -81,29 +83,37 @@ class FrontEnd {
 	private function get_ip() {
 		$ipaddress = false;
 		if ( isset( $_SERVER[ ‘HTTP_CF_CONNECTING_IP’ ] ) ) {
-			$ipaddress = $_SERVER[ ‘HTTP_CF_CONNECTING_IP’ ];
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
+			$ipaddress = filter_var( $_SERVER[ ‘HTTP_CF_CONNECTING_IP’ ] );
 		} elseif ( isset( $_SERVER[ ‘HTTP_CLIENT_IP’ ] ) ) {
-			$ipaddress = $_SERVER[ ‘HTTP_CLIENT_IP’ ];
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
+			$ipaddress = filter_var( $_SERVER[ ‘HTTP_CLIENT_IP’ ] );
 		} elseif ( isset( $_SERVER[ ‘HTTP_X_FORWARDED_FOR’ ] ) ) {
-			$ipaddress = $_SERVER[ ‘HTTP_X_FORWARDED_FOR’ ];
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
+			$ipaddress = filter_var( $_SERVER[ ‘HTTP_X_FORWARDED_FOR’ ] );
 		} elseif ( isset( $_SERVER[ ‘HTTP_X_FORWARDED’ ] ) ) {
-			$ipaddress = $_SERVER[ ‘HTTP_X_FORWARDED’ ];
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
+			$ipaddress = filter_var( $_SERVER[ ‘HTTP_X_FORWARDED’ ] );
 		} elseif ( isset( $_SERVER[ ‘HTTP_FORWARDED_FOR’ ] ) ) {
-			$ipaddress = $_SERVER[ ‘HTTP_FORWARDED_FOR’ ];
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
+			$ipaddress = filter_var( $_SERVER[ ‘HTTP_FORWARDED_FOR’ ] );
 		} elseif ( isset( $_SERVER[ ‘HTTP_FORWARDED’ ] ) ) {
-			$ipaddress = $_SERVER[ ‘HTTP_FORWARDED’ ];
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
+			$ipaddress = filter_var( $_SERVER[ ‘HTTP_FORWARDED’ ] );
 		} elseif ( isset( $_SERVER[ ‘REMOTE_ADDR’ ] ) ) {
-			$ipaddress = $_SERVER[ ‘REMOTE_ADDR’ ];
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
+			$ipaddress = filter_var( $_SERVER[ ‘REMOTE_ADDR’ ] );
 		}
 
-		// sanitize IP address
-		return filter_var( $ipaddress, FILTER_VALIDATE_IP );
+		return $ipaddress;
 	}
 
 	public function only_allow_logged_in_rest_access_to_users( $access ) {
 		if ( 'on' === Core::sue_get_option( 'stop_rest_user', 'off' ) ) {
 			/* phpcs:ignore WordPress.Security.NonceVerification  -- not saved just checking the request */
-			if ( ( preg_match( '/users/i', $_SERVER['REQUEST_URI'] ) !== 0 ) || ( isset( $_REQUEST['rest_route'] ) && ( preg_match( '/users/i', $_REQUEST['rest_route'] ) !== 0 ) ) ) {
+			$request_uri = ( isset( $_SERVER['REQUEST_URI'] ) ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+			$rest_route  = ( isset( $_SERVER['rest_route'] ) ) ? sanitize_text_field( wp_unslash( $_SERVER['rest_route'] ) ) : '';
+			if ( ( preg_match( '/users/i', $request_uri ) !== 0 ) || ( preg_match( '/users/i', $rest_route ) !== 0 ) ) {
 				if ( ! is_user_logged_in() ) {
 					$this->sue_log();
 
