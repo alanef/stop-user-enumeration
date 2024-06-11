@@ -107,11 +107,11 @@ msgstr ""
 msgid "This plugin uses JavaScript to remove any numbers from a comment author name, this is because numbers trigger enumeration checking. You can untick this if you do not use comments on your site or you use a different comment method than standard"
 msgstr ""
 
-#: stop-user-enumeration/frontend/class-frontend.php:63
+#: stop-user-enumeration/frontend/class-frontend.php:65
 msgid "forbidden - number in author name not allowed = "
 msgstr ""
 
-#: stop-user-enumeration/frontend/class-frontend.php:110
+#: stop-user-enumeration/frontend/class-frontend.php:125
 msgid "Only authenticated users can access the User endpoint REST API."
 msgstr ""
 

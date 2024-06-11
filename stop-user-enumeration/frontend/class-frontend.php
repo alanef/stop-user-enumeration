@@ -82,27 +82,27 @@ class FrontEnd {
 
 	private function get_ip() {
 		$ipaddress = false;
-		if ( isset( $_SERVER[ ‘HTTP_CF_CONNECTING_IP’ ] ) ) {
+		if ( isset( $_SERVER['HTTP_CF_CONNECTING_IP'] ) ) {
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
-			$ipaddress = filter_var( $_SERVER[ ‘HTTP_CF_CONNECTING_IP’ ] );
-		} elseif ( isset( $_SERVER[ ‘HTTP_CLIENT_IP’ ] ) ) {
+			$ipaddress = filter_var( $_SERVER['HTTP_CF_CONNECTING_IP'] );
+		} elseif ( isset( $_SERVER['HTTP_CLIENT_IP'] ) ) {
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
-			$ipaddress = filter_var( $_SERVER[ ‘HTTP_CLIENT_IP’ ] );
-		} elseif ( isset( $_SERVER[ ‘HTTP_X_FORWARDED_FOR’ ] ) ) {
+			$ipaddress = filter_var( $_SERVER['HTTP_CLIENT_IP'] );
+		} elseif ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
-			$ipaddress = filter_var( $_SERVER[ ‘HTTP_X_FORWARDED_FOR’ ] );
-		} elseif ( isset( $_SERVER[ ‘HTTP_X_FORWARDED’ ] ) ) {
+			$ipaddress = filter_var( $_SERVER['HTTP_X_FORWARDED_FOR'] );
+		} elseif ( isset( $_SERVER['HTTP_X_FORWARDED'] ) ) {
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
-			$ipaddress = filter_var( $_SERVER[ ‘HTTP_X_FORWARDED’ ] );
-		} elseif ( isset( $_SERVER[ ‘HTTP_FORWARDED_FOR’ ] ) ) {
+			$ipaddress = filter_var( $_SERVER['HTTP_X_FORWARDED'] );
+		} elseif ( isset( $_SERVER['HTTP_FORWARDED_FOR'] ) ) {
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
-			$ipaddress = filter_var( $_SERVER[ ‘HTTP_FORWARDED_FOR’ ] );
-		} elseif ( isset( $_SERVER[ ‘HTTP_FORWARDED’ ] ) ) {
+			$ipaddress = filter_var( $_SERVER['HTTP_FORWARDED_FOR'] );
+		} elseif ( isset( $_SERVER['HTTP_FORWARDED'] ) ) {
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
-			$ipaddress = filter_var( $_SERVER[ ‘HTTP_FORWARDED’ ] );
-		} elseif ( isset( $_SERVER[ ‘REMOTE_ADDR’ ] ) ) {
+			$ipaddress = filter_var( $_SERVER['HTTP_FORWARDED'] );
+		} elseif ( isset( $_SERVER['REMOTE_ADDR'] ) ) {
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
-			$ipaddress = filter_var( $_SERVER[ ‘REMOTE_ADDR’ ] );
+			$ipaddress = filter_var( $_SERVER['REMOTE_ADDR'] );
 		}
 
 		return $ipaddress;
@@ -112,9 +112,14 @@ class FrontEnd {
 		if ( 'on' === Core::sue_get_option( 'stop_rest_user', 'off' ) ) {
 			/* phpcs:ignore WordPress.Security.NonceVerification  -- not saved just checking the request */
 			$request_uri = ( isset( $_SERVER['REQUEST_URI'] ) ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
-			$rest_route  = ( isset( $_SERVER['rest_route'] ) ) ? sanitize_text_field( wp_unslash( $_SERVER['rest_route'] ) ) : '';
-			if ( ( preg_match( '/users/i', $request_uri ) !== 0 ) || ( preg_match( '/users/i', $rest_route ) !== 0 ) ) {
+			$rest_route  = ( isset( $_REQUEST['rest_route'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['rest_route'] ) ) : '';
+			$pattern     = apply_filters( 'stop_user_enumeration_rest_stop_match', '/users/i' );
+			if ( ( preg_match( $pattern, $request_uri ) !== 0 ) || ( preg_match( $pattern, $rest_route ) !== 0 ) ) {
 				if ( ! is_user_logged_in() ) {
+					$exception = apply_filters( 'stop_user_enumeration_rest_allowed_match', '/simple-jwt-login/i' ); //default exception rule simple-jwt-login
+					if ( ( preg_match( $exception, $request_uri ) !== 0 ) || ( preg_match( $exception, $rest_route ) !== 0 ) ) {
+						return $access; // check not exception
+					}
 					$this->sue_log();
 
 					return new WP_Error( 'rest_cannot_access', esc_html__( 'Only authenticated users can access the User endpoint REST API.', 'stop-user-enumeration' ), array( 'status' => rest_authorization_required_code() ) );

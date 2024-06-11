@@ -66,7 +66,9 @@ Yes
 A .htaccess solution is insufficient for several reasons, but most published posts on the subject do not cover POST blocking, REST API blocking and inadvertently block admin users access. And don't log the IP to a firewall, the major benefit!
 = Does it break anything? =
 If a comment is left by someone just giving a number that comment would be forbidden, as it is assumed a hack attempt, but the plugin has a bit of code that strips out numbers from comment author namesa1
-Also usernames containing numbers may not work in the front end.
+Also usernames containing numbers may not work in the front end.  Additionally the default rule for   Rest APi is anything with users in it, so other plugins may set up endpoints.
+= How can I change the Rest API match rules =
+There are two filters `stop_user_enumeration_rest_stop_match` set  to `/users/i` by default and `stop_user_enumeration_rest_allow_match` set to `simple-jwt-login` by default ( to allow that plugin's endpoints )
 = Do I need fail2ban for this to work? =
 No, but fail2ban will allow you to block IP addresses at your VPS / Dedicated server firewall that attempt user enumeration.
 = What is the fail2ban config?=
@@ -79,8 +81,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 == Upgrade Notice ==
 
 == Changelog ==
-= 1.5.1 =
-*  change getenv to $_SERVER for better compatability
+= 1.6 =
+* change getenv to $_SERVER for better compatability
+* added extra sanitization to meet current plugin repo standards
+* allow exception for Simple JWT Login rest route and add filters to adjust match and exception of rest rules
 
 = 1.5.0 =
 * remove admin notifications for reviews and donations
