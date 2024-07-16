@@ -2,8 +2,8 @@
 Contributors: alanfuller, fullworks
 Donate Link: https://www.buymeacoffee.com/wpdevalan
 Tags: User Enumeration, Security, WPSCAN, fail2ban,
-Tested up to: 6.5
-Stable tag: 1.6
+Tested up to: 6.6
+Stable tag: 1.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,9 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 == Upgrade Notice ==
 
 == Changelog ==
+= 1.6.1 =
+* updated tested to 6.6
+
 = 1.6 =
 * change getenv to $_SERVER for better compatability
 * added extra sanitization to meet current plugin repo standards

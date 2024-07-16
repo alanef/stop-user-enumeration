@@ -1,4 +1,7 @@
 == Changelog ==
+= 1.6.1 =
+* updated tested to 6.6
+
 = 1.6 =
 * change getenv to $_SERVER for better compatability
 * added extra sanitization to meet current plugin repo standards

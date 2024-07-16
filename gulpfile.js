@@ -10,7 +10,6 @@ var dirSync = require('gulp-directory-sync');
 var removeLines = require('gulp-remove-lines');
 var wpPot = require('gulp-wp-pot');
 var sort = require('gulp-sort');
-var notify = require("gulp-notify");
 
 gulp.task('zip', (done) => {
     gulp.src('dist/**/*')
@@ -60,8 +59,7 @@ gulp.task('translate', () => {
         }))
         .on('error', gutil.log)
         .pipe(gulp.dest('stop-user-enumeration/languages/' + project + '.pot'))
-        .pipe(gulp.dest('dist/languages/' + project + '.pot'))
-        .pipe(notify({message: 'TASK: "translate" Completed! 💯', onLast: true}));
+        .pipe(gulp.dest('dist/languages/' + project + '.pot'));
 
 });
 
