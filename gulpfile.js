@@ -26,6 +26,7 @@ gulp.task('clean', () => {
         'dist/**/sass/',
         'dist/**/*.css.map',
         'dist/**/*.scss',
+        'dist/composer.lock',
         'dist/includes/vendor/bin/',
         'dist/includes/vendor/**/.git*',
         'dist/includes/vendor/**/.git*',
