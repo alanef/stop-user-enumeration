@@ -81,6 +81,9 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 == Upgrade Notice ==
 
 == Changelog ==
+= 1.6.2 =
+* set wp_die to return 403
+
 = 1.6.1 =
 * updated tested to 6.6
 

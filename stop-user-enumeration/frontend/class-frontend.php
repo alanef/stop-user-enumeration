@@ -62,7 +62,7 @@ class FrontEnd {
 			if ( $this->ContainsNumbers( $author ) ) {
 				$this->sue_log();
 				/* phpcs:ignore WordPress.Security.NonceVerification  -- not saved just logging the request, not form input so no unslash*/
-				wp_die( esc_html__( 'forbidden - number in author name not allowed = ', 'stop-user-enumeration' ) . esc_html( $author ) );
+				wp_die( esc_html__( 'forbidden - number in author name not allowed = ', 'stop-user-enumeration' ) . esc_html( $author ), array( 'response' => 403 ) );
 			}
 		}
 	}
