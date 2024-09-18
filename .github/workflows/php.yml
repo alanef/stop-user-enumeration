@@ -34,6 +34,8 @@ jobs:
 
       - name: Run phpcs suit
         run: composer run-script check
+      - name: Add vendor
+        run: composer update
       - name: Install npm dependencies
         run: npm install
       - name: Run Gulp build
