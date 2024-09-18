@@ -5,5 +5,4 @@ zipped/
 node_modules/
 stop-user-enumeration/includes/vendor/
 /stop-user-enumeration/composer.lock
-/composer.lock
 /vendor/
