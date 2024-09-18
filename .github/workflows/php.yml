@@ -4,7 +4,7 @@ on:
   push:
   pull_request:
     branches:
-        - master
+      - master
 
 permissions:
   contents: read
@@ -38,3 +38,8 @@ jobs:
         run: npm install
       - name: Run Gulp build
         run: npx gulp build
+      - name: Run plugin check
+        uses: wordpress/plugin-check-action@v1
+        with:
+          build-dir: './dist'
+          exclude-directories: 'include/vendor'
