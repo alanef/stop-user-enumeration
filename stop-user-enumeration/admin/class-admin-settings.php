@@ -240,6 +240,7 @@ class Admin_Settings extends Admin_Pages {
 							<?php checked( 'on', $options['log_auth'] ); ?>>
 						<?php
 						printf(
+                                // translators: leave place holders
 							esc_html__(
 								'Leave this ticked if you are using %1$sFail2Ban%2$s on your VPS to block attempts at enumeration.%3$s If you are not running Fail2Ban or on a shared host this does not need to be ticked, however it normally will not cause a problem being ticked.',
 								'stop-user-enumeration'
