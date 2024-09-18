@@ -110,8 +110,9 @@ class FrontEnd {
 
 	public function only_allow_logged_in_rest_access_to_users( $access ) {
 		if ( 'on' === Core::sue_get_option( 'stop_rest_user', 'off' ) ) {
-			/* phpcs:ignore WordPress.Security.NonceVerification  -- not saved just checking the request */
+			// phpcs:ignore WordPress.Security.NonceVerification  -- not saved just checking the request
 			$request_uri = ( isset( $_SERVER['REQUEST_URI'] ) ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+			// phpcs:ignore WordPress.Security.NonceVerification  -- not saved just checking the request
 			$rest_route  = ( isset( $_REQUEST['rest_route'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['rest_route'] ) ) : '';
 			$pattern     = apply_filters( 'stop_user_enumeration_rest_stop_match', '/users/i' );
 			if ( ( preg_match( $pattern, $request_uri ) !== 0 ) || ( preg_match( $pattern, $rest_route ) !== 0 ) ) {
