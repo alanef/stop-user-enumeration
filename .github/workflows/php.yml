@@ -22,7 +22,7 @@ jobs:
 
       - name: Cache Composer packages
         id: composer-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: vendor
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
@@ -45,4 +45,5 @@ jobs:
         with:
           build-dir: './dist'
           exclude-directories: 'include/vendor'
-          exclude-checks: 'plugin_header_text_domain'
+          exclude-checks: |
+            plugin_header_text_domain
