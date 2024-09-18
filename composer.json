@@ -2,7 +2,7 @@
   "name": "fullworks/stop-user-enumeration",
   "description": "Wordpress plugin to detect user enumeration attempts",
   "type": "wordpress-plugin",
-  "license": "GPL",
+  "license": "GPL-2.0-or-later",
   "authors": [
     {
       "name": "alan",
