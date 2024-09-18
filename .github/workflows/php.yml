@@ -32,8 +32,8 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
-      # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-      # Docs: https://getcomposer.org/doc/articles/scripts.md
-
       - name: Run phpcs suit
         run: composer run-script check
+
+      - name: Run Gulp build
+        run: npx gulp build
