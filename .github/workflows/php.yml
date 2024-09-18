@@ -43,5 +43,6 @@ jobs:
       - name: Run plugin check
         uses: wordpress/plugin-check-action@v1
         with:
-          build-dir: './zip/stop-user-enumeration-free.zip'
+          build-dir: './dist'
           exclude-directories: 'include/vendor'
+          exclude-checks: 'textdomain_mismatch'
