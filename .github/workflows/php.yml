@@ -45,4 +45,4 @@ jobs:
         with:
           build-dir: './dist'
           exclude-directories: 'include/vendor'
-          exclude-checks: 'textdomain_mismatch'
+          exclude-checks: 'plugin_header_text_domain'
