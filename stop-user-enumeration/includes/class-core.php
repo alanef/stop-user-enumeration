@@ -174,7 +174,6 @@ class Core {
 		$plugin_public = new FrontEnd( $this->get_plugin_name(), $this->get_version() );
 		if ( 'on' === $this->sue_get_option( 'comment_jquery', 'off' ) ) {
 			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-			$this->loader->add_action( 'script_loader_tag', $plugin_public, 'add_defer_attribute_to_script', 10, 3 );
 		}
 
 		$this->loader->add_action( 'init', $plugin_public, 'check_request' );
