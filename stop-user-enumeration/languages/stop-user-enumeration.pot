@@ -95,26 +95,28 @@ msgstr ""
 msgid "log attempts to AUTH LOG"
 msgstr ""
 
-#: stop-user-enumeration/admin/class-admin-settings.php:243
+#. translators: leave place holders
+#: stop-user-enumeration/admin/class-admin-settings.php:244
 msgid "Leave this ticked if you are using %1$sFail2Ban%2$s on your VPS to block attempts at enumeration.%3$s If you are not running Fail2Ban or on a shared host this does not need to be ticked, however it normally will not cause a problem being ticked."
 msgstr ""
 
-#: stop-user-enumeration/admin/class-admin-settings.php:256
+#: stop-user-enumeration/admin/class-admin-settings.php:257
 msgid "Remove numbers from comment authors"
 msgstr ""
 
-#: stop-user-enumeration/admin/class-admin-settings.php:264
+#: stop-user-enumeration/admin/class-admin-settings.php:265
 msgid "This plugin uses JavaScript to remove any numbers from a comment author name, this is because numbers trigger enumeration checking. You can untick this if you do not use comments on your site or you use a different comment method than standard"
 msgstr ""
 
-#: stop-user-enumeration/frontend/class-frontend.php:65
+#: stop-user-enumeration/frontend/class-frontend.php:67
 msgid "forbidden - number in author name not allowed = "
 msgstr ""
 
-#: stop-user-enumeration/frontend/class-frontend.php:125
+#: stop-user-enumeration/frontend/class-frontend.php:128
 msgid "Only authenticated users can access the User endpoint REST API."
 msgstr ""
 
-#: stop-user-enumeration/includes/autoloader.php:61
+#. translators: leave place holder it is a file path
+#: stop-user-enumeration/includes/autoloader.php:63
 msgid "The system file attempting to be loaded at %1$s does not exist."
 msgstr ""

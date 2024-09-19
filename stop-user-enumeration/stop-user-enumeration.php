@@ -6,7 +6,7 @@ Description: Helps secure your site against hacking attacks through detecting  U
 Version: 1.6.2
 Author: Fullworks
 Requires at least: 6.3
-Requires PHP: 5.6
+Requires PHP: 7.4
 Text Domain: stop-user-enumeration
 Domain Path: /languages
 Author URI: https://fullworksplugins.com/
