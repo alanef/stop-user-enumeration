@@ -50,6 +50,21 @@ class FrontEnd {
 		}
 	}
 
+	/**
+	 * @param $tag
+	 * @param $handle
+	 * @param $src
+	 *
+	 * @return mixed|string
+	 */
+	function add_defer_attribute_to_script($tag, $handle, $src) {
+		if ( $this->plugin_name === $handle) {
+			return sprintf('<script src="%s" defer></script>', esc_url($src));
+		}
+
+		return $tag;
+	}
+
 
 	public function check_request() {
 		/*

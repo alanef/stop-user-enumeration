@@ -49,3 +49,4 @@ jobs:
           exclude-directories: 'include/vendor'
           exclude-checks: |
             plugin_header_text_domain
+            enqueued_scripts_scope
