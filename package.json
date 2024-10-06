@@ -1,19 +1,6 @@
 {
-  "devDependencies": {
-    "del": "6.1.1",
-    "gulp": "latest",
-    "gulp-directory-sync": "latest",
-    "gulp-notify": "latest",
-    "gulp-remove-lines": "latest",
-    "gulp-rename": "latest",
-    "gulp-sort": "latest",
-    "gulp-util": "latest",
-    "gulp-wp-pot": "latest",
-    "gulp-zip": "latest"
-  },
   "name": "stop-user-enumeration-project",
   "version": "1.0.0",
-  "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

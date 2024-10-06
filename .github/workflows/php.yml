@@ -34,16 +34,11 @@ jobs:
 
       - name: Run phpcs suit
         run: composer run-script check
-      - name: Add vendor
+      - name: Add vendor and build
         run: composer update
-      - name: Install npm dependencies
-        run: npm install
-      - name: Run Gulp build
-        run: npx gulp build
       - name: Run plugin check
         uses: wordpress/plugin-check-action@v1
         with:
-          build-dir: './dist'
+          build-dir: './stop-user-enumeration'
           exclude-directories: 'include/vendor'
-          exclude-checks: |
-            plugin_header_text_domain
+
