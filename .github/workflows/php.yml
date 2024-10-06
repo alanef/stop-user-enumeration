@@ -35,6 +35,16 @@ jobs:
         run: composer install --prefer-dist --no-progress
       - name: Run phpcs suit
         run: composer run-script check
+
+      - name: Install WP-CLI
+        run: |
+          curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+          chmod +x wp-cli.phar
+          sudo mv wp-cli.phar /usr/local/bin/wp
+
+      - name: Verify WP-CLI installation
+        run: wp --info
+
       - name: Add vendor and build
         run: composer update
       - name: Run plugin check
