@@ -19,11 +19,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-
       - name: Validate composer.json and composer.lock
         run: composer validate --strict
 
@@ -38,7 +33,6 @@ jobs:
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
-
       - name: Run phpcs suit
         run: composer run-script check
       - name: Add vendor and build
