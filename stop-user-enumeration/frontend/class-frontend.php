@@ -46,7 +46,7 @@ class FrontEnd {
 	 */
 	public function enqueue_scripts() {
 		if ( ! is_admin() ) {
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/frontend.js', array(), $this->version, true );
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/frontend.js', array(), $this->version, array( 'strategy' => 'defer' ) );
 		}
 	}
 
@@ -64,7 +64,7 @@ class FrontEnd {
 			if ( $this->ContainsNumbers( $author ) ) {
 				$this->sue_log();
 				/* phpcs:ignore WordPress.Security.NonceVerification  -- not saved just logging the request, not form input so no unslash*/
-				wp_die( esc_html__( 'forbidden - number in author name not allowed = ', 'stop-user-enumeration' ) . esc_html( $author ), array( 'response' => 403 ) );
+				wp_die( esc_html__( 'forbidden - number in author name not allowed = ', 'stop-user-enumeration' ) . esc_html( $author ), 403 );
 			}
 		}
 	}

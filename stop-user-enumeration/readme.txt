@@ -1,9 +1,11 @@
 === Stop User Enumeration ===
 Contributors: alanfuller, fullworks
 Donate Link: https://www.buymeacoffee.com/wpdevalan
-Tags: User Enumeration, Security, WPSCAN, fail2ban,
+Tags: User Enumeration, Security, WPSCAN, fail2ban, security
+Requires at least: 6.3
 Tested up to: 6.6
-Stable tag: 1.6.2
+Requires PHP: 7.4
+Stable tag: 1.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,8 +83,12 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 == Upgrade Notice ==
 
 == Changelog ==
+= 1.6.3 =
+* fix warning with die
+
 = 1.6.2 =
 * set wp_die to return 403
+* added defer to script
 
 = 1.6.1 =
 * updated tested to 6.6

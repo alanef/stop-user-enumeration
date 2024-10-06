@@ -1,5 +1,4 @@
 {
-  "core": "WordPress/WordPress#6.1-branch",
   "plugins": [
     "./stop-user-enumeration"
   ],

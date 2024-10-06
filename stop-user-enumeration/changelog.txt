@@ -1,6 +1,10 @@
 == Changelog ==
+= 1.6.3 =
+* fix warning with die
+
 = 1.6.2 =
 * set wp_die to return 403
+* added defer to script
 
 = 1.6.1 =
 * updated tested to 6.6
