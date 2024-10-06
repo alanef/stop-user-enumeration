@@ -31,6 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 namespace Stop_User_Enumeration;
 
+use Fullworks_WP_Autoloader\AutoloaderPlugin;
 use Stop_User_Enumeration\Includes\Core;
 
 if ( ! defined( 'WPINC' ) ) {
@@ -41,9 +42,8 @@ define( 'STOP_USER_ENUMERATION_PLUGIN_VERSION', '1.6.3' );
 
 
 // Include the autoloader, so we can dynamically include the classes.
-require_once STOP_USER_ENUMERATION_PLUGIN_DIR . 'includes/vendor/autoload.php';
-require_once STOP_USER_ENUMERATION_PLUGIN_DIR . 'includes/autoloader.php';
-
+require_once STOP_USER_ENUMERATION_PLUGIN_DIR  . 'vendor/autoload.php';
+new AutoloaderPlugin(__NAMESPACE__, __DIR__);
 
 function run_stop_user_enumeration() {
 	register_activation_hook( __FILE__, array( '\Stop_User_Enumeration\Includes\Activator', 'activate' ) );
