@@ -42,8 +42,9 @@ define( 'STOP_USER_ENUMERATION_PLUGIN_VERSION', '1.6.3' );
 
 
 // Include the autoloader, so we can dynamically include the classes.
-require_once STOP_USER_ENUMERATION_PLUGIN_DIR  . 'vendor/autoload.php';
+require_once STOP_USER_ENUMERATION_PLUGIN_DIR  . 'includes/vendor/autoload.php';
 new AutoloaderPlugin(__NAMESPACE__, __DIR__);
+
 
 function run_stop_user_enumeration() {
 	register_activation_hook( __FILE__, array( '\Stop_User_Enumeration\Includes\Activator', 'activate' ) );

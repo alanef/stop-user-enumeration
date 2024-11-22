@@ -4,8 +4,45 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "81e76a4083bdebe8c1d26ccb3898f92c",
+    "content-hash": "1a545cc32c9fd0fa28062bfb4ca10263",
     "packages": [
+        {
+            "name": "alanef/wp_autoloader",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alanef/wp_autoloader.git",
+                "reference": "ab82c9014dd47efbe72cb3612c2a57715bcb212d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alanef/wp_autoloader/zipball/ab82c9014dd47efbe72cb3612c2a57715bcb212d",
+                "reference": "ab82c9014dd47efbe72cb3612c2a57715bcb212d",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fullworks_WP_Autoloader\\": "src/"
+                }
+            },
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "alan",
+                    "email": "alan@fullworks.net"
+                }
+            ],
+            "description": "A custom autoloader to comply with WP class file names",
+            "support": {
+                "source": "https://github.com/alanef/wp_autoloader/tree/main",
+                "issues": "https://github.com/alanef/wp_autoloader/issues"
+            },
+            "time": "2024-10-24T10:54:40+00:00"
+        },
         {
             "name": "composer/installers",
             "version": "v1.0.12",
@@ -98,7 +135,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "alanef/wp_autoloader": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
