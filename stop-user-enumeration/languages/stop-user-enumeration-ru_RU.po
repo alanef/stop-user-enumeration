@@ -1,0 +1,191 @@
+# Copyright (C) 2025 Fullworks
+# This file is distributed under the GPLv2 or later..
+msgid ""
+msgstr ""
+"Project-Id-Version: Stop User Enumeration 1.7\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stop-user-enumeration\n"
+"POT-Creation-Date: 2025-03-20T17:26:47+00:00\n"
+"PO-Revision-Date: 2025-03-20 19:48+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.5\n"
+"X-Domain: stop-user-enumeration\n"
+
+#. Plugin Name of the plugin
+#: stop-user-enumeration.php admin/class-admin-settings.php:35
+msgid "Stop User Enumeration"
+msgstr "Stop User Enumeration"
+
+#. Plugin URI of the plugin
+#: stop-user-enumeration.php
+msgid "https://fullworksplugins.com/products/stop-user-enumeration/"
+msgstr "https://fullworksplugins.com/products/stop-user-enumeration/"
+
+#. Description of the plugin
+#: stop-user-enumeration.php
+msgid "Helps secure your site against hacking attacks through detecting  User Enumeration"
+msgstr "Помогает защитить ваш сайт от хакерских атак благодаря обнаружению User Enumeration"
+
+#. Author of the plugin
+#: stop-user-enumeration.php
+msgid "Fullworks"
+msgstr "Fullworks"
+
+#. Author URI of the plugin
+#: stop-user-enumeration.php
+msgid "https://fullworksplugins.com/"
+msgstr "https://fullworksplugins.com/"
+
+#: admin/class-admin-pages.php:156
+msgid "Save Options"
+msgstr "Сохранить настройки"
+
+#: admin/class-admin-pages.php:182
+msgid "Save"
+msgstr "Сохранить"
+
+#: admin/class-admin-pages.php:193
+msgid "Settings reset to defaults."
+msgstr "Настройки сброшены до значений по умолчанию."
+
+#: admin/class-admin-settings.php:91
+msgid "Information"
+msgstr "Информация"
+
+#: admin/class-admin-settings.php:99
+msgid "Options"
+msgstr "Опции"
+
+#: admin/class-admin-settings.php:113
+msgid "About this Plugin"
+msgstr "Об этом плагине"
+
+#: admin/class-admin-settings.php:115
+msgid "Stop User Enumeration detects attempts by malicious scanners to identify your users"
+msgstr ""
+"Stop User Enumeration обнаруживает попытки вредоносных сканеров идентифицировать ваших "
+"пользователей"
+
+#: admin/class-admin-settings.php:119
+msgid ""
+"If a bot or user is caught scanning for user names they are denied access and their IP is\n"
+"                        logged"
+msgstr ""
+"Если бот или пользователь будет пойман за сканированием имен пользователей, ему будет отказано "
+"в доступе, а его IP будет\n"
+"                        зарегистрирован в журнале"
+
+#: admin/class-admin-settings.php:128
+msgid ""
+"When you are viewing an admin page, the plugin does nothing, this is designed this way as it "
+"is\n"
+"                        assumed admin user have authority, bear this in mind when testing."
+msgstr ""
+"Когда вы просматриваете страницу администратора, плагин ничего не делает. Это спроектировано "
+"таким образом, так как предполагается, что у пользователя-администратора есть полномочия. "
+"Имейте это в виду при тестировании."
+
+#: admin/class-admin-settings.php:137
+msgid ""
+"This plugin is best used in conjunction with a blocking tool to exclude the IP for longer. If "
+"you\n"
+"                        are on a VPS or dedicated server where you have root access you can "
+"install and configure"
+msgstr ""
+"Этот плагин лучше всего использовать в сочетании с инструментом блокировки, чтобы исключить IP "
+"на более длительный срок. Если\n"
+"                        вы находитесь на VPS или выделенном сервере, где у вас есть root-"
+"доступ, вы можете установить и настроить"
+
+#: admin/class-admin-settings.php:145
+msgid ""
+"Also note: It is very common for users to leave their Display Name and Nickname the same as "
+"their Username, in which case the Username is leaked by so many things. Best to check at least "
+"your admins don't do this"
+msgstr ""
+"Также обратите внимание: очень часто пользователи оставляют свое отображаемое имя и псевдоним "
+"такими же, как и имя пользователя, в результате чего имя пользователя раскрывается множеством "
+"способов. Лучше всего проверить, чтобы хотя бы ваши администраторы не делали этого"
+
+#: admin/class-admin-settings.php:198
+msgid "Stop REST API User calls"
+msgstr "Остановить вызовы пользователей REST API"
+
+#: admin/class-admin-settings.php:205
+msgid ""
+"WordPress allows anyone to find users by API call, by checking this box the calls will be "
+"restricted to logged in users only. Only untick this box if you need to allow unfettered API "
+"access to users"
+msgstr ""
+"WordPress позволяет любому человеку находить пользователей по API-вызову. Если установить этот "
+"флажок, вызовы будут ограничены только для вошедших пользователей. Снимайте этот флажок только "
+"в том случае, если вам нужно разрешить пользователям беспрепятственный доступ к API"
+
+#: admin/class-admin-settings.php:210
+msgid "Stop oEmbed calls revealing user ids"
+msgstr "Остановить вызовы oEmbed, раскрывающие идентификаторы пользователей"
+
+#: admin/class-admin-settings.php:217
+msgid ""
+"WordPress reveals the user login ID through oEmbed calls by including the Author Archive link "
+"which contains the user id. When in many cases just the Author Name is enough. Note: remember "
+"it is not good idea to have login user id equal to your display name"
+msgstr ""
+"WordPress раскрывает идентификатор пользователя через вызовы oEmbed, включая ссылку на Архив "
+"автора, которая содержит идентификатор пользователя. При этом во многих случаях достаточно "
+"просто имени автора. Примечание: помните, что не рекомендуется использовать идентификатор "
+"пользователя для входа в систему, совпадающий с вашим отображаемым именем"
+
+#: admin/class-admin-settings.php:222
+msgid "Disable WP Core Author sitemaps"
+msgstr "Отключить карты сайта авторов WP Core"
+
+#: admin/class-admin-settings.php:229
+msgid ""
+"WordPress provides sitemaps for built-in content types like pages and author archives out of "
+"the box. The Author sitemap exposes the user id."
+msgstr ""
+"WordPress предоставляет карты сайта для встроенных типов контента, таких как страницы и архивы "
+"авторов, из коробки. Карта сайта автора раскрывает идентификатор пользователя."
+
+#: admin/class-admin-settings.php:234
+msgid "log attempts to AUTH LOG"
+msgstr "Регистрировать попытки в AUTH LOG"
+
+#. translators: leave place holders
+#: admin/class-admin-settings.php:244
+msgid ""
+"Leave this ticked if you are using %1$sFail2Ban%2$s on your VPS to block attempts at "
+"enumeration.%3$s If you are not running Fail2Ban or on a shared host this does not need to be "
+"ticked, however it normally will not cause a problem being ticked."
+msgstr ""
+"Оставьте этот флажок, если вы используете %1$sFail2Ban%2$s на вашем VPS для блокировки попыток "
+"перечисления.%3$s Если вы не используете Fail2Ban или работаете на общем хосте, этот флажок "
+"ставить не нужно, однако обычно он не вызывает проблем, если он установлен."
+
+#: admin/class-admin-settings.php:257
+msgid "Remove numbers from comment authors"
+msgstr "Удалить цифры из имен авторов комментариев"
+
+#: admin/class-admin-settings.php:265
+msgid ""
+"This plugin uses JavaScript to remove any numbers from a comment author name, this is because "
+"numbers trigger enumeration checking. You can untick this if you do not use comments on your "
+"site or you use a different comment method than standard"
+msgstr ""
+"Этот плагин использует JavaScript для удаления любых цифр из имени автора комментария, потому "
+"что цифры вызывают проверку перечисления. Вы можете снять этот флажок, если вы не используете "
+"комментарии на своем сайте или используете метод комментирования, отличный от стандартного"
+
+#: frontend/class-frontend.php:67
+msgid "forbidden - number in author name not allowed = "
+msgstr "запрещено - цифры в имени автора не разрешены = "
+
+#: frontend/class-frontend.php:128
+msgid "Only authenticated users can access the User endpoint REST API."
+msgstr ""
+"Только аутентифицированные пользователи могут получить доступ к конечной точке User REST API."
