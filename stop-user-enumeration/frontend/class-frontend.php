@@ -32,6 +32,8 @@ class FrontEnd {
 	/**
 	 * Initialize the class and set its properties.
 	 *
+	 * @param string $plugin_name The name of the plugin.
+	 * @param string $version The version of the plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
@@ -43,6 +45,10 @@ class FrontEnd {
 	/**
 	 * Register the JavaScript for the public-facing side of the site.
 	 *
+	 * This method enqueues the JavaScript file for the plugin on the public-facing side of the site,
+	 * ensuring it is not loaded in the admin area.
+	 *
+	 * @return void
 	 */
 	public function enqueue_scripts() {
 		if ( ! is_admin() ) {
@@ -50,7 +56,14 @@ class FrontEnd {
 		}
 	}
 
-
+	/**
+	 * Validate incoming request and restrict access based on certain conditions.
+	 *
+	 * This method checks if the request is from a logged-out user and contains an 'author' parameter.
+	 * If the 'author' parameter contains numeric digits, it logs the attempt and terminates the request.
+	 *
+	 * @return void
+	 */
 	public function check_request() {
 		/*
 		* Validate incoming request
@@ -69,19 +82,62 @@ class FrontEnd {
 		}
 	}
 
+	/**
+	 * Checks if a given string contains any numeric digits.
+	 *
+	 * This method uses a regular expression to determine if the input string
+	 * contains any numeric digits (0-9).
+	 *
+	 * @param string $String The input string to check.
+	 *
+	 * @return bool Returns true if the string contains any numeric digits, false otherwise.
+	 */
 	private function ContainsNumbers( $String ) {
 		return preg_match( '/\\d/', $String ) > 0;
 	}
 
+	/**
+	 * Logs an attempted user enumeration to the system log or a fallback logging mechanism.
+	 *
+	 * This method retrieves the IP address of the request and logs an attempted user enumeration
+	 * if logging is enabled in the plugin options. It first checks if the `syslog` function is available
+	 * and uses it to log the message. If `syslog` is not available, it falls back to using `error_log`.
+	 *
+	 * @return void
+	 */
 	private function sue_log() {
+		// Get the IP address of the request
 		$ip = $this->get_ip();
+
+		// Check if the IP address is valid and logging is enabled in the plugin options
 		if ( false !== $ip && 'on' === Core::sue_get_option( 'log_auth', 'off' ) ) {
-			openlog( 'wordpress(' . ( isset( $_SERVER['HTTP_HOST'] ) ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '' . ')', LOG_NDELAY | LOG_PID, LOG_AUTH );
-			syslog( LOG_INFO, esc_html( "Attempted user enumeration from " . $ip ) );
-			closelog();
+
+			// Check if the syslog function is available
+			if ( function_exists( 'syslog' ) ) {
+				// Open a connection to the system logger
+				\openlog( 'wordpress(' . ( isset( $_SERVER['HTTP_HOST'] ) ? esc_html( sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) ) : '' ) . ')', LOG_NDELAY | LOG_PID, LOG_AUTH );
+
+				// Log the attempted user enumeration
+				\syslog( LOG_INFO, "Attempted user enumeration from " . esc_html( $ip ) );
+
+				// Close the connection to the system logger
+				\closelog();
+			} else {
+				// Fallback logging mechanism using error_log
+				error_log( "Attempted user enumeration from " . esc_html( $ip ) );
+			}
 		}
 	}
 
+	/**
+	 * Retrieves the IP address of the client making the request.
+	 *
+	 * This method checks various server variables to determine the client's IP address.
+	 * It checks for the presence of Cloudflare, client, and forwarded IP addresses,
+	 * and falls back to the remote address if none of the others are set.
+	 *
+	 * @return string|false The client's IP address if found, or false if not found.
+	 */
 	private function get_ip() {
 		$ipaddress = false;
 		if ( isset( $_SERVER['HTTP_CF_CONNECTING_IP'] ) ) {
@@ -110,6 +166,17 @@ class FrontEnd {
 		return $ipaddress;
 	}
 
+	/**
+	 * Restricts access to the User endpoint in the REST API to logged-in users only.
+	 *
+	 * This method checks if the 'stop_rest_user' option is enabled. If it is, it validates the request URI
+	 * and REST route to see if they match the pattern for user endpoints. If the request is not from a logged-in user
+	 * and does not match the exception pattern, it logs the attempt and returns an error.
+	 *
+	 * @param mixed $access The current access status.
+	 *
+	 * @return mixed The modified access status or a WP_Error if access is denied.
+	 */
 	public function only_allow_logged_in_rest_access_to_users( $access ) {
 		if ( 'on' === Core::sue_get_option( 'stop_rest_user', 'off' ) ) {
 			// phpcs:ignore WordPress.Security.NonceVerification  -- not saved just checking the request
@@ -133,6 +200,16 @@ class FrontEnd {
 		return $access;
 	}
 
+	/**
+	 * Removes the author sitemap provider if the name is 'users'.
+	 *
+	 * This method is used to prevent the author sitemap from being generated.
+	 *
+	 * @param mixed $provider The current sitemap provider.
+	 * @param string $name The name of the sitemap.
+	 *
+	 * @return mixed The modified sitemap provider or false if the name is 'users'.
+	 */
 	public function remove_author_sitemap( $provider, $name ) {
 		if ( 'users' === $name ) {
 			return false;
@@ -141,10 +218,18 @@ class FrontEnd {
 		return $provider;
 	}
 
+	/**
+	 * Removes the author URL from oEmbed data.
+	 *
+	 * This method unsets the 'author_url' field from the oEmbed response data.
+	 *
+	 * @param array $data The oEmbed response data.
+	 *
+	 * @return array The modified oEmbed response data.
+	 */
 	public function remove_author_url_from_oembed( $data ) {
 		unset( $data['author_url'] );
 
 		return $data;
 	}
-
 }

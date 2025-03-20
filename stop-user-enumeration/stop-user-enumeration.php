@@ -34,18 +34,29 @@ namespace Stop_User_Enumeration;
 use Fullworks_WP_Autoloader\AutoloaderPlugin;
 use Stop_User_Enumeration\Includes\Core;
 
+// Check if the WPINC constant is defined to ensure the script is being run within WordPress.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
+
+// Define the plugin directory path constant.
 define( 'STOP_USER_ENUMERATION_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+
+// Define the plugin version constant.
 define( 'STOP_USER_ENUMERATION_PLUGIN_VERSION', '1.7' );
 
-
-// Include the autoloader, so we can dynamically include the classes.
+// Include the autoloader to dynamically include the classes.
 require_once STOP_USER_ENUMERATION_PLUGIN_DIR  . 'includes/vendor/autoload.php';
 new AutoloaderPlugin(__NAMESPACE__, __DIR__);
 
-
+/**
+ * Run the Stop User Enumeration plugin.
+ *
+ * This function registers the activation and uninstall hooks,
+ * creates an instance of the Core class, and runs the plugin.
+ *
+ * @return void
+ */
 function run_stop_user_enumeration() {
 	register_activation_hook( __FILE__, array( '\Stop_User_Enumeration\Includes\Activator', 'activate' ) );
 	register_uninstall_hook( __FILE__, array( '\Stop_User_Enumeration\Includes\Uninstall', 'uninstall' ) );
@@ -53,5 +64,6 @@ function run_stop_user_enumeration() {
 	$plugin->run();
 }
 
+// Execute the run_stop_user_enumeration function to start the plugin.
 run_stop_user_enumeration();
 
