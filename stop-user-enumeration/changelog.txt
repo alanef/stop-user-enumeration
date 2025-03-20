@@ -1,4 +1,7 @@
 == Changelog ==
+= 1.7 =
+* add opt in library
+
 = 1.6.3 =
 * fix warning with die
 

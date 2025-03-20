@@ -25,6 +25,7 @@
   "require": {
     "php": ">=7.4",
     "alanef/wp_autoloader": "dev-main",
+    "alanef/free_plugin_lib": "^v1.0.0",
     "composer/installers": "v1.0.12"
   }
 }

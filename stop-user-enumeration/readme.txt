@@ -5,7 +5,7 @@ Tags: User Enumeration, Security, WPSCAN, fail2ban, security
 Requires at least: 6.3
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.6.3
+Stable tag: 1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,8 +60,8 @@ Are you logged in?  This plugin won't do anything for logged in users, it only w
 Themes and xml feeds will include your user 'Display Name'. If you do not specify any name details or nick name, the 'Display Name' will default to your user login name. Make sure your Display Name is always set NOT to your user name or it will be leaked in multiple places.
 = Are there any settings? =
 Yes, but the default ones are fine for most cases
-= This doesn't work with PHP 5.2! =
-This plugin does not support PHP 5.2. PHP 5.2 is very old and you really need to sort out your hosting, running version of software way past its supported end of life is a security risk.
+= This doesn't work with PHP 5.6 or  7.1 ! =
+This plugin does not support PHP less than 7.4. You really need to sort out your hosting, running version of software way past its supported end of life is a security risk.
 = Will it work on Multisite? =
 Yes
 = Why don't I just block with .htaccess =
@@ -83,24 +83,5 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 == Upgrade Notice ==
 
 == Changelog ==
-= 1.6.3 =
-* fix warning with die
 
-= 1.6.2 =
-* set wp_die to return 403
-* added defer to script
-
-= 1.6.1 =
-* updated tested to 6.6
-
-= 1.6 =
-* change getenv to $_SERVER for better compatability
-* added extra sanitization to meet current plugin repo standards
-* allow exception for Simple JWT Login rest route and add filters to adjust match and exception of rest rules
-
-= 1.5.0 =
-* remove admin notifications for reviews and donations
-
-
-
-[Full Change History](https://plugins.trac.wordpress.org/browser/stop-user-enumeration/trunk/changelog.txt)
+[Change Log](https://fullworksplugins.com/docs/stop-user-enumeration/usage-stop-user-enumeration/change-log-4/)

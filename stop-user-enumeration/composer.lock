@@ -4,8 +4,54 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a545cc32c9fd0fa28062bfb4ca10263",
+    "content-hash": "187c412ec756dec2fbedebfec6885a28",
     "packages": [
+        {
+            "name": "alanef/free_plugin_lib",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alanef/free_plugin_lib.git",
+                "reference": "ed52c33c73999a1fe1ee5a1b00581b9462111ac8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alanef/free_plugin_lib/zipball/ed52c33c73999a1fe1ee5a1b00581b9462111ac8",
+                "reference": "ed52c33c73999a1fe1ee5a1b00581b9462111ac8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "codedungeon/phpunit-result-printer": "^0.32",
+                "phpunit/phpunit": "^9.0",
+                "wp-phpunit/wp-phpunit": "^6.7",
+                "yoast/wp-test-utils": "^1.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fullworks_Free_Plugin_Lib\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "alan",
+                    "email": "alan@fullworks.net"
+                }
+            ],
+            "description": "Library to add to free plugins, in compliance with wp.org",
+            "support": {
+                "issues": "https://github.com/alanef/free_plugin_lib/issues",
+                "source": "https://github.com/alanef/free_plugin_lib/tree/v1.0.1"
+            },
+            "time": "2025-02-18T15:16:14+00:00"
+        },
         {
             "name": "alanef/wp_autoloader",
             "version": "dev-main",
