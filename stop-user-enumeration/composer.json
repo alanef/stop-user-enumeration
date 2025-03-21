@@ -16,15 +16,13 @@
       "composer/installers": true
     }
   },
-  "repositories": {
-    "alanef/wp_autoloader": {
-      "type": "vcs",
-      "url": "https://github.com/alanef/wp_autoloader"
-    }
+  "autoload": {
+    "classmap": [
+      "."
+    ]
   },
   "require": {
     "php": ">=7.4",
-    "alanef/wp_autoloader": "dev-main",
     "alanef/free_plugin_lib": "^v1.0.0",
     "composer/installers": "v1.0.12"
   }
