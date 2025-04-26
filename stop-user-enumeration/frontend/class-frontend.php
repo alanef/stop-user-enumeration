@@ -127,6 +127,7 @@ class FrontEnd {
 				\closelog();
 			} else {
 				// Fallback logging mechanism using error_log
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- fall back logging
 				error_log( "Attempted user enumeration from " . esc_html( $ip ) );
 			}
 			
