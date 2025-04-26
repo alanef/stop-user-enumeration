@@ -108,6 +108,9 @@ class FrontEnd {
 	private function sue_log() {
 		// Get the IP address of the request
 		$ip = $this->get_ip();
+		
+		// Allow filtering of the IP address for integration with external services
+		$ip = apply_filters( 'stop_user_enumeration_ip', $ip );
 
 		// Check if the IP address is valid and logging is enabled in the plugin options
 		if ( false !== $ip && 'on' === Core::sue_get_option( 'log_auth', 'off' ) ) {
@@ -126,6 +129,9 @@ class FrontEnd {
 				// Fallback logging mechanism using error_log
 				error_log( "Attempted user enumeration from " . esc_html( $ip ) );
 			}
+			
+			// Action hook for add-ons to process enumeration attempts (limit login, blocklists, etc.)
+			do_action( 'stop_user_enumeration_attempt', $ip );
 		}
 	}
 
@@ -190,9 +196,17 @@ class FrontEnd {
 					if ( ( preg_match( $exception, $request_uri ) !== 0 ) || ( preg_match( $exception, $rest_route ) !== 0 ) ) {
 						return $access; // check not exception
 					}
-					$this->sue_log();
-
-					return new WP_Error( 'rest_cannot_access', esc_html__( 'Only authenticated users can access the User endpoint REST API.', 'stop-user-enumeration' ), array( 'status' => rest_authorization_required_code() ) );
+					
+					// Get IP address for logging and filtering
+					$ip = $this->get_ip();
+					
+					// Filter to allow extensions to determine if blocking should occur
+					$should_block = apply_filters( 'stop_user_enumeration_should_block', true, $ip );
+					
+					if ( $should_block ) {
+						$this->sue_log();
+						return new WP_Error( 'rest_cannot_access', esc_html__( 'Only authenticated users can access the User endpoint REST API.', 'stop-user-enumeration' ), array( 'status' => rest_authorization_required_code() ) );
+					}
 				}
 			}
 		}

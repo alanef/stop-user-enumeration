@@ -1,4 +1,11 @@
 == Changelog ==
+= 1.7.1 =
+* add developer hooks and filters for extending plugin functionality
+* added stop_user_enumeration_ip filter to allow modifying detected IP addresses
+* added stop_user_enumeration_should_block filter to conditionally allow or block requests
+* added stop_user_enumeration_attempt action hook for processing enumeration attempts
+* fix doing_it_wrong notice  for WP 6.8
+
 = 1.7 =
 * add opt in library
 

@@ -3,7 +3,7 @@
 Plugin Name: Stop User Enumeration
 Plugin URI: https://fullworksplugins.com/products/stop-user-enumeration/
 Description: Helps secure your site against hacking attacks through detecting  User Enumeration
-Version: 1.7
+Version: 1.7.1
 Author: Fullworks
 Requires at least: 6.3
 Requires PHP: 7.4

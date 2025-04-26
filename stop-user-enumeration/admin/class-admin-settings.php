@@ -32,7 +32,6 @@ class Admin_Settings extends Admin_Pages {
 	public function __construct( $plugin_name, $version ) {
 		$this->plugin_name    = $plugin_name;
 		$this->version        = $version;
-		$this->settings_title = esc_html__( 'Stop User Enumeration', 'stop-user-enumeration' );
 		parent::__construct();
 		new \Fullworks_Free_Plugin_Lib\Main('stop-user-enumeration/stop-user-enumeration.php',
 			admin_url( 'options-general.php?page=stop-user-enumeration' ),

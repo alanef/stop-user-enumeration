@@ -5,7 +5,7 @@ Tags: User Enumeration, Security, WPSCAN, fail2ban, security
 Requires at least: 6.3
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.7
+Stable tag: 1.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,7 +70,21 @@ A .htaccess solution is insufficient for several reasons, but most published pos
 If a comment is left by someone just giving a number that comment would be forbidden, as it is assumed a hack attempt, but the plugin has a bit of code that strips out numbers from comment author namesa1
 Also usernames containing numbers may not work in the front end.  Additionally the default rule for   Rest APi is anything with users in it, so other plugins may set up endpoints.
 = How can I change the Rest API match rules =
-There are two filters `stop_user_enumeration_rest_stop_match` set  to `/users/i` by default and `stop_user_enumeration_rest_allow_match` set to `simple-jwt-login` by default ( to allow that plugin's endpoints )
+There are two filters `stop_user_enumeration_rest_stop_match` set  to `/users/i` by default and `stop_user_enumeration_rest_allowed_match` set to `simple-jwt-login` by default ( to allow that plugin's endpoints )
+
+= Developer Hooks and Filters =
+The following hooks and filters are available for developers:
+
+**Filters:**
+* `stop_user_enumeration_rest_stop_match` - Modify the pattern used to detect REST API user queries (default: `/users/i`)
+* `stop_user_enumeration_rest_allowed_match` - Add exceptions to the REST API blocking rules (default: `/simple-jwt-login/i`)
+* `stop_user_enumeration_ip` - Filter the detected IP address before logging or processing (useful for integration with CDNs or proxies)
+* `stop_user_enumeration_should_block` - Determine if a request should be blocked based on IP or other conditions (return false to allow the request)
+
+**Actions:**
+* `stop_user_enumeration_attempt` - Triggered when user enumeration attempt is detected and logged (passes the IP address as parameter)
+
+These hooks enable add-on features like limit login attempts, block lists, WAF notifications, and integration with external services like Cloudflare.
 = Do I need fail2ban for this to work? =
 No, but fail2ban will allow you to block IP addresses at your VPS / Dedicated server firewall that attempt user enumeration.
 = What is the fail2ban config?=

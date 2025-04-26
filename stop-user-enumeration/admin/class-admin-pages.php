@@ -25,6 +25,7 @@ class Admin_Pages {
 	}
 
 	public function settings_setup() {
+		$this->settings_title = esc_html__( 'Stop User Enumeration', 'stop-user-enumeration' );
 		add_submenu_page(
 			'options-general.php',
 			$this->settings_title, /* Page Title */
