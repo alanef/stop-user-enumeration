@@ -108,7 +108,7 @@ class FrontEnd {
 	private function sue_log() {
 		// Get the IP address of the request
 		$ip = $this->get_ip();
-		
+
 		// Allow filtering of the IP address for integration with external services
 		$ip = apply_filters( 'stop_user_enumeration_ip', $ip );
 
@@ -130,7 +130,7 @@ class FrontEnd {
 				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- fall back logging
 				error_log( "Attempted user enumeration from " . esc_html( $ip ) );
 			}
-			
+
 			// Action hook for add-ons to process enumeration attempts (limit login, blocklists, etc.)
 			do_action( 'stop_user_enumeration_attempt', $ip );
 		}
@@ -187,9 +187,9 @@ class FrontEnd {
 	public function only_allow_logged_in_rest_access_to_users( $access ) {
 		if ( 'on' === Core::sue_get_option( 'stop_rest_user', 'off' ) ) {
 			// phpcs:ignore WordPress.Security.NonceVerification  -- not saved just checking the request
-			$request_uri = ( isset( $_SERVER['REQUEST_URI'] ) ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+			$request_uri = ( isset( $_SERVER['REQUEST_URI'] ) ) ? sanitize_text_field( wp_unslash( rawurldecode( $_SERVER['REQUEST_URI'] ) ) ) : '';
 			// phpcs:ignore WordPress.Security.NonceVerification  -- not saved just checking the request
-			$rest_route = ( isset( $_REQUEST['rest_route'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['rest_route'] ) ) : '';
+			$rest_route = ( isset( $_REQUEST['rest_route'] ) ) ? sanitize_text_field( wp_unslash( rawurldecode( $_REQUEST['rest_route'] ) ) ) : '';
 			$pattern    = apply_filters( 'stop_user_enumeration_rest_stop_match', '/users/i' );
 			if ( ( preg_match( $pattern, $request_uri ) !== 0 ) || ( preg_match( $pattern, $rest_route ) !== 0 ) ) {
 				if ( ! is_user_logged_in() ) {
@@ -197,15 +197,16 @@ class FrontEnd {
 					if ( ( preg_match( $exception, $request_uri ) !== 0 ) || ( preg_match( $exception, $rest_route ) !== 0 ) ) {
 						return $access; // check not exception
 					}
-					
+
 					// Get IP address for logging and filtering
 					$ip = $this->get_ip();
-					
+
 					// Filter to allow extensions to determine if blocking should occur
 					$should_block = apply_filters( 'stop_user_enumeration_should_block', true, $ip );
-					
+
 					if ( $should_block ) {
 						$this->sue_log();
+
 						return new WP_Error( 'rest_cannot_access', esc_html__( 'Only authenticated users can access the User endpoint REST API.', 'stop-user-enumeration' ), array( 'status' => rest_authorization_required_code() ) );
 					}
 				}

@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later..
 msgid ""
 msgstr ""
-"Project-Id-Version: Stop User Enumeration 1.7.1\n"
+"Project-Id-Version: Stop User Enumeration 1.7.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stop-user-enumeration\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-26T15:20:35+00:00\n"
+"POT-Creation-Date: 2025-05-04T18:03:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stop-user-enumeration\n"
@@ -135,6 +135,6 @@ msgstr ""
 msgid "forbidden - number in author name not allowed = "
 msgstr ""
 
-#: frontend/class-frontend.php:209
+#: frontend/class-frontend.php:210
 msgid "Only authenticated users can access the User endpoint REST API."
 msgstr ""

@@ -1,4 +1,7 @@
 == Changelog ==
+= 1.7.2 =
+* Fix ability to by-pass the WP REST API protection functionality, props Bob @ WpScan
+
 = 1.7.1 =
 * add developer hooks and filters for extending plugin functionality
 * added stop_user_enumeration_ip filter to allow modifying detected IP addresses
