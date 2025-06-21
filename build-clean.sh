@@ -34,81 +34,81 @@ composer install --no-dev --optimize-autoloader --no-interaction
 echo "Removing development files..."
 
 # Remove composer files
-find . -name "composer.json" -delete
-find . -name "composer.lock" -delete
+#find . -name "composer.json" -delete
+#find . -name "composer.lock" -delete
 
 # Remove documentation files (except readme.txt)
-find . -name "*.md" -not -name "readme.txt" -delete
-find . -name "README" -delete
-find . -name "CHANGELOG" -not -name "changelog.txt" -delete
-find . -name "CONTRIBUTING*" -delete
-find . -name "CODE_OF_CONDUCT*" -delete
+#find . -name "*.md" -not -name "readme.txt" -delete
+#find . -name "README" -delete
+#find . -name "CHANGELOG" -not -name "changelog.txt" -delete
+#find . -name "CONTRIBUTING*" -delete
+#find . -name "CODE_OF_CONDUCT*" -delete
 
 # Remove git and development config files
-find . -name ".git*" -delete
-find . -name ".editorconfig" -delete
-find . -name ".eslint*" -delete
-find . -name ".jshint*" -delete
-find . -name ".stylelint*" -delete
-find . -name "*.xml.dist" -delete
-find . -name "phpunit.xml*" -delete
-find . -name "phpcs.xml*" -delete
-find . -name ".phpcs.xml*" -delete
-find . -name "psalm.xml*" -delete
-find . -name ".travis.yml" -delete
-find . -name ".scrutinizer.yml" -delete
+#find . -name ".git*" -delete
+#find . -name ".editorconfig" -delete
+#find . -name ".eslint*" -delete
+#find . -name ".jshint*" -delete
+#find . -name ".stylelint*" -delete
+#find . -name "*.xml.dist" -delete
+#find . -name "phpunit.xml*" -delete
+#find . -name "phpcs.xml*" -delete
+#find . -name ".phpcs.xml*" -delete
+#find . -name "psalm.xml*" -delete
+#find . -name ".travis.yml" -delete
+#find . -name ".scrutinizer.yml" -delete
 
 # Remove test directories
-find . -type d -name "tests" -exec rm -rf {} + 2>/dev/null || true
-find . -type d -name "Tests" -exec rm -rf {} + 2>/dev/null || true
-find . -type d -name "test" -exec rm -rf {} + 2>/dev/null || true
-find . -type d -name "Test" -exec rm -rf {} + 2>/dev/null || true
-find . -type d -name ".github" -exec rm -rf {} + 2>/dev/null || true
-find . -type d -name "bin" -exec rm -rf {} + 2>/dev/null || true
+#find . -type d -name "tests" -exec rm -rf {} + 2>/dev/null || true
+#find . -type d -name "Tests" -exec rm -rf {} + 2>/dev/null || true
+#find . -type d -name "test" -exec rm -rf {} + 2>/dev/null || true
+#find . -type d -name "Test" -exec rm -rf {} + 2>/dev/null || true
+#find . -type d -name ".github" -exec rm -rf {} + 2>/dev/null || true
+#find . -type d -name "bin" -exec rm -rf {} + 2>/dev/null || true
 
 # Remove example and demo files
-find . -name "*example*" -delete
-find . -name "*demo*" -delete
-find . -name "*sample*" -delete
+#find . -name "*example*" -delete
+#find . -name "*demo*" -delete
+#find . -name "*sample*" -delete
 
 # Remove build files
-find . -name "Makefile" -delete
-find . -name "Gruntfile.js" -delete
-find . -name "gulpfile.js" -delete
-find . -name "webpack.config.js" -delete
-find . -name "rollup.config.js" -delete
+#find . -name "Makefile" -delete
+#find . -name "Gruntfile.js" -delete
+#find . -name "gulpfile.js" -delete
+#find . -name "webpack.config.js" -delete
+#find . -name "rollup.config.js" -delete
 
 # Remove package management files
-find . -name "package.json" -delete
-find . -name "package-lock.json" -delete
-find . -name "yarn.lock" -delete
-find . -name "bower.json" -delete
+#find . -name "package.json" -delete
+#find . -name "package-lock.json" -delete
+#find . -name "yarn.lock" -delete
+#find . -name "bower.json" -delete
 
 # Remove IDE files
-find . -name ".idea" -type d -exec rm -rf {} + 2>/dev/null || true
-find . -name ".vscode" -type d -exec rm -rf {} + 2>/dev/null || true
-find . -name "*.iml" -delete
-find . -name ".project" -delete
+#find . -name ".idea" -type d -exec rm -rf {} + 2>/dev/null || true
+#find . -name ".vscode" -type d -exec rm -rf {} + 2>/dev/null || true
+#find . -name "*.iml" -delete
+#find . -name ".project" -delete
 
 # Remove other unnecessary files
-find . -name "*.log" -delete
-find . -name "*.cache" -delete
-find . -name ".DS_Store" -delete
-find . -name "Thumbs.db" -delete
-find . -name "desktop.ini" -delete
+#find . -name "*.log" -delete
+#find . -name "*.cache" -delete
+#find . -name ".DS_Store" -delete
+#find . -name "Thumbs.db" -delete
+#find . -name "desktop.ini" -delete
 
 # Remove composer/installers (not needed in production)
 echo "Removing unnecessary vendor packages..."
-rm -rf includes/vendor/composer/installers
+#rm -rf includes/vendor/composer/installers
 
 # Clean up vendor directory further
-find includes/vendor -name ".git" -type d -exec rm -rf {} + 2>/dev/null || true
-find includes/vendor -name "docs" -type d -exec rm -rf {} + 2>/dev/null || true
-find includes/vendor -name "doc" -type d -exec rm -rf {} + 2>/dev/null || true
-find includes/vendor -name "examples" -type d -exec rm -rf {} + 2>/dev/null || true
+#find includes/vendor -name ".git" -type d -exec rm -rf {} + 2>/dev/null || true
+#find includes/vendor -name "docs" -type d -exec rm -rf {} + 2>/dev/null || true
+#find includes/vendor -name "doc" -type d -exec rm -rf {} + 2>/dev/null || true
+#find includes/vendor -name "examples" -type d -exec rm -rf {} + 2>/dev/null || true
 
 # Remove empty directories
-find . -type d -empty -delete
+#find . -type d -empty -delete
 
 # Return to build directory
 cd ..
