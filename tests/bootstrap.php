@@ -35,12 +35,9 @@ require_once "{$_tests_dir}/includes/functions.php";
  * Manually load the plugin being tested
  */
 function _manually_load_plugin() {
-	// In wp-env, the plugin is at the root of the plugins directory
-	$plugin_file = dirname( dirname( __DIR__ ) ) . '/stop-user-enumeration/stop-user-enumeration.php';
-	if ( ! file_exists( $plugin_file ) ) {
-		// Try alternate path
-		$plugin_file = dirname( __DIR__ ) . '/stop-user-enumeration.php';
-	}
+	// With new wp-env mapping, plugin is at standard location
+	$plugin_file = '/var/www/html/wp-content/plugins/stop-user-enumeration/stop-user-enumeration.php';
+	
 	if ( file_exists( $plugin_file ) ) {
 		// First define the plugin directory constant
 		if ( ! defined( 'STOP_USER_ENUMERATION_PLUGIN_DIR' ) ) {

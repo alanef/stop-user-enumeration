@@ -4,8 +4,8 @@
     "./stop-user-enumeration"
   ],
   "mappings": {
-    "wp-content/plugins/stop-user-enumeration/tests": "./tests",
-    "wp-content/plugins/stop-user-enumeration/vendor": "./vendor",
-    "wp-content/plugins/stop-user-enumeration/phpunit.xml.dist": "./phpunit.xml.dist"
+    "tests": "./tests",
+    "vendor": "./vendor",
+    "phpunit.xml.dist": "./phpunit.xml.dist"
   }
 }
