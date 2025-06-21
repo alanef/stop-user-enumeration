@@ -1,0 +1,68 @@
+name: Build Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+      - '*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          tools: composer:v2
+          
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+        
+      - name: Build plugin for release
+        run: |
+          chmod +x ./build-clean.sh
+          ./build-clean.sh
+          
+      - name: Get version
+        id: get_version
+        run: |
+          VERSION=$(grep "Version:" stop-user-enumeration/stop-user-enumeration.php | awk '{print $2}')
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "Building version $VERSION"
+          
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ steps.get_version.outputs.VERSION }}
+          body: |
+            Release of Stop User Enumeration v${{ steps.get_version.outputs.VERSION }}
+            
+            ## Changes
+            See [changelog.txt](https://github.com/alanef/stop-user-enumeration/blob/main/stop-user-enumeration/changelog.txt) for details.
+            
+            ## Security Fixes in 1.7.3
+            - Fixed URL-encoding bypass vulnerability in REST API protection
+            - Fixed simple-jwt-login bypass vulnerability
+            - Enhanced IP address validation
+          draft: false
+          prerelease: false
+          
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./zipped/stop-user-enumeration-${{ steps.get_version.outputs.VERSION }}.zip
+          asset_name: stop-user-enumeration-${{ steps.get_version.outputs.VERSION }}.zip
+          asset_content_type: application/zip

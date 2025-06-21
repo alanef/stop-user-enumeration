@@ -19,13 +19,18 @@
   },
   "require-dev": {
     "wp-coding-standards/wpcs": ">=2.3.0",
-    "phpcompatibility/phpcompatibility-wp": "*"
+    "phpcompatibility/phpcompatibility-wp": "*",
+    "phpunit/phpunit": "^9.5",
+    "yoast/phpunit-polyfills": "^1.0"
   },
   "scripts": {
     "post-update-cmd": ["composer update -d stop-user-enumeration",
       "wp i18n make-pot ./stop-user-enumeration  ./stop-user-enumeration/languages/stop-user-enumeration.pot --skip-audit --exclude='./vendor'"
     ],
     "build": [
+      "./build-clean.sh"
+    ],
+    "build-old": [
       "rm -rf zipped",
       "@composer install -d stop-user-enumeration --no-dev",
       "mkdir -p zipped",
@@ -44,6 +49,8 @@
       "@compat:8.0",
       "@compat:7.4",
       "@phpcs"
-    ]
+    ],
+    "test": "phpunit",
+    "test:unit": "phpunit --testsuite 'Stop User Enumeration Test Suite'"
   }
 }

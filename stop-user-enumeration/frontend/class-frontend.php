@@ -13,6 +13,8 @@ namespace Stop_User_Enumeration\FrontEnd;
 use Stop_User_Enumeration\Includes\Core;
 
 use WP_Error;
+use WP_REST_Server;
+use WP_REST_Request;
 
 class FrontEnd {
 
@@ -149,25 +151,27 @@ class FrontEnd {
 		$ipaddress = false;
 		if ( isset( $_SERVER['HTTP_CF_CONNECTING_IP'] ) ) {
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
-			$ipaddress = filter_var( $_SERVER['HTTP_CF_CONNECTING_IP'] );
+			$ipaddress = filter_var( $_SERVER['HTTP_CF_CONNECTING_IP'], FILTER_VALIDATE_IP );
 		} elseif ( isset( $_SERVER['HTTP_CLIENT_IP'] ) ) {
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
-			$ipaddress = filter_var( $_SERVER['HTTP_CLIENT_IP'] );
+			$ipaddress = filter_var( $_SERVER['HTTP_CLIENT_IP'], FILTER_VALIDATE_IP );
 		} elseif ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
-			$ipaddress = filter_var( $_SERVER['HTTP_X_FORWARDED_FOR'] );
+			// X-Forwarded-For can contain multiple IPs, take the first one
+			$ips = explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] );
+			$ipaddress = filter_var( trim( $ips[0] ), FILTER_VALIDATE_IP );
 		} elseif ( isset( $_SERVER['HTTP_X_FORWARDED'] ) ) {
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
-			$ipaddress = filter_var( $_SERVER['HTTP_X_FORWARDED'] );
+			$ipaddress = filter_var( $_SERVER['HTTP_X_FORWARDED'], FILTER_VALIDATE_IP );
 		} elseif ( isset( $_SERVER['HTTP_FORWARDED_FOR'] ) ) {
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
-			$ipaddress = filter_var( $_SERVER['HTTP_FORWARDED_FOR'] );
+			$ipaddress = filter_var( $_SERVER['HTTP_FORWARDED_FOR'], FILTER_VALIDATE_IP );
 		} elseif ( isset( $_SERVER['HTTP_FORWARDED'] ) ) {
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
-			$ipaddress = filter_var( $_SERVER['HTTP_FORWARDED'] );
+			$ipaddress = filter_var( $_SERVER['HTTP_FORWARDED'], FILTER_VALIDATE_IP );
 		} elseif ( isset( $_SERVER['REMOTE_ADDR'] ) ) {
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
-			$ipaddress = filter_var( $_SERVER['REMOTE_ADDR'] );
+			$ipaddress = filter_var( $_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP );
 		}
 
 		return $ipaddress;
@@ -176,26 +180,28 @@ class FrontEnd {
 	/**
 	 * Restricts access to the User endpoint in the REST API to logged-in users only.
 	 *
-	 * This method checks if the 'stop_rest_user' option is enabled. If it is, it validates the request URI
-	 * and REST route to see if they match the pattern for user endpoints. If the request is not from a logged-in user
+	 * This method checks if the 'stop_rest_user' option is enabled. If it is, it validates the REST request route
+	 * to see if it matches the pattern for user endpoints. If the request is not from a logged-in user
 	 * and does not match the exception pattern, it logs the attempt and returns an error.
 	 *
-	 * @param mixed $access The current access status.
+	 * @param mixed $result The response to send to the client. Usually a WP_REST_Response or WP_Error.
+	 * @param WP_REST_Server $server Server instance.
+	 * @param WP_REST_Request $request Request used to generate the response.
 	 *
-	 * @return mixed The modified access status or a WP_Error if access is denied.
+	 * @return mixed The modified result or a WP_Error if access is denied.
 	 */
-	public function only_allow_logged_in_rest_access_to_users( $access ) {
+	public function only_allow_logged_in_rest_access_to_users( $result, $server, $request ) {
 		if ( 'on' === Core::sue_get_option( 'stop_rest_user', 'off' ) ) {
-			// phpcs:ignore WordPress.Security.NonceVerification  -- not saved just checking the request
-			$request_uri = ( isset( $_SERVER['REQUEST_URI'] ) ) ? sanitize_text_field( wp_unslash( rawurldecode( $_SERVER['REQUEST_URI'] ) ) ) : '';
-			// phpcs:ignore WordPress.Security.NonceVerification  -- not saved just checking the request
-			$rest_route = ( isset( $_REQUEST['rest_route'] ) ) ? sanitize_text_field( wp_unslash( rawurldecode( $_REQUEST['rest_route'] ) ) ) : '';
-			$pattern    = apply_filters( 'stop_user_enumeration_rest_stop_match', '/users/i' );
-			if ( ( preg_match( $pattern, $request_uri ) !== 0 ) || ( preg_match( $pattern, $rest_route ) !== 0 ) ) {
+			// Get the actual REST route from the request object
+			$route = $request->get_route();
+			// Check if this is a users endpoint
+			$pattern = apply_filters( 'stop_user_enumeration_rest_stop_match', '#^/wp/v[0-9]+/users#i' );
+			if ( ! empty( $route ) && preg_match( $pattern, $route ) !== 0 ) {
 				if ( ! is_user_logged_in() ) {
-					$exception = apply_filters( 'stop_user_enumeration_rest_allowed_match', '/simple-jwt-login/i' ); //default exception rule simple-jwt-login
-					if ( ( preg_match( $exception, $request_uri ) !== 0 ) || ( preg_match( $exception, $rest_route ) !== 0 ) ) {
-						return $access; // check not exception
+					// Check for simple-jwt-login exception - only in the actual route, not in parameters
+					$exception = apply_filters( 'stop_user_enumeration_rest_allowed_match', '#^/simple-jwt-login/#i' );
+					if ( preg_match( $exception, $route ) !== 0 ) {
+						return $result; // Allow access for exception routes
 					}
 
 					// Get IP address for logging and filtering
@@ -213,7 +219,7 @@ class FrontEnd {
 			}
 		}
 
-		return $access;
+		return $result;
 	}
 
 	/**

@@ -2,10 +2,19 @@
   "name": "stop-user-enumeration-project",
   "version": "1.0.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./run-tests.sh",
+    "test:unit": "./run-tests.sh",
+    "wp-env": "wp-env",
+    "start": "wp-env start",
+    "stop": "wp-env stop",
+    "test:vulnerabilities": "./test-vulnerability-with-wp-env.sh",
+    "test:fixes": "php tests/test-vulnerability-fixes.php"
   },
   "keywords": [],
   "author": "Alan Fuller <alan@fullerfamily.uk>",
   "license": "GPL-2.0-or-later",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@wordpress/env": "^10.25.0"
+  }
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+    bootstrap="tests/bootstrap.php"
+    backupGlobals="false"
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    >
+    <testsuites>
+        <testsuite name="Stop User Enumeration Test Suite">
+            <directory suffix=".php">./tests/</directory>
+            <exclude>./tests/bootstrap.php</exclude>
+            <exclude>./tests/manual-vulnerability-test.php</exclude>
+            <exclude>./tests/test-vulnerability-fixes.php</exclude>
+        </testsuite>
+    </testsuites>
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">./stop-user-enumeration</directory>
+        </include>
+        <exclude>
+            <directory>./stop-user-enumeration/includes/vendor</directory>
+            <directory>./stop-user-enumeration/languages</directory>
+        </exclude>
+    </coverage>
+</phpunit>

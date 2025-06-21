@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later..
 msgid ""
 msgstr ""
-"Project-Id-Version: Stop User Enumeration 1.7.2\n"
+"Project-Id-Version: Stop User Enumeration 1.7.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stop-user-enumeration\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-04T18:03:23+00:00\n"
+"POT-Creation-Date: 2025-06-21T18:37:16+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stop-user-enumeration\n"
@@ -131,10 +131,10 @@ msgstr ""
 msgid "This plugin uses JavaScript to remove any numbers from a comment author name, this is because numbers trigger enumeration checking. You can untick this if you do not use comments on your site or you use a different comment method than standard"
 msgstr ""
 
-#: frontend/class-frontend.php:80
+#: frontend/class-frontend.php:82
 msgid "forbidden - number in author name not allowed = "
 msgstr ""
 
-#: frontend/class-frontend.php:210
+#: frontend/class-frontend.php:216
 msgid "Only authenticated users can access the User endpoint REST API."
 msgstr ""

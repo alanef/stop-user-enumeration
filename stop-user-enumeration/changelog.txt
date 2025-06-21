@@ -1,4 +1,11 @@
 == Changelog ==
+= 1.7.3 =
+* Fixed URL-encoding bypass vulnerability in REST API protection
+* Fixed simple-jwt-login bypass vulnerability by checking exceptions only in route paths, not query parameters
+* Improved REST API security by using WordPress REST API methods instead of checking REQUEST_URI
+* Enhanced IP address validation using FILTER_VALIDATE_IP
+* Fixed X-Forwarded-For header handling to properly parse multiple IPs
+
 = 1.7.2 =
 * Fix ability to by-pass the WP REST API protection functionality, props Bob @ WpScan
 

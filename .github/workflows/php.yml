@@ -37,12 +37,25 @@ jobs:
       - name: Run phpcs suit
         run: composer run-script check
 
-      - name: Composer install
-        run: composer install -d  stop-user-enumeration --no-dev
+      - name: Build plugin for distribution
+        run: |
+          chmod +x ./build-clean.sh
+          ./build-clean.sh
+          
+      - name: Extract built plugin for checks
+        run: |
+          cd build
+          unzip ../zipped/stop-user-enumeration-*.zip
+          
       - name: Run plugin check
         uses: wordpress/plugin-check-action@v1
         with:
-          build-dir: './stop-user-enumeration'
-          exclude-directories: |
-            'includes/vendor'
+          build-dir: './build/stop-user-enumeration'
           
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: stop-user-enumeration-${{ github.sha }}
+          path: zipped/stop-user-enumeration-*.zip
+          retention-days: 7

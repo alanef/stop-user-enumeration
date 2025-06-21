@@ -6,3 +6,5 @@ node_modules/
 stop-user-enumeration/includes/vendor/
 /stop-user-enumeration/composer.lock
 /vendor/
+.phpunit.result.cache
+*.phpunit.result.cache

@@ -70,7 +70,7 @@ class Admin_Pages {
             jQuery(document).ready(function ($) {
                 // toggle
                 $('.if-js-closed').removeClass('if-js-closed').addClass('closed');
-                postboxes.add_postbox_toggles('<?php echo esc_attr( $page_hook_id ); ?>');
+                postboxes.add_postbox_toggles(<?php echo wp_json_encode( $page_hook_id ); ?>);
                 // display spinner
                 $('#fx-smb-form').submit(function () {
                     $('#publishing-action .spinner').css('visibility', 'visible');

@@ -5,7 +5,7 @@ Tags: User Enumeration, Security, WPSCAN, fail2ban, security
 Requires at least: 6.3
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.7.2
+Stable tag: 1.7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,23 @@ An fail2ban config file, wordpress-userenum.conf is found in the plugin director
 An example jail.local is found in plugin directory stop-user-enumeration/fail2ban
 = How can I report security bugs? =
 You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/stop-user-enumeration)
+
+== Privacy ==
+
+This plugin includes an optional email feature for plugin news and updates. When enabled:
+
+* Your email address may be sent to https://fullworksplugins.com for important plugin updates and security notices
+* This is completely optional and requires your explicit consent via the opt-in form in the plugin settings
+* No data is collected or transmitted without your permission
+* You can opt-out at any time from the plugin settings
+* No other personal data is collected or transmitted to external services
+
+The plugin logs attempted user enumeration attacks locally using WordPress's standard logging system:
+* IP addresses of potential attackers are logged locally for security monitoring
+* These logs remain on your server and are not transmitted to any external service
+* Logs can be used with fail2ban or similar tools for enhanced security
+
+For more information about data handling, please visit https://fullworksplugins.com/privacy-policy/
 
 == Upgrade Notice ==
 

@@ -126,7 +126,7 @@ class Core {
 
 	/**
 	 * Register all of the hooks related to the admin area functionality
-	 * of the plugin./home/alan/Google/Projects/WordPressPlugins/get-directions-orig
+	 * of the plugin.
 	 *
 	 */
 
@@ -177,7 +177,7 @@ class Core {
 		}
 
 		$this->loader->add_action( 'init', $plugin_public, 'check_request' );
-		$this->loader->add_action( 'rest_authentication_errors', $plugin_public, 'only_allow_logged_in_rest_access_to_users' );
+		$this->loader->add_filter( 'rest_pre_dispatch', $plugin_public, 'only_allow_logged_in_rest_access_to_users', 10, 3 );
 		if ( 'on' === $this->sue_get_option( 'stop_sitemap', 'off' ) ) {
 			$this->loader->add_filter( 'wp_sitemaps_add_provider', $plugin_public, 'remove_author_sitemap', 10, 2 );
 		}
