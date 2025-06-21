@@ -45,7 +45,7 @@ jobs:
       - name: Extract built plugin for checks
         run: |
           cd build
-          unzip ../zipped/stop-user-enumeration-*.zip
+          unzip -o ../zipped/stop-user-enumeration-*.zip
           
       - name: Run plugin check
         uses: wordpress/plugin-check-action@v1
