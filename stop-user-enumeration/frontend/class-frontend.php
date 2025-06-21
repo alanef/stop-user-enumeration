@@ -156,9 +156,9 @@ class FrontEnd {
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
 			$ipaddress = filter_var( $_SERVER['HTTP_CLIENT_IP'], FILTER_VALIDATE_IP );
 		} elseif ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
 			// X-Forwarded-For can contain multiple IPs, take the first one
-			$ips = explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] );
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- not form input, will be validated
+			$ips = explode( ',', sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) );
 			$ipaddress = filter_var( trim( $ips[0] ), FILTER_VALIDATE_IP );
 		} elseif ( isset( $_SERVER['HTTP_X_FORWARDED'] ) ) {
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- not form input
