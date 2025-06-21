@@ -1,6 +1,7 @@
 .idea/
 .directory
 dist/
+build/
 zipped/
 node_modules/
 stop-user-enumeration/includes/vendor/
