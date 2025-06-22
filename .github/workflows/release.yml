@@ -20,15 +20,16 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
-          tools: composer:v2
+          tools: composer:v2, wp-cli
           
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
         
+      - name: Install WP-CLI dist-archive command
+        run: wp package install wp-cli/dist-archive-command:@stable
+        
       - name: Build plugin for release
-        run: |
-          chmod +x ./build-clean.sh
-          ./build-clean.sh
+        run: composer run-script build
           
       - name: Get version
         id: get_version
@@ -63,6 +64,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./zipped/stop-user-enumeration-${{ steps.get_version.outputs.VERSION }}.zip
+          asset_path: ./zipped/stop-user-enumeration-free.zip
           asset_name: stop-user-enumeration-${{ steps.get_version.outputs.VERSION }}.zip
           asset_content_type: application/zip
