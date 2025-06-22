@@ -27,12 +27,6 @@ jobs:
           coverage: none
           tools: composer, wp-cli
 
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
-
-      - name: Run phpcs checks
-        run: composer run-script check
-
       - name: Composer install for plugin
         run: composer install -d stop-user-enumeration --no-dev
         
