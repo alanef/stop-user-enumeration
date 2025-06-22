@@ -114,13 +114,13 @@ jobs:
           unzip ../zipped/stop-user-enumeration-free.zip
           
           # Checkout SVN repository
-          svn checkout https://plugins.svn.wordpress.org/stop-user-enumeration/ --username "$SVN_USERNAME" --password "$SVN_PASSWORD" --no-auth-cache
+          svn checkout https://plugins.svn.wordpress.org/stop-user-enumeration/ svn-repo --username "$SVN_USERNAME" --password "$SVN_PASSWORD" --no-auth-cache
           
           # Copy files to trunk
-          rsync -av --delete --exclude='.svn' stop-user-enumeration/ stop-user-enumeration/trunk/
+          rsync -av --delete --exclude='.svn' stop-user-enumeration/ svn-repo/trunk/
           
           # Add new files and remove deleted files
-          cd stop-user-enumeration/trunk
+          cd svn-repo/trunk
           svn add --force * --auto-props --parents --depth infinity -q || true
           svn delete $( svn status | sed -e '/^!/!d' -e 's/^!//' ) || true
           
