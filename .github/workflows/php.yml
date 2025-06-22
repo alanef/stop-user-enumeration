@@ -52,7 +52,7 @@ jobs:
           find stop-user-enumeration -type f -exec chmod 644 {} \;
 
       - name: Run plugin check
-        uses: wordpress/plugin-check-action@v1
+        uses: wordpress/plugin-check-action@v1.0.7
         with:
           build-dir: './build/stop-user-enumeration'
           
