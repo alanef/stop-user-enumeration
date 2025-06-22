@@ -51,39 +51,26 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
           echo "Building version $VERSION"
           
-      - name: Verify version consistency
+      - name: Verify tag matches plugin version
         run: |
-          # Get versions from different files
+          # Get plugin version and tag version
           PLUGIN_VERSION=$(grep "Version:" stop-user-enumeration/stop-user-enumeration.php | awk '{print $2}')
-          README_VERSION=$(grep "Stable tag:" stop-user-enumeration/readme.txt | awk '{print $3}')
-          CONSTANT_VERSION=$(grep "define.*STOP_USER_ENUMERATION_PLUGIN_VERSION" stop-user-enumeration/stop-user-enumeration.php | sed -E "s/.*'([0-9.]+)'.*/\1/")
           TAG_VERSION=${GITHUB_REF#refs/tags/}
           TAG_VERSION=${TAG_VERSION#v}  # Remove 'v' prefix if present
           
-          echo "Plugin header version: $PLUGIN_VERSION"
-          echo "Readme stable tag: $README_VERSION"
-          echo "Plugin constant version: $CONSTANT_VERSION"
+          echo "Plugin version: $PLUGIN_VERSION"
           echo "Git tag version: $TAG_VERSION"
           
-          # Check if all versions match
-          if [ "$PLUGIN_VERSION" != "$README_VERSION" ]; then
-            echo "❌ ERROR: Version mismatch between plugin header ($PLUGIN_VERSION) and readme.txt ($README_VERSION)"
-            exit 1
-          fi
-          
-          if [ "$PLUGIN_VERSION" != "$CONSTANT_VERSION" ]; then
-            echo "❌ ERROR: Version mismatch between plugin header ($PLUGIN_VERSION) and version constant ($CONSTANT_VERSION)"
-            exit 1
-          fi
-          
+          # Check if tag matches plugin version
           if [ "$PLUGIN_VERSION" != "$TAG_VERSION" ]; then
             echo "❌ ERROR: Version mismatch between plugin version ($PLUGIN_VERSION) and git tag ($TAG_VERSION)"
             exit 1
           fi
           
-          echo "✅ All version numbers match: $PLUGIN_VERSION"
+          echo "✅ Tag version matches plugin version: $PLUGIN_VERSION"
           
       - name: Create Release
+        id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -53,6 +53,30 @@ jobs:
       - name: Run phpcs checks
         run: composer run-script check
 
+      - name: Verify version consistency
+        run: |
+          # Get versions from different files
+          PLUGIN_VERSION=$(grep "Version:" stop-user-enumeration/stop-user-enumeration.php | awk '{print $2}')
+          README_VERSION=$(grep "Stable tag:" stop-user-enumeration/readme.txt | awk '{print $3}')
+          CONSTANT_VERSION=$(grep "define.*STOP_USER_ENUMERATION_PLUGIN_VERSION" stop-user-enumeration/stop-user-enumeration.php | sed -E "s/.*'([0-9.]+)'.*/\1/")
+          
+          echo "Plugin header version: $PLUGIN_VERSION"
+          echo "Readme stable tag: $README_VERSION"
+          echo "Plugin constant version: $CONSTANT_VERSION"
+          
+          # Check if all versions match
+          if [ "$PLUGIN_VERSION" != "$README_VERSION" ]; then
+            echo "❌ ERROR: Version mismatch between plugin header ($PLUGIN_VERSION) and readme.txt ($README_VERSION)"
+            exit 1
+          fi
+          
+          if [ "$PLUGIN_VERSION" != "$CONSTANT_VERSION" ]; then
+            echo "❌ ERROR: Version mismatch between plugin header ($PLUGIN_VERSION) and version constant ($CONSTANT_VERSION)"
+            exit 1
+          fi
+          
+          echo "✅ All version numbers match: $PLUGIN_VERSION"
+
       - name: Install WP-CLI dist-archive command
         run: wp package install wp-cli/dist-archive-command
 
