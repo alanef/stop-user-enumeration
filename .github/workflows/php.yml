@@ -29,7 +29,10 @@ jobs:
 
       - name: Composer install for plugin
         run: composer install -d stop-user-enumeration --no-dev
-        
+
+      - name: Debug check
+        run:  ls -al;cd stop-user-enumeration;ls -al
+
       - name: Run plugin check
         uses: wordpress/plugin-check-action@v1
         with:
