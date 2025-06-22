@@ -28,7 +28,9 @@
       "wp i18n make-pot ./stop-user-enumeration  ./stop-user-enumeration/languages/stop-user-enumeration.pot --skip-audit --exclude='./vendor'"
     ],
     "build": [
-      "./build-clean.sh"
+      "cd stop-user-enumeration && composer install --no-dev",
+      "mkdir -p zipped",
+      "wp dist-archive stop-user-enumeration zipped/stop-user-enumeration-free.zip --force"
     ],
     "build-old": [
       "rm -rf zipped",

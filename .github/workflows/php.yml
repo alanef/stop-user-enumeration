@@ -37,16 +37,23 @@ jobs:
       - name: Run phpcs suit
         run: composer run-script check
 
+      - name: Install WP-CLI dist-archive command
+        run: |
+          wp package install wp-cli/dist-archive-command --allow-root || true
+          
       - name: Build plugin for distribution
         run: |
-          chmod +x ./build-clean.sh
-          ./build-clean.sh
+          # First ensure vendor directory exists in plugin
+          cd stop-user-enumeration && composer install --no-dev && cd ..
+          # Create distribution archive
+          mkdir -p zipped
+          wp dist-archive stop-user-enumeration zipped/stop-user-enumeration-free.zip --force --allow-root
           
       - name: Extract and prepare plugin for checks
         run: |
           mkdir -p build
           cd build
-          unzip -o ../zipped/stop-user-enumeration-*.zip
+          unzip -o ../zipped/stop-user-enumeration-free.zip
           # Fix permissions after extraction
           chmod -R 755 stop-user-enumeration
           find stop-user-enumeration -type f -exec chmod 644 {} \;
