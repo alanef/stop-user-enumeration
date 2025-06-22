@@ -44,7 +44,7 @@ jobs:
           wp dist-archive ./stop-user-enumeration ./stop-user-enumeration.zip
           mkdir tmp-build
           unzip stop-user-enumeration.zip -d tmp-build
-1
+
       - name: Run plugin check
         uses: wordpress/plugin-check-action@v1
         with:
