@@ -13,6 +13,44 @@ A WordPress security plugin that prevents user enumeration attacks by blocking u
 - Logs enumeration attempts for fail2ban integration
 - Removes numbers from comment author names
 
+## Project Structure
+
+This repository follows a standard WordPress plugin development structure with separation between development resources and the actual plugin code:
+
+```
+stop-user-enumeration/              # Repository root
+├── .github/workflows/              # GitHub Actions CI/CD
+├── tests/                          # PHPUnit test suite
+├── vendor/                         # Composer dependencies (dev only)
+├── .wp-env.json                    # WordPress environment config
+├── .wp-env.override.json           # Local environment overrides
+├── composer.json                   # Development dependencies
+├── package.json                    # Node.js scripts for testing
+├── phpcs_sec.xml                   # PHP CodeSniffer rules
+├── phpunit.xml.dist                # PHPUnit configuration
+├── README.md                       # This file
+└── stop-user-enumeration/          # The actual plugin directory
+    ├── admin/                      # Admin functionality
+    ├── frontend/                   # Frontend functionality
+    ├── includes/                   # Core plugin files
+    │   └── vendor/                 # Production dependencies
+    ├── languages/                  # Translation files
+    ├── changelog.txt               # Version history
+    ├── composer.json               # Plugin dependencies
+    ├── readme.txt                  # WordPress.org readme
+    ├── stop-user-enumeration.php   # Main plugin file
+    └── .distignore                 # Files to exclude from distribution
+
+```
+
+### Key Concepts
+
+- **Development resources** (tests, build tools, etc.) are at the repository root
+- **Plugin code** lives in the `stop-user-enumeration/` subdirectory
+- **Production dependencies** are installed in `stop-user-enumeration/includes/vendor/`
+- **Development dependencies** are installed in the root `vendor/` directory
+- The `.distignore` file controls what gets included in the distribution build
+
 ## Development
 
 ### Setup
@@ -26,6 +64,7 @@ A WordPress security plugin that prevents user enumeration attacks by blocking u
 2. Install development dependencies:
    ```bash
    composer install
+   npm install
    ```
 
 3. Install plugin dependencies:
@@ -33,29 +72,28 @@ A WordPress security plugin that prevents user enumeration attacks by blocking u
    composer update -d stop-user-enumeration
    ```
 
-### Project Structure
-
-- `/stop-user-enumeration` - Main plugin directory
-- `/tests` - Test files
-- `/.github/workflows` - GitHub Actions workflows
-- `/build-clean.sh` - Build script for creating distribution packages
-
 ### Building for Distribution
 
-To create a clean distribution package suitable for WordPress.org:
+The project uses `wp dist-archive` command to create clean distribution packages. This tool respects the `.distignore` file in the plugin directory to exclude development files.
 
 ```bash
-# Using the build script directly
-./build-clean.sh
+# Install wp-cli dist-archive command (first time only)
+wp package install wp-cli/dist-archive-command
 
-# Or using composer
+# Build the plugin
 composer run build
+
+# Or manually:
+cd stop-user-enumeration && composer install --no-dev && cd ..
+wp dist-archive ./stop-user-enumeration ./stop-user-enumeration.zip
 ```
 
 This will:
-- Install production dependencies only
-- Remove all development files (composer.json, tests, .git, etc.)
-- Create a clean zip in `zipped/stop-user-enumeration-{version}.zip`
+- Install production dependencies only (no dev dependencies)
+- Create a distribution-ready ZIP file excluding all files listed in `.distignore`
+- Output the ZIP to `zipped/stop-user-enumeration-free.zip`
+
+The `.distignore` file ensures that development files like tests, composer.json, phpunit configs, etc. are not included in the distribution package.
 
 ### Testing
 
@@ -80,7 +118,9 @@ composer run phpcs
 
 ### Unit Testing
 
-The plugin includes PHPUnit tests for security and functionality verification.
+The plugin uses [@wordpress/env](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/) for local development and testing. This provides a Docker-based WordPress environment configured via `.wp-env.json`.
+
+#### Setup Testing Environment
 
 1. Install dependencies:
    ```bash
@@ -92,6 +132,7 @@ The plugin includes PHPUnit tests for security and functionality verification.
    ```bash
    npm run start
    ```
+   This creates a local WordPress site at http://localhost:8888 with the plugin activated.
 
 3. Run PHPUnit tests:
    ```bash
@@ -113,6 +154,13 @@ The plugin includes PHPUnit tests for security and functionality verification.
    ```bash
    npm run stop
    ```
+
+#### Test Configuration
+
+- **`.wp-env.json`**: Defines the WordPress environment configuration
+- **`.wp-env.override.json`**: Local overrides for mappings and PHP version
+- **`phpunit.xml.dist`**: PHPUnit configuration
+- **`tests/`**: Contains all test files
 
 The test suite includes:
 - REST API security tests
@@ -148,9 +196,9 @@ The GitHub Actions release workflow will automatically:
 
 ### WordPress.org Submission
 
-After building with `./build-clean.sh`:
+After building with `composer run build`:
 
-1. Test the packaged plugin in a clean WordPress installation
+1. Test the packaged plugin from `zipped/stop-user-enumeration-free.zip` in a clean WordPress installation
 2. Run the Plugin Check plugin on the packaged version
 3. Submit to WordPress.org via SVN
 
