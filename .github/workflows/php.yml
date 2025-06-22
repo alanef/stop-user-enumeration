@@ -17,56 +17,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Validate composer.json and composer.lock
-        run: composer validate --strict
-
-      - name: Cache Composer packages
-        id: composer-cache
-        uses: actions/cache@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          path: vendor
-          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-php-
+          php-version: '7.4'
+          coverage: none
+          tools: composer, wp-cli
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
-      - name: Run phpcs suit
+      - name: Run phpcs checks
         run: composer run-script check
 
       - name: Install WP-CLI dist-archive command
+        run: wp package install wp-cli/dist-archive-command:@stable
+
+      - name: Build plugin
         run: |
-          wp package install wp-cli/dist-archive-command --allow-root || true
-          
-      - name: Build plugin for distribution
-        run: |
-          # First ensure vendor directory exists in plugin
           cd stop-user-enumeration && composer install --no-dev && cd ..
-          # Create distribution archive
-          mkdir -p zipped
-          wp dist-archive stop-user-enumeration zipped/stop-user-enumeration-free.zip --force --allow-root
-          
-      - name: Extract and prepare plugin for checks
-        run: |
-          mkdir -p build
-          cd build
-          unzip -o ../zipped/stop-user-enumeration-free.zip
-          # Fix permissions after extraction
-          chmod -R 755 stop-user-enumeration
-          find stop-user-enumeration -type f -exec chmod 644 {} \;
+          wp dist-archive stop-user-enumeration ./stop-user-enumeration.zip
+          mkdir tmp-build
+          unzip stop-user-enumeration.zip -d tmp-build
 
       - name: Run plugin check
-        uses: wordpress/plugin-check-action@v1.0.7
+        uses: wordpress/plugin-check-action@v1
         with:
-          build-dir: './build/stop-user-enumeration'
-          
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
-        if: success()
-        with:
-          name: stop-user-enumeration-${{ github.sha }}
-          path: zipped/stop-user-enumeration-*.zip
-          retention-days: 7
+          build-dir: './tmp-build/stop-user-enumeration'

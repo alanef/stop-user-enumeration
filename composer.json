@@ -32,12 +32,6 @@
       "mkdir -p zipped",
       "wp dist-archive stop-user-enumeration zipped/stop-user-enumeration-free.zip --force"
     ],
-    "build-old": [
-      "rm -rf zipped",
-      "@composer install -d stop-user-enumeration --no-dev",
-      "mkdir -p zipped",
-      "zip -r zipped/stop-user-enumeration-free.zip stop-user-enumeration"
-    ],
     "phpcs": "phpcs stop-user-enumeration -s --standard=phpcs_sec.xml --ignore=*/vendor/*  --extensions=php",
     "compat:8.3": "./vendor/bin/phpcs stop-user-enumeration -s --standard=PHPCompatibilityWP --ignore=*/vendor/*  --extensions=php --runtime-set testVersion 8.3",
     "compat:8.2": "./vendor/bin/phpcs stop-user-enumeration -s --standard=PHPCompatibilityWP --ignore=*/vendor/*  --extensions=php --runtime-set testVersion 8.2",
