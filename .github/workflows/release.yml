@@ -56,7 +56,7 @@ jobs:
           # Get versions from different files
           PLUGIN_VERSION=$(grep "Version:" stop-user-enumeration/stop-user-enumeration.php | awk '{print $2}')
           README_VERSION=$(grep "Stable tag:" stop-user-enumeration/readme.txt | awk '{print $3}')
-          CONSTANT_VERSION=$(grep "STOP_USER_ENUMERATION_PLUGIN_VERSION" stop-user-enumeration/stop-user-enumeration.php | grep -oP "'\K[^']+")
+          CONSTANT_VERSION=$(grep "define.*STOP_USER_ENUMERATION_PLUGIN_VERSION" stop-user-enumeration/stop-user-enumeration.php | sed -E "s/.*'([0-9.]+)'.*/\1/")
           TAG_VERSION=${GITHUB_REF#refs/tags/}
           TAG_VERSION=${TAG_VERSION#v}  # Remove 'v' prefix if present
           
