@@ -10,4 +10,4 @@ development is in /stop-user-enumeration
 to create a zip for release run `composer run build`
 
 
-This project is tested with BrowserStack.
+This project is tested with BrowserStack. ..
