@@ -46,7 +46,7 @@
       "@compat:7.4",
       "@phpcs"
     ],
-    "test": "phpunit",
-    "test:unit": "phpunit --testsuite 'Stop User Enumeration Test Suite'"
+    "test": "npm test",
+    "test:unit": "npm run test:unit"
   }
 }
