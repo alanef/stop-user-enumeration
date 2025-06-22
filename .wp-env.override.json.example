@@ -1,7 +1,7 @@
 {
   "phpVersion": "7.4",
   "plugins": [
-    "./build/stop-user-enumeration"
+    "./stop-user-enumeration"
   ],
   "mappings": {
     "tests": "./tests",
