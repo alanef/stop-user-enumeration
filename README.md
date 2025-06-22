@@ -132,7 +132,7 @@ The plugin uses [@wordpress/env](https://developer.wordpress.org/block-editor/re
    ```bash
    npm run start
    ```
-   This creates a local WordPress site at http://localhost:8888 with the plugin activated.
+   This automatically copies `.wp-env.override.json.example` to `.wp-env.override.json` if needed and creates a local WordPress site at http://localhost:8888 with the plugin activated.
 
 3. Run PHPUnit tests:
    ```bash

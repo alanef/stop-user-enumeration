@@ -2,9 +2,11 @@
   "name": "stop-user-enumeration-project",
   "version": "1.0.0",
   "scripts": {
+    "pretest": "[ ! -f .wp-env.override.json ] && cp .wp-env.override.json.example .wp-env.override.json || true",
     "test": "./run-tests.sh",
     "test:unit": "./run-tests.sh",
     "wp-env": "wp-env",
+    "prestart": "[ ! -f .wp-env.override.json ] && cp .wp-env.override.json.example .wp-env.override.json || true",
     "start": "wp-env start",
     "stop": "wp-env stop",
     "test:vulnerabilities": "./test-vulnerability-with-wp-env.sh",
