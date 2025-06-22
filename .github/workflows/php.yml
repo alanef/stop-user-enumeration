@@ -42,11 +42,7 @@ jobs:
           chmod +x ./build-clean.sh
           ./build-clean.sh
           
-      - name: Extract built plugin for checks
-        run: |
-          cd build
-          unzip -o ../zipped/stop-user-enumeration-*.zip
-          
+
       - name: Run plugin check
         uses: wordpress/plugin-check-action@v1
         with:
