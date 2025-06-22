@@ -54,7 +54,7 @@ jobs:
         run: composer run-script check
 
       - name: Install WP-CLI dist-archive command
-        run: wp package install wp-cli/dist-archive-command:@stable
+        run: wp package install wp-cli/dist-archive-command
 
       - name: Build plugin
         run: |

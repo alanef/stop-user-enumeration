@@ -39,7 +39,7 @@ jobs:
         run: composer install --prefer-dist --no-progress
         
       - name: Install WP-CLI dist-archive command
-        run: wp package install wp-cli/dist-archive-command:@stable
+        run: wp package install wp-cli/dist-archive-command
         
       - name: Build plugin for release
         run: composer run-script build
