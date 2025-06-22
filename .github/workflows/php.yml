@@ -33,47 +33,12 @@ jobs:
       - name: Run phpcs checks
         run: composer run-script check
 
-      - name: Install WP-CLI dist-archive command
-        run: wp package install wp-cli/dist-archive-command:@stable
-
-      - name: Build plugin
-        run: |
-          cd stop-user-enumeration
-          composer install --no-dev
-          cd ..
-          wp dist-archive ./stop-user-enumeration ./stop-user-enumeration.zip
-          mkdir tmp-build
-          unzip stop-user-enumeration.zip -d tmp-build
-
-      - name: Setup MySQL
-        run: |
-          sudo systemctl start mysql
-          sudo mysql -e "CREATE DATABASE IF NOT EXISTS wordpress;"
-          sudo mysql -e "CREATE USER IF NOT EXISTS 'wordpress'@'localhost' IDENTIFIED BY 'wordpress';"
-          sudo mysql -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost';"
-          sudo mysql -e "FLUSH PRIVILEGES;"
-          
-      - name: Setup WordPress and Run Plugin Check
-        run: |
-          # Download WordPress
-          mkdir -p wordpress
-          cd wordpress
-          wp core download
-          
-          # Create wp-config.php
-          wp config create --dbname=wordpress --dbuser=wordpress --dbpass=wordpress --dbhost=localhost
-          
-          # Install WordPress
-          wp core install --url=http://localhost --title="Test Site" --admin_user=admin --admin_password=password --admin_email=admin@example.com --skip-email
-          
-          # Copy plugin to WordPress
-          cp -r ../tmp-build/stop-user-enumeration wp-content/plugins/
-          
-          # Install Plugin Check plugin
-          wp plugin install plugin-check --activate
-          
-          # Activate our plugin
-          wp plugin activate stop-user-enumeration
-          
-          # Run plugin check
-          wp plugin check stop-user-enumeration --format=json || true
+      - name: Composer install for plugin
+        run: composer install -d stop-user-enumeration --no-dev
+        
+      - name: Run plugin check
+        uses: wordpress/plugin-check-action@v1
+        with:
+          build-dir: './stop-user-enumeration'
+          exclude-directories: |
+            'includes/vendor'
