@@ -1,0 +1,79 @@
+name: Test SVN Deployment
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-svn:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          tools: composer:v2, wp-cli
+          
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+        
+      - name: Install WP-CLI dist-archive command
+        run: wp package install wp-cli/dist-archive-command
+        
+      - name: Build plugin for release
+        run: composer run-script build
+          
+      - name: Get version
+        id: get_version
+        run: |
+          VERSION=$(grep "Version:" stop-user-enumeration/stop-user-enumeration.php | awk '{print $2}')
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "Building version $VERSION"
+          
+      - name: Test SVN Deployment (DRY RUN)
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+        run: |
+          # Install subversion
+          sudo apt-get update
+          sudo apt-get install -y subversion
+          
+          # Extract plugin to temporary directory
+          mkdir -p svn-tmp
+          cd svn-tmp
+          unzip ../zipped/stop-user-enumeration-free.zip
+          
+          # List extracted contents to verify structure
+          echo "=== Extracted plugin structure ==="
+          ls -la
+          echo "=== Plugin contents ==="
+          ls -la stop-user-enumeration/
+          
+          # Checkout SVN repository
+          echo "=== Checking out SVN repository ==="
+          svn checkout https://plugins.svn.wordpress.org/stop-user-enumeration/ svn-repo --username "$SVN_USERNAME" --password "$SVN_PASSWORD" --no-auth-cache --depth empty
+          
+          # Check SVN structure
+          cd svn-repo
+          svn update --set-depth immediates
+          echo "=== SVN repository structure ==="
+          ls -la
+          
+          # Update trunk to see current contents
+          svn update trunk --set-depth infinity
+          echo "=== Current trunk contents ==="
+          ls -la trunk/
+          
+          cd ..
+          
+          # Show what would be copied
+          echo "=== What rsync would copy ==="
+          rsync -av --dry-run --delete --exclude='.svn' stop-user-enumeration/ svn-repo/trunk/
+          
+          echo "✅ SVN deployment test completed (DRY RUN)"
