@@ -27,15 +27,35 @@ jobs:
           coverage: none
           tools: composer, wp-cli
 
-      - name: Composer install for plugin
-        run: composer install -d stop-user-enumeration --no-dev
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
 
-      - name: Debug check
-        run:  ls -al;cd stop-user-enumeration;ls -al
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run phpcs checks
+        run: composer run-script check
+
+      - name: Install WP-CLI dist-archive command
+        run: wp package install wp-cli/dist-archive-command:@stable
+
+      - name: Build plugin
+        run: |
+          cd stop-user-enumeration && composer install --no-dev && cd ..
+          wp dist-archive ./stop-user-enumeration ./stop-user-enumeration.zip
+          mkdir tmp-build
+          unzip stop-user-enumeration.zip -d tmp-build
 
       - name: Run plugin check
         uses: wordpress/plugin-check-action@v1
         with:
-          build-dir: './stop-user-enumeration'
-          exclude-directories: |
-            'includes/vendor'
+          build-dir: './tmp-build/stop-user-enumeration'
