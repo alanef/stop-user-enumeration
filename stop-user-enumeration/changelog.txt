@@ -6,7 +6,36 @@
 * Enhanced IP address validation using FILTER_VALIDATE_IP
 * Fixed X-Forwarded-For header handling to properly parse multiple IPs
 
-= 1.7.2 =
+= it ran further ithink but   ℹ Starting 'wp cli info' on the cli container.
+
+                              OS:	Linux 6.11.0-1015-azure #15~24.04.1-Ubuntu SMP Thu May  1 02:52:08 UTC 2025 x86_64
+                              Shell:
+                              PHP binary:	/usr/local/bin/php
+                              PHP version:	7.4.33
+                              php.ini used:	/usr/local/etc/php/php.ini
+                              MySQL binary:	/usr/bin/mysql
+                              MySQL version:	mysql  Ver 15.1 Distrib 10.6.10-MariaDB, for Linux (x86_64) using readline 5.1
+                              SQL modes:
+                              WP-CLI root dir:	phar://wp-cli.phar/vendor/wp-cli/wp-cli
+                              WP-CLI vendor dir:	phar://wp-cli.phar/vendor
+                              WP_CLI phar path:	/var/www/html
+                              WP-CLI packages dir:
+                              WP-CLI cache dir:	/home/runner/.wp-cli/cache
+                              WP-CLI global config:
+                              WP-CLI project config:
+                              WP-CLI version:	2.7.1
+                              ✔ Ran `wp cli info` in 'cli'. (in 0s 311ms)
+                              ℹ Starting 'wp plugin list' on the cli container.
+
+                              name	status	update	version
+                              hello	inactive	none	1.7.2
+                              stop-user-enumeration	active	version higher than expected	1.7.3
+                              ✔ Ran `wp plugin list` in 'cli'. (in 0s 481ms)
+                              ℹ Starting 'wp plugin list-checks' on the cli container.
+
+                              Error: 'list-checks' is not a registered subcommand of 'plugin'. See 'wp help plugin' for available subcommands.
+
+                              ✖ Command failed with exit code 1bu1.7.2 =
 * Fix ability to by-pass the WP REST API protection functionality, props Bob @ WpScan
 
 = 1.7.1 =

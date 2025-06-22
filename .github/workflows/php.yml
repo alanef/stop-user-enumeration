@@ -42,6 +42,14 @@ jobs:
           chmod +x ./build-clean.sh
           ./build-clean.sh
           
+      - name: Extract and prepare plugin for checks
+        run: |
+          mkdir -p build
+          cd build
+          unzip -o ../zipped/stop-user-enumeration-*.zip
+          # Fix permissions after extraction
+          chmod -R 755 stop-user-enumeration
+          find stop-user-enumeration -type f -exec chmod 644 {} \;
 
       - name: Run plugin check
         uses: wordpress/plugin-check-action@v1
