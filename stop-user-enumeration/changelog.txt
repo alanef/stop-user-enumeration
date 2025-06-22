@@ -1,4 +1,7 @@
 == Changelog ==
+= 1.7.4 =
+* fix changelog
+
 = 1.7.3 =
 * Fixed URL-encoding bypass vulnerability in REST API protection
 * Fixed simple-jwt-login bypass vulnerability by checking exceptions only in route paths, not query parameters
