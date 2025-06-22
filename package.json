@@ -10,7 +10,8 @@
     "start": "wp-env start",
     "stop": "wp-env stop",
     "test:vulnerabilities": "./test-vulnerability-with-wp-env.sh",
-    "test:fixes": "php tests/test-vulnerability-fixes.php"
+    "test:fixes": "php tests/test-vulnerability-fixes.php",
+    "build": "composer run-script build"
   },
   "keywords": [],
   "author": "Alan Fuller <alan@fullerfamily.uk>",

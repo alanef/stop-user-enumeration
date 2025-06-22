@@ -3,23 +3,36 @@ name: Build Release
 on:
   push:
     tags:
-      - 'v*.*.*'
-      - '*.*.*'
+      - 'v*.*.*'    # Matches v1.7.3
+      - '*.*.*'      # Matches 1.7.3
+      - 'v*.*'       # Matches v2.3
+      - '*.*'        # Matches 2.3
 
 permissions:
   contents: write
 
 jobs:
+  run-checks:
+    uses: ./.github/workflows/checks.yml
+    
   build-release:
+    needs: run-checks
     runs-on: ubuntu-latest
     
     steps:
       - uses: actions/checkout@v4
       
+      - name: Get required PHP version
+        id: php_version
+        run: |
+          PHP_VERSION=$(grep "Requires PHP:" stop-user-enumeration/stop-user-enumeration.php | awk '{print $3}')
+          echo "PHP_VERSION=$PHP_VERSION" >> $GITHUB_OUTPUT
+          echo "Plugin requires PHP $PHP_VERSION"
+      
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: ${{ steps.php_version.outputs.PHP_VERSION }}
           tools: composer:v2, wp-cli
           
       - name: Install dependencies
@@ -38,6 +51,38 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
           echo "Building version $VERSION"
           
+      - name: Verify version consistency
+        run: |
+          # Get versions from different files
+          PLUGIN_VERSION=$(grep "Version:" stop-user-enumeration/stop-user-enumeration.php | awk '{print $2}')
+          README_VERSION=$(grep "Stable tag:" stop-user-enumeration/readme.txt | awk '{print $3}')
+          CONSTANT_VERSION=$(grep "STOP_USER_ENUMERATION_PLUGIN_VERSION" stop-user-enumeration/stop-user-enumeration.php | grep -oP "'\K[^']+")
+          TAG_VERSION=${GITHUB_REF#refs/tags/}
+          TAG_VERSION=${TAG_VERSION#v}  # Remove 'v' prefix if present
+          
+          echo "Plugin header version: $PLUGIN_VERSION"
+          echo "Readme stable tag: $README_VERSION"
+          echo "Plugin constant version: $CONSTANT_VERSION"
+          echo "Git tag version: $TAG_VERSION"
+          
+          # Check if all versions match
+          if [ "$PLUGIN_VERSION" != "$README_VERSION" ]; then
+            echo "❌ ERROR: Version mismatch between plugin header ($PLUGIN_VERSION) and readme.txt ($README_VERSION)"
+            exit 1
+          fi
+          
+          if [ "$PLUGIN_VERSION" != "$CONSTANT_VERSION" ]; then
+            echo "❌ ERROR: Version mismatch between plugin header ($PLUGIN_VERSION) and version constant ($CONSTANT_VERSION)"
+            exit 1
+          fi
+          
+          if [ "$PLUGIN_VERSION" != "$TAG_VERSION" ]; then
+            echo "❌ ERROR: Version mismatch between plugin version ($PLUGIN_VERSION) and git tag ($TAG_VERSION)"
+            exit 1
+          fi
+          
+          echo "✅ All version numbers match: $PLUGIN_VERSION"
+          
       - name: Create Release
         uses: actions/create-release@v1
         env:
@@ -51,10 +96,9 @@ jobs:
             ## Changes
             See [changelog.txt](https://github.com/alanef/stop-user-enumeration/blob/main/stop-user-enumeration/changelog.txt) for details.
             
-            ## Security Fixes in 1.7.3
-            - Fixed URL-encoding bypass vulnerability in REST API protection
-            - Fixed simple-jwt-login bypass vulnerability
-            - Enhanced IP address validation
+            
+            ## Installation
+            Download the attached zip file and upload to your WordPress site.
           draft: false
           prerelease: false
           
@@ -67,3 +111,37 @@ jobs:
           asset_path: ./zipped/stop-user-enumeration-free.zip
           asset_name: stop-user-enumeration-${{ steps.get_version.outputs.VERSION }}.zip
           asset_content_type: application/zip
+          
+      - name: Deploy to WordPress.org
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+        run: |
+          # Install subversion
+          sudo apt-get update
+          sudo apt-get install -y subversion
+          
+          # Extract plugin to temporary directory
+          mkdir -p svn-tmp
+          cd svn-tmp
+          unzip ../zipped/stop-user-enumeration-free.zip
+          
+          # Checkout SVN repository
+          svn checkout https://plugins.svn.wordpress.org/stop-user-enumeration/ --username "$SVN_USERNAME" --password "$SVN_PASSWORD" --no-auth-cache
+          
+          # Copy files to trunk
+          rsync -av --delete --exclude='.svn' stop-user-enumeration/ stop-user-enumeration/trunk/
+          
+          # Add new files and remove deleted files
+          cd stop-user-enumeration/trunk
+          svn add --force * --auto-props --parents --depth infinity -q || true
+          svn delete $( svn status | sed -e '/^!/!d' -e 's/^!//' ) || true
+          
+          # Copy to tags
+          cd ..
+          svn cp trunk tags/${{ steps.get_version.outputs.VERSION }}
+          
+          # Commit to SVN
+          svn commit -m "Release version ${{ steps.get_version.outputs.VERSION }}" --username "$SVN_USERNAME" --password "$SVN_PASSWORD" --no-auth-cache
+          
+          echo "✅ Successfully deployed to WordPress.org"

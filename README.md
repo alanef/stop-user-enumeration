@@ -2,7 +2,7 @@
 
 A WordPress security plugin that prevents user enumeration attacks by blocking unauthorized access to user data through various WordPress endpoints.
 
-[![Plugin Check](https://github.com/alanef/stop-user-enumeration/actions/workflows/php.yml/badge.svg)](https://github.com/alanef/stop-user-enumeration/actions/workflows/php.yml)
+[![Plugin Check](https://github.com/alanef/stop-user-enumeration/actions/workflows/checks.yml/badge.svg)](https://github.com/alanef/stop-user-enumeration/actions/workflows/checks.yml)
 
 ## Features
 

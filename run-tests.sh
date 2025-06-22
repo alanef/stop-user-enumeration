@@ -26,5 +26,17 @@ wp-env run tests-cli bash -c "
     export WP_TESTS_DIR=/wordpress-phpunit && \
     export WP_TESTS_PHPUNIT_POLYFILLS_PATH=/var/www/html/vendor/yoast/phpunit-polyfills && \
     cd /var/www/html && \
-    php ./vendor/bin/phpunit --configuration phpunit.xml.dist
+    php ./vendor/bin/phpunit --configuration phpunit.xml.dist --colors=always --testdox
 "
+
+# Check exit status and display result
+if [ $? -eq 0 ]; then
+    echo ""
+    echo -e "\033[32m✅ All tests passed!\033[0m"
+    echo ""
+else
+    echo ""
+    echo -e "\033[31m❌ Some tests failed!\033[0m"
+    echo ""
+    exit 1
+fi
