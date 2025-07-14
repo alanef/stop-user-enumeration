@@ -70,13 +70,10 @@ jobs:
           echo "✅ Tag version matches plugin version: $PLUGIN_VERSION"
           
       - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ steps.get_version.outputs.VERSION }}
+          name: Release ${{ steps.get_version.outputs.VERSION }}
           body: |
             Release of Stop User Enumeration v${{ steps.get_version.outputs.VERSION }}
             
@@ -88,16 +85,8 @@ jobs:
             Download the attached zip file and upload to your WordPress site.
           draft: false
           prerelease: false
-          
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./zipped/stop-user-enumeration-free.zip
-          asset_name: stop-user-enumeration-${{ steps.get_version.outputs.VERSION }}.zip
-          asset_content_type: application/zip
+          files: |
+            ./zipped/stop-user-enumeration-free.zip#stop-user-enumeration-${{ steps.get_version.outputs.VERSION }}.zip
           
       - name: Deploy to WordPress.org
         env:
