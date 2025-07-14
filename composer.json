@@ -33,12 +33,14 @@
       "wp dist-archive stop-user-enumeration zipped/stop-user-enumeration-free.zip --force"
     ],
     "phpcs": "phpcs stop-user-enumeration -s --standard=phpcs_sec.xml --ignore=*/vendor/*  --extensions=php",
+    "compat:8.4": "./vendor/bin/phpcs stop-user-enumeration -s --standard=PHPCompatibilityWP --ignore=*/vendor/*  --extensions=php --runtime-set testVersion 8.4",
     "compat:8.3": "./vendor/bin/phpcs stop-user-enumeration -s --standard=PHPCompatibilityWP --ignore=*/vendor/*  --extensions=php --runtime-set testVersion 8.3",
     "compat:8.2": "./vendor/bin/phpcs stop-user-enumeration -s --standard=PHPCompatibilityWP --ignore=*/vendor/*  --extensions=php --runtime-set testVersion 8.2",
     "compat:8.1": "./vendor/bin/phpcs stop-user-enumeration -s --standard=PHPCompatibilityWP --ignore=*/vendor/*  --extensions=php --runtime-set testVersion 8.1",
     "compat:8.0": "./vendor/bin/phpcs stop-user-enumeration -s --standard=PHPCompatibilityWP --ignore=*/vendor/*  --extensions=php --runtime-set testVersion 8.0",
     "compat:7.4": "./vendor/bin/phpcs stop-user-enumeration -s --standard=PHPCompatibilityWP --ignore=*/vendor/*  --extensions=php --runtime-set testVersion 7.4",
     "check": [
+      "@compat:8.4",
       "@compat:8.3",
       "@compat:8.2",
       "@compat:8.1",

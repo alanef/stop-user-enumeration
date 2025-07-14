@@ -1,4 +1,9 @@
 == Changelog ==
+= 1.7.5 =
+* Added PHP 8.4 compatibility
+* Updated wp-env configuration to use PHP 8.4
+* Added PHP 8.4 compatibility checks to build process
+
 = 1.7.4 =
 * fix changelog
 

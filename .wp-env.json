@@ -1,4 +1,5 @@
 {
+  "phpVersion": "8.4",
   "plugins": [
     "./stop-user-enumeration"
   ],

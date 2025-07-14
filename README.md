@@ -109,6 +109,7 @@ composer run compat:8.0
 composer run compat:8.1
 composer run compat:8.2
 composer run compat:8.3
+composer run compat:8.4
 ```
 
 Run security checks:
