@@ -10,3 +10,4 @@ stop-user-enumeration/includes/vendor/
 .phpunit.result.cache
 *.phpunit.result.cache
 .wp-env.override.json
+.env.wordpress
