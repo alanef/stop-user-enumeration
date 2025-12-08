@@ -1,0 +1,11 @@
+{
+  "phpVersion": "7.4",
+  "plugins": [
+    "./stop-user-enumeration"
+  ],
+  "mappings": {
+    "tests": "./tests",
+    "vendor": "./vendor",
+    "phpunit.xml.dist": "./phpunit.xml.dist"
+  }
+}

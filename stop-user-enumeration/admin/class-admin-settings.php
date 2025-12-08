@@ -113,7 +113,10 @@ class Admin_Settings extends Admin_Pages {
 		?>
         <table class="form-table">
             <tbody>
-            <?php do_action('ffpl_ad_display'); ?>
+            <?php
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- external hook from Opt-in Library
+			do_action('ffpl_ad_display');
+			?>
             <tr class="alternate">
                 <th scope="row"><?php esc_html_e( 'About this Plugin', 'stop-user-enumeration' ); ?></th>
                 <td><p>
