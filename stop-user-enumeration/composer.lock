@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "alanef/free_plugin_lib",
-            "version": "v1.0.1",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/alanef/free_plugin_lib.git",
-                "reference": "ed52c33c73999a1fe1ee5a1b00581b9462111ac8"
+                "reference": "130038e3e79b09eb50d1585503cbf30203cbd152"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/alanef/free_plugin_lib/zipball/ed52c33c73999a1fe1ee5a1b00581b9462111ac8",
-                "reference": "ed52c33c73999a1fe1ee5a1b00581b9462111ac8",
+                "url": "https://api.github.com/repos/alanef/free_plugin_lib/zipball/130038e3e79b09eb50d1585503cbf30203cbd152",
+                "reference": "130038e3e79b09eb50d1585503cbf30203cbd152",
                 "shasum": ""
             },
             "require": {
@@ -48,9 +48,9 @@
             "description": "Library to add to free plugins, in compliance with wp.org",
             "support": {
                 "issues": "https://github.com/alanef/free_plugin_lib/issues",
-                "source": "https://github.com/alanef/free_plugin_lib/tree/v1.0.1"
+                "source": "https://github.com/alanef/free_plugin_lib/tree/v1.1.0"
             },
-            "time": "2025-02-18T15:16:14+00:00"
+            "time": "2025-12-08T14:40:01+00:00"
         },
         {
             "name": "composer/installers",

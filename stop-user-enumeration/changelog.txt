@@ -1,4 +1,8 @@
 == Changelog ==
+= 1.7.6 =
+* Updated WP 6.9 tested note
+* Updated opt-in library to 1.1.0
+
 = 1.7.5 =
 * Added PHP 8.4 compatibility
 * Updated wp-env configuration to use PHP 8.4
