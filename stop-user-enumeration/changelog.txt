@@ -1,4 +1,7 @@
 == Changelog ==
+= 1.7.7 =
+* Updated opt-in library to 1.2.0
+
 = 1.7.6 =
 * Updated WP 6.9 tested note
 * Updated opt-in library to 1.1.0

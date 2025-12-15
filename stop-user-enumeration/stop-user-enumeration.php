@@ -3,7 +3,7 @@
 Plugin Name: Stop User Enumeration
 Plugin URI: https://fullworksplugins.com/products/stop-user-enumeration/
 Description: Helps secure your site against hacking attacks through detecting  User Enumeration
-Version: 1.7.6
+Version: 1.7.7
 Author: Fullworks
 Requires at least: 6.3
 Requires PHP: 7.4
@@ -42,7 +42,7 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'STOP_USER_ENUMERATION_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 // Define the plugin version constant.
-define( 'STOP_USER_ENUMERATION_PLUGIN_VERSION', '1.7.6' );
+define( 'STOP_USER_ENUMERATION_PLUGIN_VERSION', '1.7.7' );
 
 // Include the autoloader to dynamically include the classes.
 require_once STOP_USER_ENUMERATION_PLUGIN_DIR  . 'includes/vendor/autoload.php';
@@ -58,6 +58,11 @@ require_once STOP_USER_ENUMERATION_PLUGIN_DIR  . 'includes/vendor/autoload.php';
 function run_stop_user_enumeration() {
 	register_activation_hook( __FILE__, array( '\Stop_User_Enumeration\Includes\Activator', 'activate' ) );
 	register_uninstall_hook( __FILE__, array( '\Stop_User_Enumeration\Includes\Uninstall', 'uninstall' ) );
+	new \Fullworks_Free_Plugin_Lib\Main('stop-user-enumeration/stop-user-enumeration.php',
+		admin_url( 'options-general.php?page=stop-user-enumeration' ),
+		'SUE',
+		'stop-user-enumeration',
+		'Stop User Enumeration');
 	$plugin = new Core();
 	$plugin->run();
 }

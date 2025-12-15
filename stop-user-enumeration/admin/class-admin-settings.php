@@ -33,11 +33,6 @@ class Admin_Settings extends Admin_Pages {
 		$this->plugin_name    = $plugin_name;
 		$this->version        = $version;
 		parent::__construct();
-		new \Fullworks_Free_Plugin_Lib\Main('stop-user-enumeration/stop-user-enumeration.php',
-			admin_url( 'options-general.php?page=stop-user-enumeration' ),
-			'SUE',
-			'html_files_page_load-html-files-settings',
-			$this->settings_title);
 	}
 
 
