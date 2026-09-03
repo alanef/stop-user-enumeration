@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Managed by wordpress-plugin-boilerplate/tooling - fix there first, then run bin/sync-tooling.sh -->
 <phpunit
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
@@ -11,8 +12,9 @@
     >
     <testsuites>
         <testsuite name="Stop User Enumeration Test Suite">
-            <directory suffix=".php">./tests/</directory>
-            <exclude>./tests/bootstrap.php</exclude>
+            <!-- Either naming convention: tests/test-foo.php or tests/**/FooTest.php -->
+            <directory prefix="test-" suffix=".php">./tests</directory>
+            <directory suffix="Test.php">./tests</directory>
             <exclude>./tests/manual-vulnerability-test.php</exclude>
             <exclude>./tests/test-vulnerability-fixes.php</exclude>
         </testsuite>
@@ -22,6 +24,7 @@
             <directory suffix=".php">./stop-user-enumeration</directory>
         </include>
         <exclude>
+            <directory>./stop-user-enumeration/vendor</directory>
             <directory>./stop-user-enumeration/includes/vendor</directory>
             <directory>./stop-user-enumeration/languages</directory>
         </exclude>

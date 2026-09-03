@@ -1,7 +1,7 @@
 {
-  "name": "fullworks/stop-user-enumeration",
-  "description": "Wordpress plugin to detect user enumeration attempts",
-  "type": "wordpress-plugin",
+  "name": "fullworks/stop-user-enumeration-project",
+  "description": "Development project for the Stop User Enumeration WordPress plugin",
+  "type": "project",
   "license": "GPL-2.0-or-later",
   "authors": [
     {
@@ -18,27 +18,31 @@
     }
   },
   "require-dev": {
+    "squizlabs/php_codesniffer": "3.*",
     "wp-coding-standards/wpcs": ">=2.3.0",
     "phpcompatibility/phpcompatibility-wp": "*",
     "phpunit/phpunit": "^9.5",
-    "yoast/phpunit-polyfills": "^1.0"
+    "yoast/phpunit-polyfills": "^1.1"
   },
   "scripts": {
-    "post-update-cmd": ["composer update -d stop-user-enumeration",
-      "wp i18n make-pot ./stop-user-enumeration  ./stop-user-enumeration/languages/stop-user-enumeration.pot --skip-audit --exclude='./vendor'"
+    "post-update-cmd": [
+      "@plugin-update",
+      "@make-pot"
     ],
+    "plugin-update": "if [ -f stop-user-enumeration/composer.json ]; then composer update -d stop-user-enumeration; fi",
+    "make-pot": "mkdir -p stop-user-enumeration/languages && wp i18n make-pot ./stop-user-enumeration ./stop-user-enumeration/languages/stop-user-enumeration.pot --skip-audit --exclude='vendor,includes/vendor,node_modules'",
     "build": [
-      "cd stop-user-enumeration && composer install --no-dev",
+      "if [ -f stop-user-enumeration/composer.json ]; then composer install -d stop-user-enumeration --no-dev; fi",
       "mkdir -p zipped",
       "wp dist-archive stop-user-enumeration zipped/stop-user-enumeration-free.zip --force"
     ],
-    "phpcs": "phpcs stop-user-enumeration -s --standard=phpcs_sec.xml --ignore=*/vendor/*  --extensions=php",
-    "compat:8.4": "./vendor/bin/phpcs stop-user-enumeration -s --standard=PHPCompatibilityWP --ignore=*/vendor/*  --extensions=php --runtime-set testVersion 8.4",
-    "compat:8.3": "./vendor/bin/phpcs stop-user-enumeration -s --standard=PHPCompatibilityWP --ignore=*/vendor/*  --extensions=php --runtime-set testVersion 8.3",
-    "compat:8.2": "./vendor/bin/phpcs stop-user-enumeration -s --standard=PHPCompatibilityWP --ignore=*/vendor/*  --extensions=php --runtime-set testVersion 8.2",
-    "compat:8.1": "./vendor/bin/phpcs stop-user-enumeration -s --standard=PHPCompatibilityWP --ignore=*/vendor/*  --extensions=php --runtime-set testVersion 8.1",
-    "compat:8.0": "./vendor/bin/phpcs stop-user-enumeration -s --standard=PHPCompatibilityWP --ignore=*/vendor/*  --extensions=php --runtime-set testVersion 8.0",
-    "compat:7.4": "./vendor/bin/phpcs stop-user-enumeration -s --standard=PHPCompatibilityWP --ignore=*/vendor/*  --extensions=php --runtime-set testVersion 7.4",
+    "phpcs": "phpcs stop-user-enumeration -s --standard=phpcs_sec.xml --ignore=*/vendor/* --extensions=php",
+    "compat:8.4": "phpcs stop-user-enumeration -s --standard=PHPCompatibilityWP --ignore=*/vendor/* --extensions=php --runtime-set testVersion 8.4",
+    "compat:8.3": "phpcs stop-user-enumeration -s --standard=PHPCompatibilityWP --ignore=*/vendor/* --extensions=php --runtime-set testVersion 8.3",
+    "compat:8.2": "phpcs stop-user-enumeration -s --standard=PHPCompatibilityWP --ignore=*/vendor/* --extensions=php --runtime-set testVersion 8.2",
+    "compat:8.1": "phpcs stop-user-enumeration -s --standard=PHPCompatibilityWP --ignore=*/vendor/* --extensions=php --runtime-set testVersion 8.1",
+    "compat:8.0": "phpcs stop-user-enumeration -s --standard=PHPCompatibilityWP --ignore=*/vendor/* --extensions=php --runtime-set testVersion 8.0",
+    "compat:7.4": "phpcs stop-user-enumeration -s --standard=PHPCompatibilityWP --ignore=*/vendor/* --extensions=php --runtime-set testVersion 7.4",
     "check": [
       "@compat:8.4",
       "@compat:8.3",
@@ -48,7 +52,6 @@
       "@compat:7.4",
       "@phpcs"
     ],
-    "test": "npm test",
-    "test:unit": "npm run test:unit"
+    "test": "npm test"
   }
 }

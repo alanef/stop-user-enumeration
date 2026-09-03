@@ -1,3 +1,4 @@
+# Managed by wordpress-plugin-boilerplate/tooling - fix there first, then run bin/sync-tooling.sh
 name: Plugin Check
 
 on:
@@ -12,9 +13,14 @@ on:
 permissions:
   contents: read
 
-jobs:
-  build:
+env:
+  PLUGIN_DIR: stop-user-enumeration
+  PLUGIN_FILE: stop-user-enumeration/stop-user-enumeration.php
+  VERSION_CONSTANT: "STOP_USER_ENUMERATION_PLUGIN_VERSION"
 
+jobs:
+  checks:
+    name: PHPCS, version consistency and Plugin Check
     runs-on: ubuntu-latest
 
     steps:
@@ -24,9 +30,12 @@ jobs:
       - name: Get required PHP version
         id: php_version
         run: |
-          PHP_VERSION=$(grep "Requires PHP:" stop-user-enumeration/stop-user-enumeration.php | awk '{print $3}')
+          PHP_VERSION=$(grep -m1 "Requires PHP:" "$PLUGIN_FILE" | sed -E 's/.*Requires PHP:[[:space:]]*//' | tr -d ' \r')
+          PHP_VERSION=${PHP_VERSION:-7.4}
+          # The dev tooling (PHPUnit 9, PHPCS 3) needs PHP 7.4+, whatever the plugin itself supports.
+          if [ "$(printf '%s\n' "$PHP_VERSION" 7.4 | sort -V | head -1)" != "7.4" ]; then PHP_VERSION=7.4; fi
           echo "PHP_VERSION=$PHP_VERSION" >> $GITHUB_OUTPUT
-          echo "Plugin requires PHP $PHP_VERSION"
+          echo "Using PHP $PHP_VERSION"
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -39,7 +48,6 @@ jobs:
         run: composer validate --strict
 
       - name: Cache Composer packages
-        id: composer-cache
         uses: actions/cache@v4
         with:
           path: vendor
@@ -55,27 +63,26 @@ jobs:
 
       - name: Verify version consistency
         run: |
-          # Get versions from different files
-          PLUGIN_VERSION=$(grep "Version:" stop-user-enumeration/stop-user-enumeration.php | awk '{print $2}')
-          README_VERSION=$(grep "Stable tag:" stop-user-enumeration/readme.txt | awk '{print $3}')
-          CONSTANT_VERSION=$(grep "define.*STOP_USER_ENUMERATION_PLUGIN_VERSION" stop-user-enumeration/stop-user-enumeration.php | sed -E "s/.*'([0-9.]+)'.*/\1/")
-          
+          PLUGIN_VERSION=$(grep -m1 -E "^[[:space:]]*\*?[[:space:]]*Version:" "$PLUGIN_FILE" | sed -E 's/.*Version:[[:space:]]*//' | tr -d ' \r')
+          README_VERSION=$(grep -m1 "Stable tag:" "$PLUGIN_DIR/readme.txt" | sed -E 's/.*Stable tag:[[:space:]]*//' | tr -d ' \r')
+
           echo "Plugin header version: $PLUGIN_VERSION"
-          echo "Readme stable tag: $README_VERSION"
-          echo "Plugin constant version: $CONSTANT_VERSION"
-          
-          # Check if all versions match
+          echo "Readme stable tag:     $README_VERSION"
+
           if [ "$PLUGIN_VERSION" != "$README_VERSION" ]; then
-            echo "❌ ERROR: Version mismatch between plugin header ($PLUGIN_VERSION) and readme.txt ($README_VERSION)"
+            echo "::error::Version mismatch between plugin header ($PLUGIN_VERSION) and readme.txt ($README_VERSION)"
             exit 1
           fi
-          
-          if [ "$PLUGIN_VERSION" != "$CONSTANT_VERSION" ]; then
-            echo "❌ ERROR: Version mismatch between plugin header ($PLUGIN_VERSION) and version constant ($CONSTANT_VERSION)"
-            exit 1
+
+          if [ -n "$VERSION_CONSTANT" ]; then
+            CONSTANT_VERSION=$(grep -m1 -E "define[[:space:]]*\([[:space:]]*['\"]$VERSION_CONSTANT['\"]" "$PLUGIN_FILE" | sed -E "s/.*['\"]$VERSION_CONSTANT['\"][[:space:]]*,[[:space:]]*['\"]([^'\"]+)['\"].*/\1/")
+            echo "Version constant:      $CONSTANT_VERSION"
+            if [ "$PLUGIN_VERSION" != "$CONSTANT_VERSION" ]; then
+              echo "::error::Version mismatch between plugin header ($PLUGIN_VERSION) and $VERSION_CONSTANT ($CONSTANT_VERSION)"
+              exit 1
+            fi
           fi
-          
-          echo "✅ All version numbers match: $PLUGIN_VERSION"
+          echo "All version numbers match: $PLUGIN_VERSION"
 
       - name: Install WP-CLI dist-archive command
         env:
@@ -98,12 +105,59 @@ jobs:
 
       - name: Build plugin
         run: |
-          cd stop-user-enumeration && composer install --no-dev && cd ..
-          wp dist-archive ./stop-user-enumeration ./stop-user-enumeration.zip
+          composer run-script build
           mkdir tmp-build
-          unzip stop-user-enumeration.zip -d tmp-build
+          unzip -q "zipped/$PLUGIN_DIR-free.zip" -d tmp-build
 
       - name: Run plugin check
         uses: wordpress/plugin-check-action@v1
         with:
-          build-dir: './tmp-build/stop-user-enumeration'
+          build-dir: './tmp-build/${{ env.PLUGIN_DIR }}'
+
+  tests:
+    name: PHPUnit (wp-env)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get required PHP version
+        id: php_version
+        run: |
+          PHP_VERSION=$(grep -m1 "Requires PHP:" "$PLUGIN_FILE" | sed -E 's/.*Requires PHP:[[:space:]]*//' | tr -d ' \r')
+          PHP_VERSION=${PHP_VERSION:-7.4}
+          # The dev tooling (PHPUnit 9, PHPCS 3) needs PHP 7.4+, whatever the plugin itself supports.
+          if [ "$(printf '%s\n' "$PHP_VERSION" 7.4 | sort -V | head -1)" != "7.4" ]; then PHP_VERSION=7.4; fi
+          echo "PHP_VERSION=$PHP_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ steps.php_version.outputs.PHP_VERSION }}
+          coverage: none
+          tools: composer
+
+      - name: Install composer dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Install plugin dependencies
+        run: |
+          if [ -f "$PLUGIN_DIR/composer.json" ]; then
+            composer install -d "$PLUGIN_DIR" --no-dev --prefer-dist --no-progress
+          fi
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Start wp-env
+        run: npx wp-env start
+
+      - name: Run tests
+        run: npm test
