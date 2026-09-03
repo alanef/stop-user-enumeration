@@ -24,15 +24,16 @@ jobs:
         
       - name: Install WP-CLI dist-archive command
         env:
-          # WP-CLI's bundled Composer rejects the runner's ghs_ token when
-          # GitHub's longer stateless-token format is in play (its oauth-token
-          # validation fails on the format), which makes this step flake. The
-          # token is persisted in a config FILE by setup-php, so clearing env
-          # vars alone is not enough — strip the persisted github-oauth from
-          # every composer home (default + wp-cli's own) and clone the public
-          # command anonymously with empty Composer auth.
+          # WP-CLI bundles Composer 2.2, whose github-oauth validation rejects
+          # the runner's GITHUB_TOKEN format ("contains invalid characters").
+          # setup-php persists that token in auth.json, so strip the persisted
+          # github-oauth from every composer home (default + wp-cli's own).
+          # Installing anonymously instead is flaky: shared runner IPs exhaust
+          # GitHub's unauthenticated API limit ("Could not authenticate against
+          # github.com"). So hand the same token back as http-basic, which
+          # Composer 2.2 accepts without the format check.
           GITHUB_TOKEN: ""
-          COMPOSER_AUTH: "{}"
+          COMPOSER_AUTH: '{"http-basic":{"github.com":{"username":"x-access-token","password":"${{ github.token }}"}}}'
         run: |
           composer config --global --unset github-oauth.github.com 2>/dev/null || true
           rm -f "$HOME/.composer/auth.json" \
