@@ -67,6 +67,9 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
           echo "Building version $VERSION"
           
+      - name: Name the release zip
+        run: cp zipped/stop-user-enumeration-free.zip "zipped/stop-user-enumeration-${{ steps.get_version.outputs.VERSION }}.zip"
+
       - name: Verify tag matches plugin version
         run: |
           # Get plugin version and tag version
@@ -102,7 +105,7 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            ./zipped/stop-user-enumeration-free.zip#stop-user-enumeration-${{ steps.get_version.outputs.VERSION }}.zip
+            zipped/stop-user-enumeration-${{ steps.get_version.outputs.VERSION }}.zip
           
       - name: Deploy to WordPress.org
         env:
