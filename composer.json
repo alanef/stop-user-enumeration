@@ -34,8 +34,7 @@
     "build": [
       "if [ -f stop-user-enumeration/composer.json ]; then composer install -d stop-user-enumeration --no-dev; fi",
       "mkdir -p zipped",
-      "wp dist-archive stop-user-enumeration zipped/stop-user-enumeration-free.zip --force",
-      "zip -qd zipped/stop-user-enumeration-free.zip stop-user-enumeration/.distignore >/dev/null 2>&1 || true"
+      "wp dist-archive stop-user-enumeration zipped/stop-user-enumeration-free.zip --force"
     ],
     "phpcs": "phpcs stop-user-enumeration -s --standard=phpcs_sec.xml --ignore=*/vendor/* --extensions=php",
     "compat:8.4": "phpcs stop-user-enumeration -s --standard=PHPCompatibilityWP --ignore=*/vendor/* --extensions=php --runtime-set testVersion 8.4",
