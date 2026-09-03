@@ -1,5 +1,5 @@
 == Changelog ==
-= 1.7.7 =
+= 1.7.8 =
 * Updated opt-in library to 1.2.0
 
 = 1.7.6 =

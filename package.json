@@ -1,6 +1,6 @@
 {
   "name": "stop-user-enumeration-project",
-  "version": "1.0.0",
+  "version": "1.7.8",
   "scripts": {
     "pretest": "[ ! -f .wp-env.override.json ] && cp .wp-env.override.json.example .wp-env.override.json || true",
     "test": "./run-tests.sh",
