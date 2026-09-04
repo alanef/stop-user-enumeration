@@ -9,6 +9,7 @@ tmp-build/
 node_modules/
 /vendor/
 /stop-user-enumeration/vendor/
+/stop-user-enumeration/composer.lock
 /stop-user-enumeration/includes/vendor/
 .phpunit.result.cache
 *.phpunit.result.cache
@@ -20,5 +21,4 @@ node_modules/
 __pycache__/
 # repository specific
 stop-user-enumeration/includes/vendor/
-/stop-user-enumeration/composer.lock
 .env.wordpress
