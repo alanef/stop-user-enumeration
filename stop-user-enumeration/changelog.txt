@@ -1,4 +1,7 @@
 == Changelog ==
+= Unreleased =
+* The comment-author script now loads only on pages that show a comment form, instead of on every front-end page
+
 = 1.7.9 =
 * Fixed two database writes on every page load: the plugin and its bundled opt-in library both registered an uninstall hook and overwrote each other's entry in the uninstall_plugins option. Uninstall now runs from uninstall.php instead
 * Fixed plugin settings being left in the database after the plugin was deleted, because only the library's uninstall callback ever ran

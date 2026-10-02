@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- The comment-author script now loads only on pages that show a comment form, instead of
+  on every front-end page.
+
 ## [1.7.9] - 2026-10-02
 
 ### Fixed

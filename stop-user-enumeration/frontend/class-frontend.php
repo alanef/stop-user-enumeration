@@ -47,14 +47,23 @@ class FrontEnd {
 	/**
 	 * Register the JavaScript for the public-facing side of the site.
 	 *
-	 * This method enqueues the JavaScript file for the plugin on the public-facing side of the site,
-	 * ensuring it is not loaded in the admin area.
+	 * Runs on comment_form_before, so the script only loads on pages that output a
+	 * comment form. The head has already been sent by then, so it prints in the footer.
 	 *
 	 * @return void
 	 */
 	public function enqueue_scripts() {
 		if ( ! is_admin() ) {
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/frontend.js', array(), $this->version, array( 'strategy' => 'defer' ) );
+			wp_enqueue_script(
+				$this->plugin_name,
+				plugin_dir_url( __FILE__ ) . 'js/frontend.js',
+				array(),
+				$this->version,
+				array(
+					'strategy'  => 'defer',
+					'in_footer' => true,
+				)
+			);
 		}
 	}
 

@@ -151,7 +151,8 @@ class Core {
 		 */
 		$plugin_public = new FrontEnd( $this->get_plugin_name(), $this->get_version() );
 		if ( 'on' === $this->sue_get_option( 'comment_jquery', 'off' ) ) {
-			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+			// Only pages that output a comment form need the script.
+			$this->loader->add_action( 'comment_form_before', $plugin_public, 'enqueue_scripts' );
 		}
 
 		$this->loader->add_action( 'init', $plugin_public, 'check_request' );
