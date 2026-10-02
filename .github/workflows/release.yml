@@ -21,10 +21,42 @@ jobs:
 
   build-release:
     needs: run-checks
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
+
+      # Where a release goes is a property of the plugin, not of the workflow,
+      # so it is read from the plugin's own readme.txt and the same CI serves
+      # every repo. Omitting the header is the safe default: GitHub only,
+      # nothing published anywhere public by accident. A value that is present
+      # but unrecognised is a typo, not a choice, so it stops the release
+      # rather than silently falling back to that default.
+      - name: Resolve deploy targets
+        id: deploy
+        run: |
+          README="$PLUGIN_DIR/readme.txt"
+          TYPE=""
+          if [ -f "$README" ]; then
+            TYPE=$(grep -m1 -iE "^[[:space:]]*Type:" "$README" \
+              | sed -E 's/^[[:space:]]*[Tt][Yy][Pp][Ee]:[[:space:]]*//' \
+              | tr -d ' \r' | tr '[:upper:]' '[:lower:]')
+          fi
+          case "$TYPE" in
+            "")       WPORG=false; FREEMIUS=false; LABEL="GitHub only (no Type: header)" ;;
+            free)     WPORG=true;  FREEMIUS=false; LABEL="GitHub + WordPress.org" ;;
+            freemium) WPORG=true;  FREEMIUS=true;  LABEL="GitHub + WordPress.org + Freemius" ;;
+            premium)  WPORG=false; FREEMIUS=true;  LABEL="GitHub + Freemius" ;;
+            *)
+              echo "::error::Unrecognised \"Type: $TYPE\" in $README. Use free, freemium or premium, or omit the header entirely for GitHub-only."
+              exit 1
+              ;;
+          esac
+          echo "WPORG=$WPORG" >> $GITHUB_OUTPUT
+          echo "FREEMIUS=$FREEMIUS" >> $GITHUB_OUTPUT
+          echo "Type: ${TYPE:-(absent)}"
+          echo "Deploy targets: $LABEL"
+          echo "**Deploy targets:** $LABEL" >> $GITHUB_STEP_SUMMARY
 
       - name: Get required PHP version
         id: php_version
@@ -89,7 +121,7 @@ jobs:
           echo "Tag version matches plugin version: $PLUGIN_VERSION"
 
       - name: Create GitHub release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ github.ref }}
           name: Release ${{ steps.get_version.outputs.VERSION }}
@@ -107,6 +139,7 @@ jobs:
             zipped/stop-user-enumeration-${{ steps.get_version.outputs.VERSION }}.zip
 
       - name: Deploy to WordPress.org
+        if: steps.deploy.outputs.WPORG == 'true'
         env:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
@@ -137,6 +170,18 @@ jobs:
           svn status | grep '^!' | sed 's/^! *//' | xargs -r -I{} svn delete "{}" || true
 
           cd ..
+
+          # wordpress.org listing assets (banners, icon, screenshots, Playground
+          # blueprint) live in .wordpress-org/ at project root and go to SVN
+          # assets/, beside trunk and tags, in the same commit. They are never
+          # in the plugin zip. README.md there is developer notes, not listing.
+          if [ -d "$GITHUB_WORKSPACE/.wordpress-org" ]; then
+            mkdir -p assets
+            rsync -a --delete --exclude='.svn' --exclude='README.md' "$GITHUB_WORKSPACE/.wordpress-org/" assets/
+            svn add --force assets --auto-props --parents --depth infinity -q || true
+            svn status assets | grep '^!' | sed 's/^! *//' | xargs -r -I{} svn delete "{}" || true
+          fi
+
           svn cp trunk "tags/$VERSION"
           svn commit -m "Release version $VERSION" --username "$SVN_USERNAME" --password "$SVN_PASSWORD" --no-auth-cache
 

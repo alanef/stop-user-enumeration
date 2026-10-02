@@ -5,9 +5,11 @@ on:
   push:
     branches:
       - main
+      - develop
   pull_request:
     branches:
       - main
+      - develop
   workflow_call:
 
 permissions:
@@ -21,11 +23,11 @@ env:
 jobs:
   checks:
     name: PHPCS, version consistency and Plugin Check
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Get required PHP version
         id: php_version
@@ -48,7 +50,7 @@ jobs:
         run: composer validate --strict
 
       - name: Cache Composer packages
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: vendor
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
@@ -125,11 +127,11 @@ jobs:
 
   tests:
     name: PHPUnit (wp-env)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Get required PHP version
         id: php_version
@@ -157,7 +159,7 @@ jobs:
           fi
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: '22'
           cache: npm
@@ -166,7 +168,18 @@ jobs:
         run: npm ci
 
       - name: Start wp-env
-        run: npx wp-env start
+        # wp-env start flakes intermittently in CI on container and network
+        # timing. Retry, stopping between attempts so a half-started
+        # environment does not poison the next try.
+        run: |
+          started=0
+          for i in 1 2 3; do
+            if npx wp-env start; then started=1; break; fi
+            echo "wp-env start attempt $i failed; retrying..."
+            npx wp-env stop >/dev/null 2>&1 || true
+            sleep 5
+          done
+          [ "$started" = "1" ] || { echo "::error::wp-env failed to start after 3 attempts"; exit 1; }
 
       - name: Run tests
         run: npm test
