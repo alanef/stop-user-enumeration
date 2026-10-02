@@ -19,6 +19,7 @@ class Uninstall {
 	public static function uninstall() {
 
 		delete_option( 'stop-user-enumeration' );
+		\Fullworks_Free_Plugin_Lib\Main::plugin_uninstall( 'SUE' );
 
 	}
 

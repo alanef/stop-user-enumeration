@@ -50,14 +50,13 @@ require_once STOP_USER_ENUMERATION_PLUGIN_DIR  . 'includes/vendor/autoload.php';
 /**
  * Run the Stop User Enumeration plugin.
  *
- * This function registers the activation and uninstall hooks,
+ * This function registers the activation hook,
  * creates an instance of the Core class, and runs the plugin.
  *
  * @return void
  */
 function run_stop_user_enumeration() {
 	register_activation_hook( __FILE__, array( '\Stop_User_Enumeration\Includes\Activator', 'activate' ) );
-	register_uninstall_hook( __FILE__, array( '\Stop_User_Enumeration\Includes\Uninstall', 'uninstall' ) );
 	new \Fullworks_Free_Plugin_Lib\Main('stop-user-enumeration/stop-user-enumeration.php',
 		admin_url( 'options-general.php?page=stop-user-enumeration' ),
 		'SUE',
