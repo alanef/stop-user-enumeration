@@ -1,0 +1,44 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"meta": {
+		"title": "Stop User Enumeration demo",
+		"description": "Try the common user-enumeration probes as a logged-out visitor and see them blocked.",
+		"author": "fullworks",
+		"categories": [
+			"Security"
+		]
+	},
+	"landingPage": "/try-it/",
+	"preferredVersions": {
+		"php": "8.3",
+		"wp": "latest"
+	},
+	"steps": [
+		{
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "wordpress.org/plugins",
+				"slug": "stop-user-enumeration"
+			},
+			"options": {
+				"activate": true
+			}
+		},
+		{
+			"step": "setSiteOptions",
+			"options": {
+				"SUE_form_rendered": "optout"
+			}
+		},
+		{
+			"step": "writeFile",
+			"path": "/wordpress/wp-content/mu-plugins/sue-demo-logged-out-front-end.php",
+			"data": "<?php\n/**\n * Playground demo only: the front end (including REST) behaves as a logged-out\n * visitor, so the probes are blocked even though the demo is logged in to wp-admin.\n * Stop User Enumeration deliberately never blocks logged-in users.\n */\nadd_filter(\n\t'determine_current_user',\n\tfunction ( $user_id ) {\n\t\tif ( is_admin() || wp_doing_ajax() || ( isset( $GLOBALS['pagenow'] ) && 'wp-login.php' === $GLOBALS['pagenow'] ) ) {\n\t\t\treturn $user_id;\n\t\t}\n\t\treturn 0;\n\t},\n\t99\n);\n"
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php\nrequire '/wordpress/wp-load.php';\n\nupdate_option( 'permalink_structure', '/%postname%/' );\nflush_rewrite_rules();\n\n$probe = function ( $path, $note ) {\n\t$url = home_url( $path );\n\treturn '<li><a href=\"' . esc_url( $url ) . '\"><code>' . esc_html( $path ) . '</code></a>: ' . $note . '</li>';\n};\n\n$settings = admin_url( 'options-general.php?page=stop-user-enumeration' );\n\n$content = '<!-- wp:paragraph --><p>Stop User Enumeration is active. In this demo the front end behaves as a <strong>logged-out visitor</strong>, which is who the plugin protects. Try the usual ways a scanner discovers user names:</p><!-- /wp:paragraph -->'\n\t. '<!-- wp:list --><ul>'\n\t. $probe( '/?author=1', 'the classic author-archive probe. Blocked.' )\n\t. $probe( '/wp-json/wp/v2/users', 'the REST API user list. Blocked for logged-out visitors.' )\n\t. $probe( '/?rest_route=/wp/v2/users', 'the same endpoint without pretty permalinks. Blocked.' )\n\t. $probe( '/wp-sitemap-users-1.xml', 'the core user sitemap. Removed.' )\n\t. '</ul><!-- /wp:list -->'\n\t. '<!-- wp:paragraph --><p>On a real site logged-in users and admin pages are never affected. You are logged in to the dashboard here: <a href=\"' . esc_url( $settings ) . '\">open the plugin settings</a>.</p><!-- /wp:paragraph -->';\n\nwp_insert_post(\n\tarray(\n\t\t'post_type'    => 'page',\n\t\t'post_name'    => 'try-it',\n\t\t'post_title'   => 'Try Stop User Enumeration',\n\t\t'post_status'  => 'publish',\n\t\t'post_content' => $content,\n\t)\n);\n"
+		}
+	],
+	"login": true
+}
