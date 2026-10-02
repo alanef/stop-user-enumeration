@@ -44,7 +44,7 @@ class Admin_Pages {
 			add_action( "admin_footer-{$page_hook_id}", array( $this, 'footer_scripts' ) );
 			/* Set number of column available. */
 			add_filter( 'screen_layout_columns', array( $this, 'screen_layout_column' ), 10, 2 );
-			add_action( $this->settings_page_id . '_settings_page_boxes', array( $this, 'add_required_meta_boxes' ) );
+			add_action( 'stop_user_enumeration_settings_page_boxes', array( $this, 'add_required_meta_boxes' ) );
 		}
 	}
 
@@ -102,7 +102,7 @@ class Admin_Pages {
 		global $hook_suffix;
 		if ( $this->settings_page_id === $hook_suffix ) {
 			/* enable add_meta_boxes function in this page. */
-			do_action( $this->settings_page_id . '_settings_page_boxes', $hook_suffix );
+			do_action( 'stop_user_enumeration_settings_page_boxes', $hook_suffix );
 			?>
             <div class="wrap">
                 <h2><?php echo esc_html( $this->settings_title ); ?></h2>

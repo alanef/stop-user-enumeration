@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The comment-author script now loads only on pages that show a comment form, instead of
   on every front-end page.
+- The internal action that adds the settings page meta boxes is renamed from
+  `settings_page_stop-user-enumeration_settings_page_boxes` to
+  `stop_user_enumeration_settings_page_boxes`, so it carries the plugin prefix.
 
 ## [1.7.9] - 2026-10-02
 

@@ -1,6 +1,7 @@
 == Changelog ==
 = Unreleased =
 * The comment-author script now loads only on pages that show a comment form, instead of on every front-end page
+* Renamed the internal settings page meta box action to stop_user_enumeration_settings_page_boxes so it carries the plugin prefix
 
 = 1.7.9 =
 * Fixed two database writes on every page load: the plugin and its bundled opt-in library both registered an uninstall hook and overwrote each other's entry in the uninstall_plugins option. Uninstall now runs from uninstall.php instead
