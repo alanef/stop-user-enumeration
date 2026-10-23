@@ -1,6 +1,6 @@
 {
   "name": "stop-user-enumeration-project",
-  "version": "1.0.0",
+  "version": "1.7.10",
   "private": true,
   "description": "Development project for the Stop User Enumeration WordPress plugin",
   "author": "Alan Fuller <alan@fullworks.net>",

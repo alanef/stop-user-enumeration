@@ -1,5 +1,5 @@
 == Changelog ==
-= Unreleased =
+= 1.7.10 =
 * Fixed: the settings notice could not be dismissed and kept coming back on every page load
 * Fixed: on sites running other Fullworks free plugins, the opt-in notice and menu could belong to the wrong plugin
 * Fixed: leaving the opt-in screen without choosing left the notice up for good; visiting settings now shows the opt-in screen again until you click Allow or Skip
