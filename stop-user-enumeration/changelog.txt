@@ -4,7 +4,7 @@
 * Fixed: on sites running other Fullworks free plugins, the opt-in notice and menu could belong to the wrong plugin
 * Fixed: leaving the opt-in screen without choosing left the notice up for good; visiting settings now shows the opt-in screen again until you click Allow or Skip
 * Changed: the notice now links straight to the opt-in screen instead of the settings page
-* Changed: updated the bundled opt-in library to 1.3.1
+* Changed: updated the bundled opt-in library to 1.3.2
 
 = 1.7.9 =
 * Fixed two database writes on every page load: the plugin and its bundled opt-in library both registered an uninstall hook and overwrote each other's entry in the uninstall_plugins option. Uninstall now runs from uninstall.php instead
