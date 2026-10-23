@@ -1,0 +1,46 @@
+{
+  "issue_id": "PLUGINS_SMALL-6",
+  "scan_date": "2026-10-23T09:00:00Z",
+  "scanned_by": "AI Assistant",
+  "files_analyzed": [
+    "free_plugin_lib:src/Main.php",
+    "free_plugin_lib:src/Classes/Email.php",
+    "free_plugin_lib:src/Assets/scripts/main.js",
+    "stop-user-enumeration/composer.json"
+  ],
+  "commit_range": {
+    "free_plugin_lib": "84d3d1f..9e94ffc",
+    "stop-user-enumeration": "fcafa0a..e4e7020"
+  },
+  "findings": [
+    {
+      "severity": "Low",
+      "category": "A01: Broken Access Control (pre-existing)",
+      "file": "free_plugin_lib:src/Main.php:85-101",
+      "description": "handle_skip_optin sets the site-wide status to optout on a valid nonce with no capability check. The nonce is per-user and only rendered on a manage_options page, so the CSRF risk is nil. Unchanged by this issue.",
+      "recommendation": "Add current_user_can('manage_options') when the library is next touched."
+    },
+    {
+      "severity": "Info",
+      "category": "A03: Injection",
+      "file": "free_plugin_lib:src/Main.php:~395",
+      "description": "esc_js() output inside a double-quoted attribute selector would turn a quote in a shortname into &quot;. Shortnames are developer constants, never user input.",
+      "recommendation": "None needed."
+    }
+  ],
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 1,
+    "info": 1,
+    "total": 2
+  },
+  "recommendation": "PASS_WITH_NOTES",
+  "blocking_issues": [],
+  "instrument_validation": {
+    "input_sanitisation_sweep": "validated: flags all 3 raw $_GET/$_POST reads in 958c57d^ (the last fix of that class); flags none in v1.3.2",
+    "guard_before_state_change": "UNVALIDATED: no prior fix of this class exists in the library. Manual review: every update_site_option/update_user_meta reachable from a request is preceded by a nonce check and, in the AJAX handlers, a capability check, except the pre-existing first-run 'pending' write and the page-routing 'rendering' write, which now runs only for manage_options users"
+  },
+  "notes": "Changes compare shortnames, scope AJAX handlers to their own plugin (early return, no state change before the checks), restrict the opt-in redirect to admins outside AJAX, and fix links and wording. No new inputs, endpoints, secrets or dependencies. SUE's only dependency change is free_plugin_lib 1.3.2."
+}
