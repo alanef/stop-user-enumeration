@@ -58,7 +58,7 @@ Either using the dashboard 'Add Plugin' feature to find, install and activate th
 = It doesn't seem to work! ==
 Are you logged in?  This plugin won't do anything for logged in users, it only works when you are logged out. This is the way it is designed. A common mistake is to install the plugin and test it, while still logged in as admin.
 = My username still seems to be leaked! ==
-Themes and xml feeds will include your user 'Display Name'. If you do not specify any name details or nick name, the 'Display Name' will default to your user login name. Make sure your Display Name is always set NOT to your user name or it will be leaked in multiple places.
+Themes and xml feeds will include your user 'Display Name'. If you do not specify any name details or nick name, the 'Display Name' will default to your user login name. Make sure your Display Name is always set NOT to your user name or it will be leaked in multiple places. The plugin now warns administrators about any user who can publish whose display name or author URL matches their login name, and lists them on its settings page.
 = Are there any settings? =
 Yes, but the default ones are fine for most cases
 = This doesn't work with PHP 5.6 or  7.1 ! =

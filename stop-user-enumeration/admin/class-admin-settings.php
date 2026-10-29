@@ -101,6 +101,14 @@ class Admin_Settings extends Admin_Pages {
 			'normal',                 /* Context */
 			'default'                 /* Priority */
 		);
+		add_meta_box(
+			'settings-3',
+			esc_html__( 'Login names on show', 'stop-user-enumeration' ),
+			array( new Login_Exposure(), 'meta_box' ),
+			$this->settings_page_id,
+			'normal',
+			'default'
+		);
 	}
 
 

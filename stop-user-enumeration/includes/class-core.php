@@ -15,6 +15,7 @@
 namespace Stop_User_Enumeration\Includes;
 
 use Stop_User_Enumeration\Admin\Admin_Settings;
+use Stop_User_Enumeration\Admin\Login_Exposure;
 use Stop_User_Enumeration\FrontEnd\FrontEnd;
 
 
@@ -112,6 +113,15 @@ class Core {
 
 		$settings = new Admin_Settings( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_action( 'admin_menu', $settings, 'settings_setup' );
+
+		// PLUGINS_SMALL-12: warn when a publishing user's display name or author URL shows their login name.
+		// The cache is dropped on any user or role change, which can happen outside admin too.
+		$exposure = new Login_Exposure();
+		foreach ( array( 'profile_update', 'user_register', 'deleted_user', 'set_user_role', 'add_user_role', 'remove_user_role' ) as $hook ) {
+			$this->loader->add_action( $hook, $exposure, 'clear_cache' );
+		}
+		$this->loader->add_action( 'admin_notices', $exposure, 'admin_notice' );
+		$this->loader->add_action( 'admin_post_' . Login_Exposure::DISMISS_ACTION, $exposure, 'dismiss' );
 
 	}
 

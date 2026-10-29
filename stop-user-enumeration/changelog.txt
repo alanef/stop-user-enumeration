@@ -1,4 +1,7 @@
 == Changelog ==
+= Unreleased =
+* Added: a warning for administrators when someone who can publish has a display name or author URL that shows their login name to visitors. WordPress uses the login name as the display name unless a first or last name is given, and builds the author URL from it, so on a new site the admin's login name appears in feeds, embeds and author bylines. The warning, on the Dashboard, Users, Plugins and this plugin's settings page, links to each profile to change the display name. The author URL can't be changed from the profile screen, so it is reported as advice only. The settings page always lists every match.
+
 = 1.7.10 =
 * Fixed: the settings notice could not be dismissed and kept coming back on every page load
 * Fixed: on sites running other Fullworks free plugins, the opt-in notice and menu could belong to the wrong plugin
